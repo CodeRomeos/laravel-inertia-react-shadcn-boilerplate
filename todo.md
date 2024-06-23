@@ -1,0 +1,2 @@
+ - [ ] Email verification
+ - [ ] Client invoices

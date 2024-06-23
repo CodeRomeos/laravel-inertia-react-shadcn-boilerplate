@@ -1,0 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.number-font {
+    font-family: 'Courier New', Courier, monospace;
+}

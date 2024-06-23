@@ -1,0 +1,153 @@
+export const navItems = [
+    {
+        title: "Dashboard",
+        href: route("admin.dashboard"),
+        icon: "dashboard",
+        label: "Dashboard",
+    },
+
+    {
+        title: "Finance",
+        href: "#",
+        icon: "coins",
+        label: "Finance",
+        permit: "view finance|create finance|edit finance",
+        items: [
+            {
+                title: "Reports",
+                // href: route("admin.reports.index"),
+                href: "#",
+                icon: "banknote",
+                label: "Reports",
+            },
+            {
+                title: "Bank Accounts",
+                href: route("admin.bankAccounts.index"),
+                icon: "landmark",
+                label: "Bank Accounts",
+                permit: "view bank accounts",
+            },
+            {
+                title: "Cards",
+                href: route("admin.cards.index"),
+                icon: "creditCard",
+                label: "Cards",
+                permit: "view cards",
+            },
+            {
+                title: "Payment Methods",
+                href: route("admin.paymentMethods.index"),
+                icon: "handshake",
+                label: "Payment Methods",
+                permit: "view payment methods",
+            },
+            {
+                title: "All Category",
+                href: route("admin.categories.index"),
+                icon: "list",
+                label: "All Category",
+                permit: "view categories",
+            },
+        ],
+    },
+
+    {
+        title: "Client",
+        href: "#",
+        icon: "users",
+        label: "Client",
+        permit: "view clients|create clients|edit clients",
+        items: [
+            {
+                title: "New Client",
+                href: route("admin.clients.create"),
+                icon: "userRoundPlus",
+                label: "New Client",
+                permit: "create clients",
+            },
+            {
+                title: "All Client",
+                href: route("admin.clients.index"),
+                icon: "list",
+                label: "All Client",
+                permit: "view clients",
+            },
+        ],
+    },
+    {
+        title: "Users",
+        href: "#",
+        icon: "users",
+        label: "Users",
+        permit: "view users|create users|edit users",
+        items: [
+            {
+                title: "Add User",
+                href: route("admin.users.create"),
+                icon: "userRoundPlus",
+                label: "Add User",
+                permit: "create users",
+            },
+            {
+                title: "All User",
+                href: route("admin.users.index"),
+                icon: "list",
+                label: "All User",
+                permit: "view users",
+            },
+        ],
+    },
+    {
+        title: "Roles",
+        href: "#",
+        icon: "users",
+        label: "Roles",
+        permit: "view roles|create roles|edit roles",
+        items: [
+            {
+                title: "Add Role",
+                href: route("admin.roles.create"),
+                icon: "userRoundPlus",
+                label: "Add User",
+                permit: "create roles",
+            },
+            {
+                title: "All Roles",
+                href: route("admin.roles.index"),
+                icon: "list",
+                label: "All Roles",
+                permit: "view roles",
+            },
+        ],
+    },
+    {
+        title: "Notes",
+        href: "#",
+        icon: "pages",
+        label: "Notes",
+        permit: "view notes|create notes|edit notes",
+        items: [
+            {
+                title: "Add Note",
+                href: route("admin.notes.create"),
+                icon: "post",
+                label: "Add Note",
+                permit: "create notes",
+            },
+            {
+                title: "All Notes",
+                href: route("admin.notes.index"),
+                icon: "folders",
+                label: "Notes",
+                permit: "view notes",
+            },
+        ],
+    },
+    {
+        title: "Acitivity Logs",
+        href: route("admin.activityLogs.index"),
+        icon: "list",
+        label: "Acitivity Logs",
+        permit: "view activity logs",
+    },
+];
