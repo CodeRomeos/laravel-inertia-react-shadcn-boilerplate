@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\NoteController;
 use App\Http\Controllers\Admin\PageController;
 use App\Http\Controllers\Admin\PaymentMethodController;
+use App\Http\Controllers\Admin\PostController;
 use App\Http\Controllers\Admin\Role\RoleController;
 use App\Http\Controllers\Admin\Users\UserController;
 use Illuminate\Support\Facades\Route;
@@ -64,6 +65,14 @@ Route::prefix('pages')->name('pages.')->middleware('auth')->controller(PageContr
     Route::get('create', 'create')->name('create')->middleware(['can:create pages']);
     Route::get('{id}', 'edit')->name('edit')->middleware(['can:edit pages']);
     Route::get('', 'index')->name('index')->middleware(['can:view pages']);
+});
+
+Route::prefix('posts')->name('posts.')->middleware('auth')->controller(PostController::class)->group(function () {
+    Route::post('update/{id}', 'update')->name('update')->middleware(['can:edit posts']);
+    Route::post('store', 'store')->name('store')->middleware(['can:create posts']);
+    Route::get('create', 'create')->name('create')->middleware(['can:create posts']);
+    Route::get('{id}', 'edit')->name('edit')->middleware(['can:edit posts']);
+    Route::get('', 'index')->name('index')->middleware(['can:view posts']);
 });
 
 Route::prefix('cards')->name('cards.')->middleware('auth')->controller(CardController::class)->group(function () {

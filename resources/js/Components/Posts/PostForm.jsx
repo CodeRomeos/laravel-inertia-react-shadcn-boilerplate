@@ -3,7 +3,7 @@ import { Label } from "@/shadcn/ui/label";
 import { Input } from "@/shadcn/ui/input";
 import InputError from "../InputError";
 import { Button } from "@/shadcn/ui/button";
-import { useForm, usePage } from "@inertiajs/react";
+import { useForm, usePost } from "@inertiajs/react";
 import { textToSlug } from "@/Helpers/GlobalFunctions";
 import LoadingButton from "../LoadingButton";
 import EditorInput from "../EditorInput";
@@ -17,28 +17,28 @@ import {
     SelectValue,
 } from "@/shadcn/ui/select";
 
-export default function PageForm({page, personTitles}) {
-    const { data, setData, post, processing, errors, reset } = useForm({
-        title: page ? page?.title : '',
-        slug: page ? page?.slug : '',
-        body: page ? page?.body : '',
-        status: page ? page?.status : 0,
-        meta_title: page ? page?.meta_title : '',
-        meta_description: page ? page?.meta_description : '',
+export default function PostForm({post}) {
+    const { data, setData, post: postAction, processing, errors, reset } = useForm({
+        title: post ? post?.title : '',
+        slug: post ? post?.slug : '',
+        body: post ? post?.body : '',
+        status: post ? post?.status : 0,
+        meta_title: post ? post?.meta_title : '',
+        meta_description: post ? post?.meta_description : '',
     });
 
     const submit = (e) => {
         e.preventDefault();
 
-        if (page) {
-            post(route("admin.pages.update", { id: page.id }));
+        if (post) {
+            postAction(route("admin.posts.update", { id: post.id }));
         } else {
-            post(route("admin.pages.store"));
+            postAction(route("admin.posts.store"));
         }
     };
 
     React.useEffect(() => {
-        if (!page) {
+        if (!post) {
             setData("slug", textToSlug(data.title));
         } else {
             setData("title", data.title);

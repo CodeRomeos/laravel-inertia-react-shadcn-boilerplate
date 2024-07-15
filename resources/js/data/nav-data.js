@@ -12,6 +12,13 @@ export const navItems = [
         icon: "page",
         label: "Pages",
     },
+    {
+        title: "Posts",
+        label: "Posts",
+        href: route("admin.posts.index"),
+        icon: "page",
+        label: "Posts",
+    },
 
     {
         title: "Finance",
