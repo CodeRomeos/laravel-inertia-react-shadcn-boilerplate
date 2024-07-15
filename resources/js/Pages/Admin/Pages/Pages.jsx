@@ -3,6 +3,7 @@ import { ScrollArea } from "@/shadcn/ui/scroll-area";
 import { Head, Link } from "@inertiajs/react";
 import {
     ArrowUpDown,
+    Eye,
     // ChevronDown,
     MoreHorizontal,
     Pencil,
@@ -71,7 +72,16 @@ export const columns = [
             const payment = row.original;
 
             return (
-                <div className="text-right">
+                <div className="flex justify-end items-center gap-2">
+                    {row.original.status == 1 && <Button asChild size="icon">
+                        <Link
+                            href={route("page", row.original.slug)}
+                            target="_blank"
+                        >
+                            <Eye className="h-4 w-4" />
+                        </Link>
+                    </Button>}
+                    
                     <Can permit="edit pages">
                         <Button asChild variant="outline" size="icon">
                             <Link

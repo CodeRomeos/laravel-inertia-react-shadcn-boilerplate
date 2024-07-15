@@ -7,6 +7,15 @@ import { useForm, usePage } from "@inertiajs/react";
 import { textToSlug } from "@/Helpers/GlobalFunctions";
 import LoadingButton from "../LoadingButton";
 import EditorInput from "../EditorInput";
+import {
+    Select,
+    SelectContent,
+    SelectGroup,
+    SelectItem,
+    SelectLabel,
+    SelectTrigger,
+    SelectValue,
+} from "@/shadcn/ui/select";
 
 export default function FormForm({page, personTitles}) {
     const { data, setData, post, processing, errors, reset } = useForm({
@@ -88,6 +97,25 @@ export default function FormForm({page, personTitles}) {
                     <InputError message={errors.body} className="mt-2" />
                 </div>
                 <div>
+                    <Label htmlFor="status">Status</Label>
+                    <Select
+                        defaultValue={`${data.status}`}
+                        onValueChange={(value) => setData("status", value)}
+                    >
+                        <SelectTrigger className="w-full">
+                            <SelectValue placeholder="Select status" />
+                        </SelectTrigger>
+                        <SelectContent>
+                            <SelectGroup>
+                                <SelectItem value="0">Draft</SelectItem>
+                                <SelectItem value="1">Publish</SelectItem>
+                            </SelectGroup>
+                        </SelectContent>
+                    </Select>
+
+                    <InputError message={errors.status} className="mt-2" />
+                </div>
+                <div>
                     <Label htmlFor="meta_title">Meta Title</Label>
                     <Input
                         id="meta_title"
@@ -117,7 +145,10 @@ export default function FormForm({page, personTitles}) {
                         }}
                     />
 
-                    <InputError message={errors.meta_description} className="mt-2" />
+                    <InputError
+                        message={errors.meta_description}
+                        className="mt-2"
+                    />
                 </div>
             </div>
             <LoadingButton loading={processing} className="w-[260px]">
