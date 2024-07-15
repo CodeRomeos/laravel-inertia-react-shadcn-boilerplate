@@ -5,6 +5,13 @@ export const navItems = [
         icon: "dashboard",
         label: "Dashboard",
     },
+    {
+        title: "Pages",
+        label: "Pages",
+        href: route("admin.pages.index"),
+        icon: "page",
+        label: "Pages",
+    },
 
     {
         title: "Finance",
