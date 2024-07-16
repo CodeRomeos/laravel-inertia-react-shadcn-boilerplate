@@ -5,6 +5,20 @@ export const navItems = [
         icon: "dashboard",
         label: "Dashboard",
     },
+    {
+        title: "Pages",
+        label: "Pages",
+        href: route("admin.pages.index"),
+        icon: "page",
+        label: "Pages",
+    },
+    {
+        title: "Posts",
+        label: "Posts",
+        href: route("admin.posts.index"),
+        icon: "page",
+        label: "Posts",
+    },
 
     {
         title: "Finance",

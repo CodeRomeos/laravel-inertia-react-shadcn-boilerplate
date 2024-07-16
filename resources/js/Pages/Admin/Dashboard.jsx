@@ -45,6 +45,7 @@ import { Badge } from "@/shadcn/ui/badge";
 
 export default function Dashboard({
     auth,
+    stats,
     groupedData,
     charts
 }) {
@@ -70,9 +71,7 @@ export default function Dashboard({
                         <PageHeading.Title>
                             Hi {auth.user.full_name}, Welcome back 👋
                         </PageHeading.Title>
-                        <PageHeading.Actions>
-
-                        </PageHeading.Actions>
+                        <PageHeading.Actions></PageHeading.Actions>
                     </PageHeading>
                     <Tabs defaultValue="overview" className="space-y-4">
                         <TabsList>
@@ -87,7 +86,7 @@ export default function Dashboard({
                                     <Card>
                                         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                                             <CardTitle className="text-sm font-medium">
-                                                Total Queries
+                                                Total Posts
                                             </CardTitle>
                                             <ContactIcon
                                                 size={14}
@@ -98,7 +97,7 @@ export default function Dashboard({
                                             <div
                                                 className={`text-2xl font-bold `}
                                             >
-                                               200
+                                                {stats.totalPostsCount ?? 0}
                                             </div>
                                             <p className="text-xs text-muted-foreground">
                                                 {/* +20.1% from last month */}
@@ -108,28 +107,25 @@ export default function Dashboard({
                                     <Card>
                                         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                                             <CardTitle className="text-sm font-medium">
-                                                Completed queries
+                                                Published Posts
                                             </CardTitle>
-                                            <Check
-                                                size={14}
-                                                color="#777"
-                                            />
+                                            <Check size={14} color="#777" />
                                         </CardHeader>
                                         <CardContent>
                                             <div
-                                                className={`text-2xl font-bold `}
+                                                className={`text-2xl font-bold text-green-500`}
                                             >
-                                                100
+                                                {stats.publishedPostCount ?? 0}
                                             </div>
                                             <p className="text-xs text-muted-foreground">
-                                                ss
+                                                {/* ss */}
                                             </p>
                                         </CardContent>
                                     </Card>
                                     <Card>
                                         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                                             <CardTitle className="text-sm font-medium">
-                                                Proposal Sent
+                                                Total Pages
                                             </CardTitle>
                                             <MinusCircle
                                                 color="red"
@@ -137,8 +133,8 @@ export default function Dashboard({
                                             />
                                         </CardHeader>
                                         <CardContent>
-                                            <div className="text-2xl font-bold text-red-500">
-                                               90
+                                            <div className="text-2xl font-bold">
+                                                {stats.totalPagesCount}
                                             </div>
                                             <p className="text-xs text-muted-foreground">
                                                 {/* +19% from last month */}
@@ -148,7 +144,7 @@ export default function Dashboard({
                                     <Card>
                                         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                                             <CardTitle className="text-sm font-medium">
-                                                Total Proposal Conf
+                                                Published Pages
                                             </CardTitle>
                                             <PlusCircle
                                                 color="green"
@@ -157,7 +153,7 @@ export default function Dashboard({
                                         </CardHeader>
                                         <CardContent>
                                             <div className="text-2xl font-bold text-green-500">
-                                                40
+                                                {stats.publishedPageCount}
                                             </div>
                                             <p className="text-xs text-muted-foreground">
                                                 {/* +201 since last hour */}
@@ -166,11 +162,8 @@ export default function Dashboard({
                                     </Card>
                                 </div>
                             </Can>
-                           
-                            <div className="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-7">
-                                
-                                
-                            </div>
+
+                            <div className="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-7"></div>
                         </TabsContent>
 
                         {/* Charts */}
@@ -182,9 +175,7 @@ export default function Dashboard({
                                             Monthly Total
                                         </CardTitle>
                                     </CardHeader>
-                                    <div className="h-32">
-                                        
-                                    </div>
+                                    <div className="h-32"></div>
                                 </Card>
 
                                 <Card className="border rounded-md">
@@ -197,11 +188,8 @@ export default function Dashboard({
                                         <CustomPieChart />
                                     </div>
                                 </Card>
-                                
                             </div>
-                            <div className="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-7">
-                                
-                            </div>
+                            <div className="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-7"></div>
                         </TabsContent>
                     </Tabs>
                 </div>
