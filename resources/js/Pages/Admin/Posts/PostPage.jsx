@@ -11,6 +11,7 @@ import { textToSlug } from "@/Helpers/GlobalFunctions";
 import TwoColumnLayout from "@/Layouts/TwoColumnLayout";
 import { TextLarge, TextMuted } from "@/shadcn/ui/text-muted";
 import {
+    Eye,
     Info,
     Mail,
     MapPin,
@@ -58,6 +59,9 @@ export default function PostPage({ post }) {
                         )}
                     </PageHeading.Title>
                     <PageHeading.Actions>
+                        {(post && post.status) && <Button asChild size="icon" variant="link">
+                            <Link href={route("blog.post", post.slug)} target="_blank"><Eye className="h-4 w-4" /></Link>
+                        </Button>}
                         <Button asChild variant="outline">
                             <Link href={route("admin.posts.index")}>Cancel</Link>
                         </Button>

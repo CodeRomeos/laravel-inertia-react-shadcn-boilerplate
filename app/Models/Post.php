@@ -17,4 +17,9 @@ class Post extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    function scopePublished($posts) 
+    {
+        return $posts->where('status', 1);    
+    }
 }

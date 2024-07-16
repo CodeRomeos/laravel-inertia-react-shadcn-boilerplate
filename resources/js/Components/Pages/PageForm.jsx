@@ -16,6 +16,7 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/shadcn/ui/select";
+import SlugInput from "../SlugInput";
 
 export default function PageForm({page, personTitles}) {
     const { data, setData, post, processing, errors, reset } = useForm({
@@ -58,7 +59,7 @@ export default function PageForm({page, personTitles}) {
                         name="title"
                         value={data.title}
                         className="mt-1 block w-full text-xl h-16"
-                        placeholder="First name"
+                        placeholder="Title"
                         onChange={(e) => {
                             setData("title", e.target.value);
                         }}
@@ -68,18 +69,17 @@ export default function PageForm({page, personTitles}) {
                 </div>
                 {/* Slug */}
                 <div>
-                    <Input
+                    <SlugInput
                         id="slug"
                         type="text"
                         name="slug"
                         value={data.slug}
-                        className="mt-1 block w-full"
                         placeholder="slug"
                         onChange={(e) => {
                             setData("slug", e.target.value);
                         }}
+                        baseUrl={route("homepage")}
                     />
-
                     <InputError message={errors.slug} className="mt-2" />
                 </div>
                 <div>

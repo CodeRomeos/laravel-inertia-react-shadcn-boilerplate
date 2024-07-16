@@ -3,7 +3,7 @@ import { Label } from "@/shadcn/ui/label";
 import { Input } from "@/shadcn/ui/input";
 import InputError from "../InputError";
 import { Button } from "@/shadcn/ui/button";
-import { useForm, usePost } from "@inertiajs/react";
+import { useForm } from "@inertiajs/react";
 import { textToSlug } from "@/Helpers/GlobalFunctions";
 import LoadingButton from "../LoadingButton";
 import EditorInput from "../EditorInput";
@@ -16,6 +16,7 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/shadcn/ui/select";
+import SlugInput from "../SlugInput";
 
 export default function PostForm({post}) {
     const { data, setData, post: postAction, processing, errors, reset } = useForm({
@@ -58,7 +59,7 @@ export default function PostForm({post}) {
                         name="title"
                         value={data.title}
                         className="mt-1 block w-full text-xl h-16"
-                        placeholder="First name"
+                        placeholder="Title"
                         onChange={(e) => {
                             setData("title", e.target.value);
                         }}
@@ -68,16 +69,16 @@ export default function PostForm({post}) {
                 </div>
                 {/* Slug */}
                 <div>
-                    <Input
+                    <SlugInput
                         id="slug"
                         type="text"
                         name="slug"
                         value={data.slug}
-                        className="mt-1 block w-full"
                         placeholder="slug"
                         onChange={(e) => {
                             setData("slug", e.target.value);
                         }}
+                        baseUrl={route("blog.index")}
                     />
 
                     <InputError message={errors.slug} className="mt-2" />
