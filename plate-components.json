@@ -1,0 +1,15 @@
+{
+  "$schema": "https://ui.shadcn.com/schema.json",
+  "aliases": {
+    "components": "@/shadcn/plate-ui"
+  },
+  "rsc": false,
+  "style": "default",
+  "tailwind": {
+    "baseColor": "slate",
+    "config": "tailwind.config.js",
+    "css": "resources/css/shadcn.css",
+    "cssVariables": true,
+    "prefix": ""
+  }
+}

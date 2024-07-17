@@ -17,6 +17,7 @@ import {
     SelectValue,
 } from "@/shadcn/ui/select";
 import SlugInput from "../SlugInput";
+import PlateEditor from "../plate-js/PlateEditor";
 
 export default function PostForm({post}) {
     const { data, setData, post: postAction, processing, errors, reset } = useForm({
@@ -85,7 +86,8 @@ export default function PostForm({post}) {
                 </div>
                 <div>
                     <Label htmlFor="body">Body</Label>
-                    <EditorInput
+                    <PlateEditor />
+                    {/* <EditorInput
                         id="body"
                         name="body"
                         value={data.body}
@@ -93,7 +95,7 @@ export default function PostForm({post}) {
                         onChange={(d) => {
                             setData("body", d);
                         }}
-                    />
+                    /> */}
 
                     <InputError message={errors.body} className="mt-2" />
                 </div>
