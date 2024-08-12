@@ -13,6 +13,12 @@ class Page extends Model
 
     protected $guarded = ['id'];
 
+    protected function casts() {
+        return [
+            'puck_body' => 'json'
+        ];
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class);

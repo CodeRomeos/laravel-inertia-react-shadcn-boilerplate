@@ -18,7 +18,11 @@ trait ActivityLoggable {
         ->logExcept(['password'])
         ->setDescriptionForEvent(function(string $eventName) use($user, $title, $modelName) {
             $eventName = ucwords($eventName);
-            return "{$eventName} - {$modelName} - {$title} (#{$this->id}). By User : {$user->full_name} (#{$user->id}).";
+            if($user) {
+                return "{$eventName} - {$modelName} - {$title} (#{$this->id}). By User : {$user->full_name} (#{$user->id}).";
+            }
+
+            return "{$eventName} - {$modelName} - {$title} (#{$this->id}).";
         });
     }
 }

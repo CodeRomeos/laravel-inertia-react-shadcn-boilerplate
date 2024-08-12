@@ -17,12 +17,14 @@ import {
     SelectValue,
 } from "@/shadcn/ui/select";
 import SlugInput from "../SlugInput";
+import { PuckEditor } from "../Puck/PuckEditor";
 
 export default function PageForm({page, personTitles}) {
     const { data, setData, post, processing, errors, reset } = useForm({
         title: page ? page?.title : '',
         slug: page ? page?.slug : '',
         body: page ? page?.body : '',
+        puck_body: page ? page?.puck_body : '',
         status: page ? page?.status : 0,
         meta_title: page ? page?.meta_title : '',
         meta_description: page ? page?.meta_description : '',
@@ -84,7 +86,12 @@ export default function PageForm({page, personTitles}) {
                 </div>
                 <div>
                     <Label htmlFor="body">Body</Label>
-                    <EditorInput
+                    <PuckEditor value={data.puck_body} onPublish={(d) => {
+                        setData("puck_body", d);
+                        post(route("admin.pages.update", { id: page.id }));
+                        // submit();
+                    }} />
+                    {/* <EditorInput
                         id="body"
                         name="body"
                         value={data.body}
@@ -92,7 +99,7 @@ export default function PageForm({page, personTitles}) {
                         onChange={(d) => {
                             setData("body", d);
                         }}
-                    />
+                    /> */}
 
                     <InputError message={errors.body} className="mt-2" />
                 </div>
