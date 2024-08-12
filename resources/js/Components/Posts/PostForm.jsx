@@ -85,7 +85,7 @@ export default function PostForm({post}) {
                 </div>
                 <div>
                     <Label htmlFor="body">Body</Label>
-                    <EditorInput
+                    {/* <EditorInput
                         id="body"
                         name="body"
                         value={data.body}
@@ -93,7 +93,7 @@ export default function PostForm({post}) {
                         onChange={(d) => {
                             setData("body", d);
                         }}
-                    />
+                    /> */}
 
                     <InputError message={errors.body} className="mt-2" />
                 </div>
