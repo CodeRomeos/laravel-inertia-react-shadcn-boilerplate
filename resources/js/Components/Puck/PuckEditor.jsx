@@ -2,7 +2,7 @@ import { Puck } from "@measured/puck";
 import "@measured/puck/puck.css";
 import { config } from './config';
 import { Button } from "@/shadcn/ui/button";
-import { MonitorIcon, SmartphoneIcon, TabletSmartphone } from "lucide-react";
+import { MonitorIcon, SmartphoneIcon, TabletIcon, TabletSmartphone } from "lucide-react";
 
 
 export const overrides = {
@@ -16,7 +16,7 @@ export const overrides = {
 
 export const viewports = [
     {
-        width: 360,
+        width: 400,
         height: 400,
         icon: <SmartphoneIcon />,
         label: "Small",
@@ -24,7 +24,7 @@ export const viewports = [
     {
         width: 768,
         height: "600",
-        icon: <TabletSmartphone />,
+        icon: <TabletIcon />,
         label: "Medium",
     },
     {

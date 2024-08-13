@@ -28,6 +28,9 @@ export default function PuckPageForm({ page, personTitles }) {
     const formEl = useRef(null);
     const [showVisualEditor, showVisualEditorSet] = React.useState(false);
     const [scale, scaleSet] = React.useState(1);
+
+    const [puckTabValue, puckTabValueSet] = React.useState('blocks');
+
     const [selectedViewport, selectedViewportSet] = React.useState(viewports[2]);
     const { data, setData, post, processing, errors, reset } = useForm({
         title: page ? page?.title : "",
@@ -65,6 +68,7 @@ export default function PuckPageForm({ page, personTitles }) {
                 data={data.puck_body || {}}
                 headerTitle={data.title ?? "Page Builder"}
                 onChange={(d) => {
+                    puckTabValueSet('fields');
                     setData("puck_body", d);
                 }}
                 iframe={{
@@ -107,9 +111,9 @@ export default function PuckPageForm({ page, personTitles }) {
                                     />
                                 </div>
                             </div>
-                            <div className="">
+                            <div className="bg-gray-100 p-4 rounded-md">
                                 {/* Responsive buttons */}
-                                <div className="h-10">
+                                <div className="pb-4">
                                     <div className="flex items-center justify-center gap-2">
                                         {viewports.map((viewport) => (
                                             <Button
@@ -129,13 +133,13 @@ export default function PuckPageForm({ page, personTitles }) {
                                     </div>
                                 </div>
                                 <div className="h-screen overflow-y-auto py-4">
-                                    <div className="row-span-11 flex items-center justify-center">
+                                    <div className="flex items-center justify-center">
                                         <div
-                                            className="h-full "
+                                            className="h-full border bg-white min-h-96"
                                             style={{
-                                                transform: `scale(${scale})`,
+                                                // transform: `scale(${scale})`,
                                                 width: selectedViewport.width,
-                                                height: "100%",
+
                                             }}
                                         >
                                             <Puck.Preview />
@@ -143,38 +147,79 @@ export default function PuckPageForm({ page, personTitles }) {
                                     </div>
                                 </div>
                             </div>
+                            <div className="space-y-4">
+                                <div>
+                                    <Label htmlFor="meta_title">
+                                        Meta Title
+                                    </Label>
+                                    <Input
+                                        id="meta_title"
+                                        type="text"
+                                        name="meta_title"
+                                        value={data.meta_title}
+                                        className="mt-1 block w-full"
+                                        placeholder="Meta title"
+                                        onChange={(e) => {
+                                            setData(
+                                                "meta_title",
+                                                e.target.value
+                                            );
+                                        }}
+                                    />
+
+                                    <InputError
+                                        message={errors.meta_title}
+                                        className="mt-2"
+                                    />
+                                </div>
+                                <div>
+                                    <Label htmlFor="meta_description">
+                                        Meta description
+                                    </Label>
+                                    <Input
+                                        id="meta_description"
+                                        type="text"
+                                        name="meta_description"
+                                        value={data.meta_description}
+                                        className="mt-1 block w-full"
+                                        placeholder="Meta description"
+                                        onChange={(e) => {
+                                            setData(
+                                                "meta_description",
+                                                e.target.value
+                                            );
+                                        }}
+                                    />
+
+                                    <InputError
+                                        message={errors.meta_description}
+                                        className="mt-2"
+                                    />
+                                </div>
+                            </div>
                         </div>
                         <div className="col-span-3 space-y-4">
-                            <Tabs
-                                defaultValue="publish"
-                                className="border p-4 rounded-md"
-                            >
-                                <TabsList className="grid grid-cols-2">
-                                    <TabsTrigger value="publish">
-                                        Publish
-                                    </TabsTrigger>
-                                    <TabsTrigger value="meta">Meta</TabsTrigger>
-                                </TabsList>
-                                <TabsContent value="publish">
-                                    {/* Slug */}
-                                    <div>
-                                        <SlugInput
-                                            id="slug"
-                                            type="text"
-                                            name="slug"
-                                            value={data.slug}
-                                            placeholder="slug"
-                                            onChange={(e) => {
-                                                setData("slug", e.target.value);
-                                            }}
-                                            baseUrl={route("homepage")}
-                                        />
-                                        <InputError
-                                            message={errors.slug}
-                                            className="mt-2"
-                                        />
-                                    </div>
-                                    <div>
+                            <div className="space-y-4">
+                                {/* Slug */}
+                                <div>
+                                    <SlugInput
+                                        id="slug"
+                                        type="text"
+                                        name="slug"
+                                        value={data.slug}
+                                        placeholder="slug"
+                                        onChange={(e) => {
+                                            setData("slug", e.target.value);
+                                        }}
+                                        baseUrl={route("homepage")}
+                                    />
+                                    <InputError
+                                        message={errors.slug}
+                                        className="mt-2"
+                                    />
+                                </div>
+                                <div className="flex items-end justify-between gap-4">
+                                    <div className="w-full">
                                         <Label htmlFor="status">Status</Label>
                                         <Select
                                             defaultValue={`${data.status}`}
@@ -202,77 +247,35 @@ export default function PuckPageForm({ page, personTitles }) {
                                             className="mt-2"
                                         />
                                     </div>
-                                </TabsContent>
-                                <TabsContent value="meta">
                                     <div>
-                                        <Label htmlFor="meta_title">
-                                            Meta Title
-                                        </Label>
-                                        <Input
-                                            id="meta_title"
-                                            type="text"
-                                            name="meta_title"
-                                            value={data.meta_title}
-                                            className="mt-1 block w-full"
-                                            placeholder="Meta title"
-                                            onChange={(e) => {
-                                                setData(
-                                                    "meta_title",
-                                                    e.target.value
-                                                );
-                                            }}
-                                        />
-
-                                        <InputError
-                                            message={errors.meta_title}
-                                            className="mt-2"
-                                        />
+                                        <LoadingButton
+                                            loading={processing}
+                                            className="w-28"
+                                            onClick={submit}
+                                        >
+                                            Save
+                                        </LoadingButton>
                                     </div>
-                                    <div>
-                                        <Label htmlFor="meta_description">
-                                            Meta description
-                                        </Label>
-                                        <Input
-                                            id="meta_description"
-                                            type="text"
-                                            name="meta_description"
-                                            value={data.meta_description}
-                                            className="mt-1 block w-full"
-                                            placeholder="Meta description"
-                                            onChange={(e) => {
-                                                setData(
-                                                    "meta_description",
-                                                    e.target.value
-                                                );
-                                            }}
-                                        />
-
-                                        <InputError
-                                            message={errors.meta_description}
-                                            className="mt-2"
-                                        />
-                                    </div>
-                                </TabsContent>
-                            </Tabs>
-
-                            <LoadingButton
-                                loading={processing}
-                                className="w-[260px]"
-                                onClick={submit}
-                            >
-                                Save
-                            </LoadingButton>
-                            <Tabs defaultValue="components">
-                                <TabsList className="grid grid-cols-2">
-                                    <TabsTrigger value="components">
-                                        Components
+                                </div>
+                            </div>
+                            <Tabs defaultValue="blocks" value={puckTabValue} onValueChange={puckTabValueSet}>
+                                <TabsList className="grid grid-cols-3">
+                                    <TabsTrigger value="fields">
+                                        Fields
+                                    </TabsTrigger>
+                                    <TabsTrigger value="blocks">
+                                        Blocks
                                     </TabsTrigger>
                                     <TabsTrigger value="outline">
                                         Outline
                                     </TabsTrigger>
                                 </TabsList>
-                                <TabsContent value="components">
-                                    <Puck.Fields />
+                                <TabsContent value="fields">
+                                    <div className="bg-gray-100">
+                                        <Puck.Fields />
+                                    </div>
+                                </TabsContent>
+                                <TabsContent value="blocks">
                                     <Puck.Components />
                                 </TabsContent>
                                 <TabsContent value="outline">
