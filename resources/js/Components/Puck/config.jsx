@@ -33,6 +33,15 @@ export const config = {
         typography: {
             components: ["Heading", "Paragraph"],
         },
+        editors: {
+            components: ["WYSIWYG", "HTMLCodeEditor"],
+        },
+        layouts: {
+            components: ["Flex", "Columns"],
+        },
+        blocks: {
+            components: ["Card", "ButtonGroup"],
+        },
     },
     components: {
         Flex,

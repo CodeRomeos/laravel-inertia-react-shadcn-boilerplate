@@ -1,22 +1,17 @@
 /* eslint-disable @next/next/no-img-element */
 import React from "react";
-import { Autofield } from "@measured/puck";
-import { marginFields, paddingFields } from "./CommonBlockProps";
 import {
     Dialog,
     DialogContent,
-    DialogDescription,
-    DialogFooter,
     DialogHeader,
     DialogTitle,
     DialogTrigger,
 } from "@/shadcn/ui/dialog";
-import SmallEditorInput from "@/Components/SmallEditorInput";
 import { Button } from "@/shadcn/ui/button";
 import HTMLCodeEditorInput from "@/Components/HTMLCodeEditorInput";
 
 export const HTMLCodeEditor = {
-    label: "HTMLCodeEditor",
+    label: "HTML",
     fields: {
         htmlContent: {
             type: "custom",
@@ -47,7 +42,8 @@ export const HTMLCodeEditor = {
         },
     },
     defaultProps: {
-        htmlContent: "<div></div>",
+        htmlContent:
+            "<div><em>Lorem ipsum, dolor sit amet consectetur adipisicing elit.</em></div>",
     },
     render: ({ htmlContent, puck }) => {
         return (

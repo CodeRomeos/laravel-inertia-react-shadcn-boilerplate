@@ -139,7 +139,6 @@ export default function PuckPageForm({ page, personTitles }) {
                                             style={{
                                                 // transform: `scale(${scale})`,
                                                 width: selectedViewport.width,
-
                                             }}
                                         >
                                             <Puck.Preview />
@@ -258,7 +257,8 @@ export default function PuckPageForm({ page, personTitles }) {
                                     </div>
                                 </div>
                             </div>
-                            <Tabs defaultValue="blocks" 
+                            <Tabs
+                                defaultValue="blocks"
                                 // value={puckTabValue} onValueChange={puckTabValueSet}
                             >
                                 <TabsList className="grid grid-cols-2">
@@ -277,11 +277,19 @@ export default function PuckPageForm({ page, personTitles }) {
                                         <Puck.Fields />
                                     </div>
                                 </TabsContent> */}
-                                <TabsContent value="blocks" className="space-y-4">
-                                    <div className="bg-gray-100">
+                                <TabsContent
+                                    value="blocks"
+                                    className="space-y-4"
+                                >
+                                    <div className="border rounded-md max-h-[380px] overflow-y-scroll">
                                         <Puck.Fields />
                                     </div>
-                                    <Puck.Components />
+                                    <div className="bg-slate-100 p-2">
+                                        <h5 className="m-2">Components</h5>
+                                        <div className="max-h-[480px] overflow-y-scroll">
+                                            <Puck.Components />
+                                        </div>
+                                    </div>
                                 </TabsContent>
                                 <TabsContent value="outline">
                                     <Puck.Outline />
