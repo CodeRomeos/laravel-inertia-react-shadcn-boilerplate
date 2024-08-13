@@ -5,6 +5,7 @@ import { Columns } from "./Blocks/Columns";
 import { Flex } from "./Blocks/Flex";
 import SiteFooter from "@/Layouts/SiteFooter";
 import { Heading } from "./Blocks/Heading";
+import { Paragraph } from "./Blocks/Paragraph";
 
 
 // Create Puck component config
@@ -35,15 +36,6 @@ export const config = {
         ButtonGroup,
         Card,
         Heading,
-        Paragraph: {
-            fields: {
-                children: {
-                    type: "textarea",
-                },
-            },
-            render: ({ children }) => {
-                return <p>{children}</p>;
-            },
-        },
+        Paragraph
     },
 };
