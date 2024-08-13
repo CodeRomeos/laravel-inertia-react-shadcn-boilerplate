@@ -4,6 +4,7 @@ import { Card } from "./Blocks/Card";
 import { Columns } from "./Blocks/Columns";
 import { Flex } from "./Blocks/Flex";
 import SiteFooter from "@/Layouts/SiteFooter";
+import { Heading } from "./Blocks/Heading";
 
 
 // Create Puck component config
@@ -25,7 +26,7 @@ export const config = {
     },
     categories: {
         typography: {
-            components: ["HeadingBlock", "ParagraphBlock"],
+            components: ["Heading", "Paragraph"],
         },
     },
     components: {
@@ -33,17 +34,8 @@ export const config = {
         Columns,
         ButtonGroup,
         Card,
-        HeadingBlock: {
-            fields: {
-                children: {
-                    type: "text",
-                },
-            },
-            render: ({ children }) => {
-                return <h1 className="text-3xl font-bold my-3">{children}</h1>;
-            },
-        },
-        ParagraphBlock: {
+        Heading,
+        Paragraph: {
             fields: {
                 children: {
                     type: "textarea",
