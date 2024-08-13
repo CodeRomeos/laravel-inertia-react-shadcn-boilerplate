@@ -6,6 +6,7 @@ import { Flex } from "./Blocks/Flex";
 import SiteFooter from "@/Layouts/SiteFooter";
 import { Heading } from "./Blocks/Heading";
 import { Paragraph } from "./Blocks/Paragraph";
+import { WYSIWYG } from "./Blocks/WYSIWYG";
 
 
 // Create Puck component config
@@ -36,6 +37,7 @@ export const config = {
         ButtonGroup,
         Card,
         Heading,
-        Paragraph
+        Paragraph,
+        WYSIWYG
     },
 };
