@@ -29,7 +29,7 @@ export default function PuckPageForm({ page, personTitles }) {
     const [showVisualEditor, showVisualEditorSet] = React.useState(false);
     const [scale, scaleSet] = React.useState(1);
 
-    const [puckTabValue, puckTabValueSet] = React.useState('blocks');
+    // const [puckTabValue, puckTabValueSet] = React.useState('blocks');
 
     const [selectedViewport, selectedViewportSet] = React.useState(viewports[2]);
     const { data, setData, post, processing, errors, reset } = useForm({
@@ -68,7 +68,7 @@ export default function PuckPageForm({ page, personTitles }) {
                 data={data.puck_body || {}}
                 headerTitle={data.title ?? "Page Builder"}
                 onChange={(d) => {
-                    puckTabValueSet('fields');
+                    // puckTabValueSet('fields');
                     setData("puck_body", d);
                 }}
                 iframe={{
@@ -135,7 +135,7 @@ export default function PuckPageForm({ page, personTitles }) {
                                 <div className="h-screen overflow-y-auto py-4">
                                     <div className="flex items-center justify-center">
                                         <div
-                                            className="h-full border bg-white min-h-96"
+                                            className="h-full border bg-white min-h-96 transition-all"
                                             style={{
                                                 // transform: `scale(${scale})`,
                                                 width: selectedViewport.width,
@@ -258,11 +258,13 @@ export default function PuckPageForm({ page, personTitles }) {
                                     </div>
                                 </div>
                             </div>
-                            <Tabs defaultValue="blocks" value={puckTabValue} onValueChange={puckTabValueSet}>
-                                <TabsList className="grid grid-cols-3">
-                                    <TabsTrigger value="fields">
+                            <Tabs defaultValue="blocks" 
+                                // value={puckTabValue} onValueChange={puckTabValueSet}
+                            >
+                                <TabsList className="grid grid-cols-2">
+                                    {/* <TabsTrigger value="fields">
                                         Fields
-                                    </TabsTrigger>
+                                    </TabsTrigger> */}
                                     <TabsTrigger value="blocks">
                                         Blocks
                                     </TabsTrigger>
@@ -270,12 +272,15 @@ export default function PuckPageForm({ page, personTitles }) {
                                         Outline
                                     </TabsTrigger>
                                 </TabsList>
-                                <TabsContent value="fields">
+                                {/* <TabsContent value="fields">
                                     <div className="bg-gray-100">
                                         <Puck.Fields />
                                     </div>
-                                </TabsContent>
-                                <TabsContent value="blocks">
+                                </TabsContent> */}
+                                <TabsContent value="blocks" className="space-y-4">
+                                    <div className="bg-gray-100">
+                                        <Puck.Fields />
+                                    </div>
                                     <Puck.Components />
                                 </TabsContent>
                                 <TabsContent value="outline">
