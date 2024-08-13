@@ -7,6 +7,7 @@ import SiteFooter from "@/Layouts/SiteFooter";
 import { Heading } from "./Blocks/Heading";
 import { Paragraph } from "./Blocks/Paragraph";
 import { WYSIWYG } from "./Blocks/WYSIWYG";
+import { HTMLCodeEditor } from "./Blocks/HTMLCodeEditor";
 
 
 // Create Puck component config
@@ -19,11 +20,13 @@ export const config = {
         //     meta_description: {type: "textarea"},
         // },
         render: ({ children }) => {
-            return <div className="">
-                {/* <Header /> */}
-                {children}
-                {/* <SiteFooter /> */}
-            </div>;
+            return (
+                <div className="">
+                    {/* <Header /> */}
+                    {children}
+                    {/* <SiteFooter /> */}
+                </div>
+            );
         },
     },
     categories: {
@@ -38,6 +41,7 @@ export const config = {
         Card,
         Heading,
         Paragraph,
-        WYSIWYG
+        WYSIWYG,
+        HTMLCodeEditor,
     },
 };
