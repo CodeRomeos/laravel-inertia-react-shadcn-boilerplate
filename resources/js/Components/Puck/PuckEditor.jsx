@@ -13,13 +13,27 @@ const overrides = {
     ),
 };
 
-export function PuckEditor({ onPublish, value = {}, ...any }) {
+export function PuckEditor({ value = {}, ...any }) {
     return (
-        <Puck
-            config={config}
-            overrides={overrides}
-            data={value || {}}
-            {...any}
-        />
+        <Puck config={config} overrides={overrides} data={value || {}} {...any}>
+            <div
+                style={{
+                    display: "grid",
+                    gridTemplateColumns: "1fr 2fr",
+                    gridGap: 16,
+                }}
+            >
+
+                <div>
+                    {/* Render the drag-and-drop preview */}
+                    <Puck.Preview />
+                </div>
+                <div>
+                    {/* Render the component list */}
+                    <Puck.Components />
+                </div>
+            </div>
+        </Puck>
+        // <Puck config={config} overrides={overrides} data={value || {}} {...any}/>
     );
 }

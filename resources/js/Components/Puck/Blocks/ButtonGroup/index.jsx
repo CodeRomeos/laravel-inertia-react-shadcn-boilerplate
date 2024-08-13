@@ -3,6 +3,7 @@ import React from "react";
 import "./ButtonGroup.css";
 import { Button } from "@/shadcn/ui/button";
 import { Section } from "../../Components/Section";
+import { Link } from "@inertiajs/react";
 
 export const ButtonGroup = {
     label: "Button Group",
@@ -16,15 +17,28 @@ export const ButtonGroup = {
                 variant: {
                     type: "radio",
                     options: [
-                        { label: "primary", value: "primary" },
-                        { label: "secondary", value: "secondary" },
+                        { label: "Default", value: "default" },
+                        { label: "Outline", value: "outline" },
+                        { label: "Secondary", value: "secondary" },
+                        { label: "Danger", value: "destructive" },
+                        { label: "Ghost", value: "ghost" },
+                        { label: "Link", value: "link" },
+                    ],
+                },
+                size: {
+                    type: "radio",
+                    options: [
+                        { label: "Small", value: "sm" },
+                        { label: "Default", value: "default" },
+                        { label: "Large", value: "lg" },
                     ],
                 },
             },
             defaultItemProps: {
                 label: "Button",
                 href: "#",
-                variant: "primary",
+                variant: "default",
+                size: "default",
             },
         },
         align: {
@@ -36,7 +50,14 @@ export const ButtonGroup = {
         },
     },
     defaultProps: {
-        buttons: [{ label: "Learn more", href: "#", variant: "default" }],
+        buttons: [
+            {
+                label: "Learn more",
+                href: "#",
+                variant: "default",
+                size: "default",
+            },
+        ],
     },
     render: ({ align, buttons, puck }) => {
         return (
@@ -49,12 +70,12 @@ export const ButtonGroup = {
                     {buttons.map((button, i) => (
                         <Button
                             key={i}
-                            href={button.href}
+                            asChild
                             variant={button.variant}
-                            size="large"
+                            size={button.size}
                             tabIndex={puck.isEditing ? -1 : undefined}
                         >
-                            {button.label}
+                            <Link href={button.href}>{button.label}</Link>
                         </Button>
                     ))}
                 </div>
