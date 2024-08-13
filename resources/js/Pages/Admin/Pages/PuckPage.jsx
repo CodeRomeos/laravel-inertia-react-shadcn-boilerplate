@@ -31,9 +31,10 @@ import {
 import Screenshot from "@/Components/Screenshot";
 import Can from "@/Components/Can";
 import PageForm from "@/Components/Pages/PageForm";
+import { Puck } from "@measured/puck";
+import PuckPageForm from "@/Components/Pages/PuckPageForm";
 
-export default function Page({ page, personTitles }) {
-    
+export default function PuckPage({ page, personTitles }) {
     return (
         <TwoColumnLayout>
             <Head>
@@ -59,7 +60,9 @@ export default function Page({ page, personTitles }) {
                     </PageHeading.Title>
                     <PageHeading.Actions>
                         <Button asChild variant="outline">
-                            <Link href={route("admin.pages.index")}>Cancel</Link>
+                            <Link href={route("admin.pages.index")}>
+                                Cancel
+                            </Link>
                         </Button>
                         <Can permit="create pages">
                             <Button asChild>
@@ -108,42 +111,8 @@ export default function Page({ page, personTitles }) {
                     <div className="flex gap-4"></div>
                 </div>
             </TwoColumnLayout.Heading>
-            <TwoColumnLayout.Content>
-                <TwoColumnLayout.Main>
-                        <ShadcnCard
-                            className=""
-                            title="General"
-                            description={<></>}
-                        >
-                            <PageForm page={page}/>
-                        </ShadcnCard>
-                        <TwoColumnLayout.Actions>
-                        </TwoColumnLayout.Actions>
-                </TwoColumnLayout.Main>
-                <TwoColumnLayout.Aside>
-                    <Screenshot
-                        screenshotName={`page_${page?.title}`}
-                        moduleName="pages"
-                    >
-                        {page && (
-                            <ShadcnCard title={page?.full_name}>
-                                <TextMuted className="inline-block">
-                                    Created at
-                                </TextMuted>
-                                <TextLarge className={`leading-[0]`}>
-                                    {page.created_at_string}
-                                </TextLarge>
-                                <TextMuted className="inline-block pt-2">
-                                    Last Updated
-                                </TextMuted>
-                                <TextLarge className={`leading-[0]`}>
-                                    {page.updated_at_string}
-                                </TextLarge>
-                            </ShadcnCard>
-                        )}
-                    </Screenshot>
-                </TwoColumnLayout.Aside>
-            </TwoColumnLayout.Content>
+
+            <PuckPageForm page={page} />
         </TwoColumnLayout>
     );
 }

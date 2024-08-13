@@ -21,7 +21,7 @@ class PageController extends Controller
 
     public function create(CountryRepository $countryRepository)
     {
-        return Inertia::render('Admin/Pages/Page', ['personTitles' => PersonTitle::cases(), 'phoneCodes' => $countryRepository->getPhoneCodeOptions()]);
+        return Inertia::render('Admin/Pages/PuckPage', ['personTitles' => PersonTitle::cases(), 'phoneCodes' => $countryRepository->getPhoneCodeOptions()]);
     }
 
     public function edit($id, CountryRepository $countryRepository)
@@ -29,7 +29,7 @@ class PageController extends Controller
         $page = Page::findOrFail($id);
         $pageResource = new PageResource($page);
         $pageResource->wrap(null);
-        return Inertia::render('Admin/Pages/Page', ['page' => $pageResource, 'personTitles' => PersonTitle::cases(), 'phoneCodes' => $countryRepository->getPhoneCodeOptions()]);
+        return Inertia::render('Admin/Pages/PuckPage', ['page' => $pageResource, 'personTitles' => PersonTitle::cases(), 'phoneCodes' => $countryRepository->getPhoneCodeOptions()]);
     }
 
     public function store(Request $request)
