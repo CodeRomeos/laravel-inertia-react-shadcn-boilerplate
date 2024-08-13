@@ -4,7 +4,7 @@ import { config } from './config';
 import { Button } from "@/shadcn/ui/button";
 
 
-const overrides = {
+export const overrides = {
     headerActions: ({ children }) => (
         <>
             {children}

@@ -31,6 +31,7 @@ import {
 import Screenshot from "@/Components/Screenshot";
 import Can from "@/Components/Can";
 import PageForm from "@/Components/Pages/PageForm";
+import { Puck } from "@measured/puck";
 
 export default function Page({ page, personTitles }) {
     
@@ -108,42 +109,9 @@ export default function Page({ page, personTitles }) {
                     <div className="flex gap-4"></div>
                 </div>
             </TwoColumnLayout.Heading>
-            <TwoColumnLayout.Content>
-                <TwoColumnLayout.Main>
-                        <ShadcnCard
-                            className=""
-                            title="General"
-                            description={<></>}
-                        >
-                            <PageForm page={page}/>
-                        </ShadcnCard>
-                        <TwoColumnLayout.Actions>
-                        </TwoColumnLayout.Actions>
-                </TwoColumnLayout.Main>
-                <TwoColumnLayout.Aside>
-                    <Screenshot
-                        screenshotName={`page_${page?.title}`}
-                        moduleName="pages"
-                    >
-                        {page && (
-                            <ShadcnCard title={page?.full_name}>
-                                <TextMuted className="inline-block">
-                                    Created at
-                                </TextMuted>
-                                <TextLarge className={`leading-[0]`}>
-                                    {page.created_at_string}
-                                </TextLarge>
-                                <TextMuted className="inline-block pt-2">
-                                    Last Updated
-                                </TextMuted>
-                                <TextLarge className={`leading-[0]`}>
-                                    {page.updated_at_string}
-                                </TextLarge>
-                            </ShadcnCard>
-                        )}
-                    </Screenshot>
-                </TwoColumnLayout.Aside>
-            </TwoColumnLayout.Content>
+
+                <PageForm page={page} />
+
         </TwoColumnLayout>
     );
 }
