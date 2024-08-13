@@ -2,7 +2,7 @@
 import React from "react";
 import "./ButtonGroup.css";
 import { Button } from "@/shadcn/ui/button";
-import { Section } from "../../components/Section";
+import { Section } from "../../Components/Section";
 
 export const ButtonGroup = {
     label: "Button Group",
@@ -41,9 +41,9 @@ export const ButtonGroup = {
     render: ({ align, buttons, puck }) => {
         return (
             <Section
-                className={
+                className={`${
                     align === "center" ? "ButtonGroup-center" : "ButtonGroup"
-                }
+                } p-3`}
             >
                 <div className="ButtonGroup-actions">
                     {buttons.map((button, i) => (

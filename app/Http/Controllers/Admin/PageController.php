@@ -56,6 +56,7 @@ class PageController extends Controller
             'title' => 'required|string',
             'slug' => 'required|string|unique:pages,slug,' . $id,
             'body' => 'nullable',
+            'puck_body' => 'nullable',
             'status' => 'required|in:0,1',
             'meta_title' => 'nullable|string',
             'meta_description' => 'nullable|string'
@@ -63,6 +64,7 @@ class PageController extends Controller
         $page = Page::findOrFail($id);
         $page->fill($request->all());
         $page->save();
+        $page->refresh();
         return redirect()->route('admin.pages.edit', $id)->with(['flash_type' => 'success', 'flash_message' => 'Page updated successfully', 'flash_description' => $page->title]);
     }
 }

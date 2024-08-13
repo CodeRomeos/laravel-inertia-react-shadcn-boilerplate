@@ -1,7 +1,7 @@
 import React from "react";
 import "./Columns.css";
 import { DropZone } from "@measured/puck";
-import { Section } from "../../components/Section";
+import { Section } from "../../Components/Section";
 
 
 export const Columns = {
@@ -40,7 +40,6 @@ export const Columns = {
         columns: [{}, {}],
     },
     render: ({ columns, distribution }) => {
-        console.log({columns})
         return (
             <Section>
                 <div

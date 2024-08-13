@@ -1,3 +1,8 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import url('/shadcn.css');
+
 .ButtonGroup-actions {
   display: flex;
   gap: 24px;
