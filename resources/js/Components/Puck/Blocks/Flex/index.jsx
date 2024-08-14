@@ -30,11 +30,11 @@ export const Flex = {
     render: ({ items, minItemWidth }) => {
         return (
             <Section>
-                <div className="Flex">
+                <div className="flexblock">
                     {items.map((item, idx) => (
                         <div
                             key={idx}
-                            className="Flex-item"
+                            className="flexblock-item"
                             style={{
                                 minWidth: item.minItemWidth || minItemWidth,
                             }}
