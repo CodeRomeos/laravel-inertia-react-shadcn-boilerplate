@@ -16,7 +16,7 @@ import { Button } from "@/shadcn/ui/button";
 import TiptapEditor from "@/Components/TipTap/TipTapEditor";
 
 export const WYSIWYG2 = {
-    label: "WYSIWYG2",
+    label: "WYSIWYG2 (With Table)",
     fields: {
         wysiwygContent: {
             type: "custom",

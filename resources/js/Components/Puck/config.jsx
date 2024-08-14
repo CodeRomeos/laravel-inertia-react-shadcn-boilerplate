@@ -35,7 +35,7 @@ export const config = {
             components: ["Heading", "Paragraph"],
         },
         editors: {
-            components: ["WYSIWYG", "HTMLCodeEditor"],
+            components: ["WYSIWYG", "HTMLCodeEditor", "WYSIWYG2"],
         },
         layouts: {
             components: ["Flex", "Columns"],

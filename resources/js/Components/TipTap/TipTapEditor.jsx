@@ -18,7 +18,7 @@ import { AlignCenterIcon, AlignJustifyIcon, AlignLeftIcon, AlignRightIcon, BoldI
 
 
 export const tableHTML = `
-  <table style="width:100%">
+  <table style="width:100%" class="tiptap-table">
     <tr>
       <th>Firstname</th>
       <th>Lastname</th>
@@ -41,6 +41,26 @@ export const tableHTML = `
     </tr>
   </table>
 `;
+
+
+const CustomTable = Table.extend({
+    addAttributes() {
+        return {
+            // extend the existing attributes …
+            ...this.parent?.(),
+
+            // and add a new one …
+            class: {
+                default: null,
+                renderHTML: (attributes) => {
+                    return {
+                        "class": 'tiptap-table ' + attributes.class,
+                    };
+                },
+            },
+        };
+    },
+});
 
 const MenuBar = ({ editor }) => {
     if (!editor) {
@@ -356,12 +376,12 @@ const TiptapEditor = ({ content = "<p>Hello World!</p>", onChange }) => {
                 types: ["heading", "paragraph"],
             }),
             Highlight,
-            Table.configure({
+            CustomTable.configure({
                 resizable: true,
             }),
             TableRow,
             TableHeader,
-            TableCell
+            TableCell,
         ],
         content: content,
         onUpdate: ({ editor }) => {
