@@ -121,3 +121,101 @@ export const textColorField = {
         };
     },
 };
+
+export const borderField = {
+    fields: {
+        label: "Border",
+        getItemSummary: (item) => item.label || "Border",
+        type: "object",
+        objectFields: {
+            width: { type: "number" },
+            color: {
+                label: "Color",
+                type: "custom",
+                render: ({ name, onChange, value }) => (
+                    <FieldLabel label="Color">
+                        <Input
+                            type="color"
+                            defaultValue={value}
+                            name={name}
+                            onChange={(e) => onChange(e.currentTarget.value)}
+                        />
+                    </FieldLabel>
+                ),
+            },
+            style: {
+                type: "select",
+                options: [
+                    { label: "Solid", value: "solid" },
+                    { label: "Dashed", value: "dashed" },
+                    { label: "Dotted", value: "dotted" },
+                ],
+            },
+        },
+    },
+    defaultProps: {
+        width: 0,
+        color: "#ffffff",
+        style: "solid",
+    },
+
+    style: (b) => {
+        b = b ? b : { width: 0, color: "#ffffff", style: "solid" };
+        return {
+            borderWidth: `${b.width}px`,
+            borderStyle: b.style,
+            borderColor: b.color,
+        };
+    },
+};
+
+export const bgColorField = {
+    fields: {
+        type: "custom",
+        label: "Background Color",
+        render: ({ name, label, onChange, value }) => (
+            <FieldLabel label={label}>
+                <Input
+                    type="color"
+                    defaultValue={value}
+                    name={name}
+                    onChange={(e) => onChange(e.currentTarget.value)}
+                />
+            </FieldLabel>
+        ),
+    },
+    defaultProps: "#ffffff",
+
+    style: (c) => {
+        return {
+            backgroundColor: c,
+        };
+    },
+};
+
+export const borderRadiusField = {
+    fields: {
+        type: "select",
+        label: "Border Radius",
+        options: [
+            { label: "None", value: "none" },
+            { label: "5%", value: "5%" },
+            { label: "10%", value: "10%" },
+            { label: "15%", value: "15%" },
+            { label: "20%", value: "20%" },
+            { label: "25%", value: "25%" },
+            { label: "30%", value: "30%" },
+            { label: "35%", value: "35%" },
+            { label: "40%", value: "40%" },
+            { label: "45%", value: "45%" },
+            { label: "50%", value: "50%" },
+        ],
+    },
+    defaultProps: "none",
+
+    style: (c) => {
+        return {
+            borderRadius: `${c}`,
+        };
+    },
+};
