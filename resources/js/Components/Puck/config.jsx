@@ -10,6 +10,7 @@ import { WYSIWYG } from "./Blocks/WYSIWYG";
 import { HTMLCodeEditor } from "./Blocks/HTMLCodeEditor";
 import { WYSIWYG2 } from "./Blocks/WYSIWYG2";
 import { Image } from "./Blocks/Image";
+import { VerticalSpace } from "./Blocks/VerticalSpace";
 
 
 // Create Puck component config
@@ -42,7 +43,7 @@ export const config = {
             components: ["Flex", "Columns"],
         },
         blocks: {
-            components: ["Card", "ButtonGroup", "Image"],
+            components: ["Card", "ButtonGroup", "Image", "VerticalSpace"],
         },
     },
     components: {
@@ -55,6 +56,7 @@ export const config = {
         WYSIWYG,
         WYSIWYG2,
         HTMLCodeEditor,
-        Image
+        Image,
+        VerticalSpace
     },
 };

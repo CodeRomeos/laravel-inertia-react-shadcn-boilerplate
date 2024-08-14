@@ -1,6 +1,29 @@
 import { Input } from "@/shadcn/ui/input";
 import { FieldLabel } from "@measured/puck";
 
+export const spacingOptions = [
+    { label: "8px", value: "8px" },
+    { label: "16px", value: "16px" },
+    { label: "24px", value: "24px" },
+    { label: "32px", value: "32px" },
+    { label: "40px", value: "40px" },
+    { label: "48px", value: "48px" },
+    { label: "56px", value: "56px" },
+    { label: "64px", value: "64px" },
+    { label: "72px", value: "72px" },
+    { label: "80px", value: "80px" },
+    { label: "88px", value: "88px" },
+    { label: "96px", value: "96px" },
+    { label: "104px", value: "104px" },
+    { label: "112px", value: "112px" },
+    { label: "120px", value: "120px" },
+    { label: "128px", value: "128px" },
+    { label: "136px", value: "136px" },
+    { label: "144px", value: "144px" },
+    { label: "152px", value: "152px" },
+    { label: "160px", value: "160px" },
+];
+
 // Tailwind margin/paddings values
 export const marginPaddingValues = [
     0, 0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 16, 20, 24, 28, 32, 36, 40, 44, 48, 52, 56, 60, 64, 72, 80, 96
