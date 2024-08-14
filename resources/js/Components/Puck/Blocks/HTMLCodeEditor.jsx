@@ -43,7 +43,9 @@ export const HTMLCodeEditor = {
     },
     defaultProps: {
         htmlContent:
-            "<div><em>Lorem ipsum, dolor sit amet consectetur adipisicing elit.</em></div>",
+`<div>
+    <em>Lorem ipsum, dolor sit amet consectetur adipisicing elit.</em>
+</div>`,
     },
     render: ({ htmlContent, puck }) => {
         return (

@@ -212,3 +212,28 @@ table.tiptap-table {
       width: 4px;
     }
   }
+  
+  
+.html-code-editor {
+  counter-reset: line;
+  border: 1px solid #ced4da;
+}
+
+.html-code-editor .codeArea {
+  outline: none;
+  padding-left: 60px !important;
+}
+
+
+.html-code-editor pre {
+  padding-left: 60px !important;
+}
+
+.html-code-editor .editorLineNumber {
+  position: absolute;
+  left: 0px;
+  color: #cccccc;
+  text-align: right;
+  width: 40px;
+  font-weight: 100;
+}
