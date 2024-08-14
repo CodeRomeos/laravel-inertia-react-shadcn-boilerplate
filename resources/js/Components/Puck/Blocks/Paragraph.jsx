@@ -1,12 +1,12 @@
 /* eslint-disable @next/next/no-img-element */
 import React from "react";
 import { Autofield } from "@measured/puck";
-import { marginFields, paddingFields } from "./CommonBlockProps";
+import { marginFields, paddingFields, textColorField } from "./CommonBlockProps";
 
 export const Paragraph = {
     label: "Paragraph",
     fields: {
-        body: { type: "textarea", autosize: true, name: 'body', id: 'body' },
+        body: { type: "textarea", autosize: true, name: "body", id: "body" },
         align: {
             type: "radio",
             options: [
@@ -16,19 +16,26 @@ export const Paragraph = {
             ],
         },
 
-        margins: marginFields.fields,
-        paddings: paddingFields.fields,
+        margin: marginFields.fields,
+        padding: paddingFields.fields,
+        textColor: textColorField.fields
     },
     defaultProps: {
         body: "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Iusto maiores excepturi delectus nam pariatur commodi libero, non impedit! Et labore ducimus perferendis placeat deserunt impedit fugiat. Reiciendis autem accusamus quam.",
         align: "left",
-        margins: marginFields.defaultProps,
-        paddings: paddingFields.defaultProps,
+        margin: marginFields.defaultProps,
+        padding: paddingFields.defaultProps,
+        textColor: textColorField.defaultProps
     },
-    render: ({ body, paddings, margins, align, puck }) => {
+    render: ({ body, padding, margin, align, textColor, puck }) => {
         return (
             <p
-                className={`text-${align} ${paddingFields.classNames(paddings)} ${marginFields.classNames(margins)}`}
+                className={`${align ? "text-" + align : ""} `}
+                style={{
+                    ...marginFields.style(margin),
+                    ...paddingFields.style(padding),
+                    ...textColorField.style(textColor),
+                }}
             >
                 {body}
             </p>

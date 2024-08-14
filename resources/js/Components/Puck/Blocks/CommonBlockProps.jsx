@@ -1,3 +1,6 @@
+import { Input } from "@/shadcn/ui/input";
+import { FieldLabel } from "@measured/puck";
+
 // Tailwind margin/paddings values
 export const marginPaddingValues = [
     0, 0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 16, 20, 24, 28, 32, 36, 40, 44, 48, 52, 56, 60, 64, 72, 80, 96
@@ -11,104 +14,87 @@ export const marginPaddingSelectOptions = marginPaddingValues.map((value) => ({
 
 export const marginFields = {
     fields: {
-        type: "array",
-        label: "Margins",
-        max: 1,
-        min: 1,
-        getItemSummary: (item) => item.label || "Set Margins",
-        arrayFields: {
-            top: {
-                label: "Top",
-                min: 0,
-                max: 100,
-                type: "select",
-                options: marginPaddingSelectOptions,
-            },
-            bottom: {
-                label: "Bottom",
-                min: 0,
-                max: 100,
-                type: "select",
-                options: marginPaddingSelectOptions,
-            },
-            left: {
-                label: "Left",
-                min: 0,
-                max: 100,
-                type: "select",
-                options: marginPaddingSelectOptions,
-            },
-            right: {
-                label: "Right",
-                min: 0,
-                max: 100,
-                type: "select",
-                options: marginPaddingSelectOptions,
-            },
+        getItemSummary: (item) => item.label || "Set Margin",
+        type: "object",
+        objectFields: {
+            top: { type: "number" },
+            bottom: { type: "number" },
+            left: { type: "number" },
+            right: { type: "number" },
         },
     },
-    defaultProps: [
-        {
-            top: 0,
-            bottom: 0,
-            left: 0,
-            right: 0,
-        },
-    ],
-    classNames: (ms) => {
-        const v = ms[0] ? ms[0] : { top: 0, bottom: 0, left: 0, right: 0 };
-        return `mt-${v.top} mb-${v.bottom} ml-${v.left} mr-${v.right}`;
+    defaultProps: {
+        top: 0,
+        bottom: 0,
+        left: 0,
+        right: 0,
+    },
+    classNames: (v) => {
+        v = v ? v : { top: 0, bottom: 0, left: 0, right: 0 };
+        return `mt-[${v.top}px] mb-[${v.bottom}px] ml-[${v.left}px] mr-[${v.right}px]`;
+    },
+    style: (v) => {
+        v = v ? v : { top: 0, bottom: 0, left: 0, right: 0 };
+        return {
+            marginTop: `${v.top}px`,
+            marginBottom: `${v.bottom}px`,
+            marginLeft: `${v.left}px`,
+            marginRight: `${v.right}px`,
+        };
     },
 };
 
 export const paddingFields = {
     fields: {
-        type: "array",
-        label: "Paddings",
-        max: 1,
-        min: 1,
-        getItemSummary: (item) => item.label || "Set Paddings",
-        arrayFields: {
-            top: {
-                label: "Top",
-                min: 0,
-                max: 100,
-                type: "select",
-                options: marginPaddingSelectOptions,
-            },
-            bottom: {
-                label: "Bottom",
-                min: 0,
-                max: 100,
-                type: "select",
-                options: marginPaddingSelectOptions,
-            },
-            left: {
-                label: "Left",
-                min: 0,
-                max: 100,
-                type: "select",
-                options: marginPaddingSelectOptions,
-            },
-            right: {
-                label: "Right",
-                min: 0,
-                max: 100,
-                type: "select",
-                options: marginPaddingSelectOptions,
-            },
+        getItemSummary: (item) => item.label || "Set Padding",
+        type: "object",
+        objectFields: {
+            top: { type: "number" },
+            bottom: { type: "number" },
+            left: { type: "number" },
+            right: { type: "number" },
         },
     },
-    defaultProps: [
-        {
-            top: 0,
-            bottom: 0,
-            left: 0,
-            right: 0,
-        },
-    ],
-    classNames: (ps) => {
-        const v = ps[0] ? ps[0] : { top: 0, bottom: 0, left: 0, right: 0 };
-        return `pt-${v.top} pb-${v.bottom} pl-${v.left} pr-${v.right}`;
+    defaultProps: {
+        top: 0,
+        bottom: 0,
+        left: 0,
+        right: 0,
+    },
+    classNames: (v) => {
+        v = v ? v : { top: 0, bottom: 0, left: 0, right: 0 };
+        return `pt-[${v.top}px] pb-[${v.bottom}px] pl-[${v.left}px] pr-[${v.right}px]`;
+    },
+    style: (v) => {
+        v = v ? v : { top: 0, bottom: 0, left: 0, right: 0 };
+        return {
+            paddingTop: `${v.top}px`,
+            paddingBottom: `${v.bottom}px`,
+            paddingLeft: `${v.left}px`,
+            paddingRight: `${v.right}px`,
+        };
+    },
+};
+
+export const textColorField = {
+    fields: {
+        type: "custom",
+        render: ({ name, onChange, value }) => (
+            <FieldLabel label="Color">
+                <Input
+                    type="color"
+                    defaultValue={value}
+                    name={name}
+                    onChange={(e) => onChange(e.currentTarget.value)}
+                />
+            </FieldLabel>
+        ),
+    },
+    defaultProps: "#000000",
+
+    style: (c) => {
+        return {
+            color: c,
+        };
     },
 };

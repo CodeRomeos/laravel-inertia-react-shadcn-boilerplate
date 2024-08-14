@@ -194,7 +194,7 @@ const MenuBar = ({ editor }) => {
                                 .run()
                         }
                     >
-                        <TableIcon className="h-4 w-4" />
+                        Insert Table
                     </ToggleGroupItem>
                     <ToggleGroupItem
                         value="insertHTMLTable"
