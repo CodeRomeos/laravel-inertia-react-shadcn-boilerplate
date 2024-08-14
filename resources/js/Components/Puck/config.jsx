@@ -8,6 +8,7 @@ import { Heading } from "./Blocks/Heading";
 import { Paragraph } from "./Blocks/Paragraph";
 import { WYSIWYG } from "./Blocks/WYSIWYG";
 import { HTMLCodeEditor } from "./Blocks/HTMLCodeEditor";
+import { WYSIWYG2 } from "./Blocks/WYSIWYG2";
 
 
 // Create Puck component config
@@ -51,6 +52,7 @@ export const config = {
         Heading,
         Paragraph,
         WYSIWYG,
+        WYSIWYG2,
         HTMLCodeEditor,
     },
 };

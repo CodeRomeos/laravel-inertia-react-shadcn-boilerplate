@@ -39,12 +39,15 @@ export default function SmallEditorInput({ value = "", onChange }) {
             onEditorStateChange={editorStateSet}
             toolbar={{
                 options: [
+                    "inline",
                     "fontSize",
                     "textAlign",
                     "colorPicker",
                     "link",
                     "embedded",
                     "emoji",
+                    "list",
+                    "image"
                 ],
             }}
         />
