@@ -20,16 +20,33 @@ import SlugInput from "../SlugInput";
 import { PuckEditor, viewports } from "../Puck/PuckEditor";
 import { config } from "../Puck/config";
 import { overrides } from "../Puck/PuckEditor";
-import { Puck } from "@measured/puck";
+import { Puck, usePuck } from "@measured/puck";
 import { LaptopIcon, SmartphoneIcon, TabletIcon } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/shadcn/ui/tabs";
 
+
+const PuckEvents = ({onSelect}) => {
+    const { appState, selectedItem } = usePuck();
+    const [currentSelectedItem, currentSelectedItemSet] = React.useState(null);
+    
+    React.useMemo(() => {
+        if (JSON.stringify(selectedItem) != JSON.stringify(currentSelectedItem)) {
+            currentSelectedItemSet(selectedItem);
+            onSelect(selectedItem);
+        }    
+    }, [selectedItem]);
+
+    return <></>;
+};
+
 export default function PuckPageForm({ page, personTitles }) {
+    
     const formEl = useRef(null);
     const [showVisualEditor, showVisualEditorSet] = React.useState(false);
     const [scale, scaleSet] = React.useState(1);
 
-    // const [puckTabValue, puckTabValueSet] = React.useState('blocks');
+    const [puckTabValue, puckTabValueSet] = React.useState('blocks');
+    const [selectedItem, selectedItemSet] = React.useState(null);
 
     const [selectedViewport, selectedViewportSet] = React.useState(viewports[2]);
     const { data, setData, post, processing, errors, reset } = useForm({
@@ -74,6 +91,11 @@ export default function PuckPageForm({ page, personTitles }) {
                 iframe={{
                     enabled: false,
                 }}
+                // dnd={{
+                //     onBeforeCapture: (a, b) => {
+                //         console.log("onBeforeCapture", a, b);
+                //     },
+                // }}
 
                 // onPublish={(d) => {
                 //     // submit form
@@ -85,6 +107,15 @@ export default function PuckPageForm({ page, personTitles }) {
                 //     );
                 // }}
             >
+                <PuckEvents
+                    onSelect={(item) => {
+                        if(JSON.stringify(item) != JSON.stringify(selectedItem)) {
+                            console.log(item);
+                            selectedItemSet(item);
+                            puckTabValueSet("fields");
+                        }
+                    }}
+                />
                 <div>
                     {/* First name & last name */}
                     <div className="grid grid-cols-12 gap-4">
@@ -259,12 +290,13 @@ export default function PuckPageForm({ page, personTitles }) {
                             </div>
                             <Tabs
                                 defaultValue="blocks"
-                                // value={puckTabValue} onValueChange={puckTabValueSet}
+                                value={puckTabValue}
+                                onValueChange={puckTabValueSet}
                             >
-                                <TabsList className="grid grid-cols-2">
-                                    {/* <TabsTrigger value="fields">
+                                <TabsList className="grid grid-cols-3">
+                                    <TabsTrigger value="fields">
                                         Fields
-                                    </TabsTrigger> */}
+                                    </TabsTrigger>
                                     <TabsTrigger value="blocks">
                                         Blocks
                                     </TabsTrigger>
@@ -272,21 +304,22 @@ export default function PuckPageForm({ page, personTitles }) {
                                         Outline
                                     </TabsTrigger>
                                 </TabsList>
-                                {/* <TabsContent value="fields">
-                                    <div className="bg-gray-100">
+                                <TabsContent value="fields">
+                                    <div className="border rounded-md max-h-[600px] overflow-y-scroll">
+                                        {selectedItem && <h4 className="p-4 text-lg">{selectedItem.type}</h4>}
                                         <Puck.Fields />
                                     </div>
-                                </TabsContent> */}
+                                </TabsContent>
                                 <TabsContent
                                     value="blocks"
                                     className="space-y-4"
                                 >
-                                    <div className="border rounded-md max-h-[380px] overflow-y-scroll">
+                                    {/* <div className="border rounded-md max-h-[380px] overflow-y-scroll">
                                         <Puck.Fields />
-                                    </div>
+                                    </div> */}
                                     <div className="bg-slate-100 p-2">
                                         <h5 className="m-2">Components</h5>
-                                        <div className="max-h-[480px] overflow-y-scroll">
+                                        <div className="max-h-[600px] overflow-y-scroll">
                                             <Puck.Components />
                                         </div>
                                     </div>
