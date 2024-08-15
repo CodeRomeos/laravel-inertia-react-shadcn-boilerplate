@@ -30,11 +30,14 @@ const PuckEvents = ({onSelect}) => {
     const [currentSelectedItem, currentSelectedItemSet] = React.useState(null);
     
     React.useMemo(() => {
-        if (JSON.stringify(selectedItem) != JSON.stringify(currentSelectedItem)) {
+        if (
+            selectedItem != null && JSON.stringify(selectedItem) !=
+            JSON.stringify(currentSelectedItem)
+        ) {
             currentSelectedItemSet(selectedItem);
             onSelect(selectedItem);
-        }    
-    }, [selectedItem]);
+        }
+    }, [JSON.stringify(currentSelectedItem) != JSON.stringify(selectedItem)]);
 
     return <></>;
 };
@@ -109,8 +112,10 @@ export default function PuckPageForm({ page, personTitles }) {
             >
                 <PuckEvents
                     onSelect={(item) => {
-                        if(JSON.stringify(item) != JSON.stringify(selectedItem)) {
-                            console.log(item);
+                        if (
+                            item != null && JSON.stringify(item) !=
+                            JSON.stringify(selectedItem)
+                        ) {
                             selectedItemSet(item);
                             puckTabValueSet("fields");
                         }
