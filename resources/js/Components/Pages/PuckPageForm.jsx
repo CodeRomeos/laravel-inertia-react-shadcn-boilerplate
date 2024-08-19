@@ -17,41 +17,17 @@ import {
     SelectValue,
 } from "@/shadcn/ui/select";
 import SlugInput from "../SlugInput";
-import { PuckEditor, viewports } from "../Puck/PuckEditor";
-import { config } from "../Puck/config";
-import { overrides } from "../Puck/PuckEditor";
-import { Puck, usePuck } from "@measured/puck";
-import { LaptopIcon, SmartphoneIcon, TabletIcon } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/shadcn/ui/tabs";
+import PuckPageEditor from "../Puck/PuckPageEditor";
 
 
-const PuckEvents = ({onSelect}) => {
-    const { appState, selectedItem } = usePuck();
-    const [currentSelectedItem, currentSelectedItemSet] = React.useState(null);
-    
-    React.useMemo(() => {
-        if (
-            selectedItem != null && JSON.stringify(selectedItem) !=
-            JSON.stringify(currentSelectedItem)
-        ) {
-            currentSelectedItemSet(selectedItem);
-            onSelect(selectedItem);
-        }
-    }, [JSON.stringify(currentSelectedItem) != JSON.stringify(selectedItem)]);
 
-    return <></>;
-};
+
 
 export default function PuckPageForm({ page, personTitles }) {
     
     const formEl = useRef(null);
-    const [showVisualEditor, showVisualEditorSet] = React.useState(false);
-    const [scale, scaleSet] = React.useState(1);
-
-    const [puckTabValue, puckTabValueSet] = React.useState('blocks');
-    const [selectedItem, selectedItemSet] = React.useState(null);
-
-    const [selectedViewport, selectedViewportSet] = React.useState(viewports[2]);
+    
     const { data, setData, post, processing, errors, reset } = useForm({
         title: page ? page?.title : "",
         slug: page ? page?.slug : "",
@@ -82,261 +58,163 @@ export default function PuckPageForm({ page, personTitles }) {
 
     return (
         <div className="">
-            <Puck
-                config={config}
-                overrides={overrides}
-                data={data.puck_body || {}}
-                headerTitle={data.title ?? "Page Builder"}
-                onChange={(d) => {
-                    // puckTabValueSet('fields');
-                    setData("puck_body", d);
-                }}
-                iframe={{
-                    enabled: false,
-                }}
-                // dnd={{
-                //     onBeforeCapture: (a, b) => {
-                //         console.log("onBeforeCapture", a, b);
-                //     },
-                // }}
-
-                // onPublish={(d) => {
-                //     // submit form
-                //     formEl?.current.dispatchEvent(
-                //         new Event("submit", {
-                //             cancelable: true,
-                //             bubbles: true,
-                //         })
-                //     );
-                // }}
-            >
-                <PuckEvents
-                    onSelect={(item) => {
-                        if (
-                            item != null && JSON.stringify(item) !=
-                            JSON.stringify(selectedItem)
-                        ) {
-                            selectedItemSet(item);
-                            puckTabValueSet("fields");
-                        }
-                    }}
-                />
-                <div>
-                    {/* First name & last name */}
-                    <div className="grid grid-cols-12 gap-4">
-                        <div className="col-span-9 space-y-4">
+            <div>
+                {/* First name & last name */}
+                <div className="grid grid-cols-12 gap-4">
+                    <div className="col-span-9 space-y-4">
+                        <div>
+                            {/* Title */}
                             <div>
-                                {/* Title */}
-                                <div>
-                                    {/* <Label htmlFor="title">Title</Label> */}
-                                    <Input
-                                        id="title"
-                                        type="text"
-                                        name="title"
-                                        value={data.title}
-                                        className="mt-1 block w-full text-xl h-16"
-                                        placeholder="Title"
-                                        onChange={(e) => {
-                                            setData("title", e.target.value);
-                                        }}
-                                    />
+                                {/* <Label htmlFor="title">Title</Label> */}
+                                <Input
+                                    id="title"
+                                    type="text"
+                                    name="title"
+                                    value={data.title}
+                                    className="mt-1 block w-full text-xl h-16"
+                                    placeholder="Title"
+                                    onChange={(e) => {
+                                        setData("title", e.target.value);
+                                    }}
+                                />
 
-                                    <InputError
-                                        message={errors.title}
-                                        className="mt-2"
-                                    />
-                                </div>
+                                <InputError
+                                    message={errors.title}
+                                    className="mt-2"
+                                />
                             </div>
-                            <div className="bg-gray-100 p-4 rounded-md">
-                                {/* Responsive buttons */}
-                                <div className="pb-4">
-                                    <div className="flex items-center justify-center gap-2">
-                                        {viewports.map((viewport) => (
-                                            <Button
-                                                key={viewport.width}
-                                                type="button"
-                                                variant="outline"
-                                                size="icon"
-                                                onClick={() => {
-                                                    selectedViewportSet(
-                                                        viewport
-                                                    );
-                                                }}
-                                            >
-                                                {viewport.icon}
-                                            </Button>
-                                        ))}
-                                    </div>
-                                </div>
-                                <div className="h-screen overflow-y-auto py-4">
-                                    <div className="flex items-center justify-center">
-                                        <div
-                                            className="h-full border bg-white min-h-96 transition-all"
-                                            style={{
-                                                // transform: `scale(${scale})`,
-                                                width: selectedViewport.width,
+                        </div>
+                    </div>
+                    <div className="col-span-3 space-y-4">
+                        <Tabs defaultValue="publish">
+                            <TabsList className="grid grid-cols-2">
+                                <TabsTrigger value="publish">
+                                    Publish
+                                </TabsTrigger>
+                                <TabsTrigger value="meta">Meta</TabsTrigger>
+                            </TabsList>
+                            <TabsContent value="publish">
+                                <div className="space-y-4">
+                                    {/* Slug */}
+                                    <div>
+                                        <SlugInput
+                                            id="slug"
+                                            type="text"
+                                            name="slug"
+                                            value={data.slug}
+                                            placeholder="slug"
+                                            onChange={(e) => {
+                                                setData("slug", e.target.value);
                                             }}
-                                        >
-                                            <Puck.Preview />
+                                            baseUrl={route("homepage")}
+                                        />
+                                        <InputError
+                                            message={errors.slug}
+                                            className="mt-2"
+                                        />
+                                    </div>
+                                    <div className="flex items-end justify-between gap-4">
+                                        <div className="w-full">
+                                            <Label htmlFor="status">
+                                                Status
+                                            </Label>
+                                            <Select
+                                                defaultValue={`${data.status}`}
+                                                onValueChange={(value) =>
+                                                    setData("status", value)
+                                                }
+                                            >
+                                                <SelectTrigger className="w-full">
+                                                    <SelectValue placeholder="Select status" />
+                                                </SelectTrigger>
+                                                <SelectContent>
+                                                    <SelectGroup>
+                                                        <SelectItem value="0">
+                                                            Draft
+                                                        </SelectItem>
+                                                        <SelectItem value="1">
+                                                            Publish
+                                                        </SelectItem>
+                                                    </SelectGroup>
+                                                </SelectContent>
+                                            </Select>
+
+                                            <InputError
+                                                message={errors.status}
+                                                className="mt-2"
+                                            />
+                                        </div>
+                                        <div>
+                                            <LoadingButton
+                                                loading={processing}
+                                                className="w-28"
+                                                onClick={submit}
+                                            >
+                                                Save
+                                            </LoadingButton>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div className="space-y-4">
-                                <div>
-                                    <Label htmlFor="meta_title">
-                                        Meta Title
-                                    </Label>
-                                    <Input
-                                        id="meta_title"
-                                        type="text"
-                                        name="meta_title"
-                                        value={data.meta_title}
-                                        className="mt-1 block w-full"
-                                        placeholder="Meta title"
-                                        onChange={(e) => {
-                                            setData(
-                                                "meta_title",
-                                                e.target.value
-                                            );
-                                        }}
-                                    />
-
-                                    <InputError
-                                        message={errors.meta_title}
-                                        className="mt-2"
-                                    />
-                                </div>
-                                <div>
-                                    <Label htmlFor="meta_description">
-                                        Meta description
-                                    </Label>
-                                    <Input
-                                        id="meta_description"
-                                        type="text"
-                                        name="meta_description"
-                                        value={data.meta_description}
-                                        className="mt-1 block w-full"
-                                        placeholder="Meta description"
-                                        onChange={(e) => {
-                                            setData(
-                                                "meta_description",
-                                                e.target.value
-                                            );
-                                        }}
-                                    />
-
-                                    <InputError
-                                        message={errors.meta_description}
-                                        className="mt-2"
-                                    />
-                                </div>
-                            </div>
-                        </div>
-                        <div className="col-span-3 space-y-4">
-                            <div className="space-y-4">
-                                {/* Slug */}
-                                <div>
-                                    <SlugInput
-                                        id="slug"
-                                        type="text"
-                                        name="slug"
-                                        value={data.slug}
-                                        placeholder="slug"
-                                        onChange={(e) => {
-                                            setData("slug", e.target.value);
-                                        }}
-                                        baseUrl={route("homepage")}
-                                    />
-                                    <InputError
-                                        message={errors.slug}
-                                        className="mt-2"
-                                    />
-                                </div>
-                                <div className="flex items-end justify-between gap-4">
-                                    <div className="w-full">
-                                        <Label htmlFor="status">Status</Label>
-                                        <Select
-                                            defaultValue={`${data.status}`}
-                                            onValueChange={(value) =>
-                                                setData("status", value)
-                                            }
-                                        >
-                                            <SelectTrigger className="w-full">
-                                                <SelectValue placeholder="Select status" />
-                                            </SelectTrigger>
-                                            <SelectContent>
-                                                <SelectGroup>
-                                                    <SelectItem value="0">
-                                                        Draft
-                                                    </SelectItem>
-                                                    <SelectItem value="1">
-                                                        Publish
-                                                    </SelectItem>
-                                                </SelectGroup>
-                                            </SelectContent>
-                                        </Select>
+                            </TabsContent>
+                            <TabsContent value="meta">
+                                <div className="space-y-4">
+                                    <div>
+                                        <Label htmlFor="meta_title">
+                                            Meta Title
+                                        </Label>
+                                        <Input
+                                            id="meta_title"
+                                            type="text"
+                                            name="meta_title"
+                                            value={data.meta_title}
+                                            className="mt-1 block w-full"
+                                            placeholder="Meta title"
+                                            onChange={(e) => {
+                                                setData(
+                                                    "meta_title",
+                                                    e.target.value
+                                                );
+                                            }}
+                                        />
 
                                         <InputError
-                                            message={errors.status}
+                                            message={errors.meta_title}
                                             className="mt-2"
                                         />
                                     </div>
                                     <div>
-                                        <LoadingButton
-                                            loading={processing}
-                                            className="w-28"
-                                            onClick={submit}
-                                        >
-                                            Save
-                                        </LoadingButton>
+                                        <Label htmlFor="meta_description">
+                                            Meta description
+                                        </Label>
+                                        <Input
+                                            id="meta_description"
+                                            type="text"
+                                            name="meta_description"
+                                            value={data.meta_description}
+                                            className="mt-1 block w-full"
+                                            placeholder="Meta description"
+                                            onChange={(e) => {
+                                                setData(
+                                                    "meta_description",
+                                                    e.target.value
+                                                );
+                                            }}
+                                        />
+
+                                        <InputError
+                                            message={errors.meta_description}
+                                            className="mt-2"
+                                        />
                                     </div>
                                 </div>
-                            </div>
-                            <Tabs
-                                defaultValue="blocks"
-                                value={puckTabValue}
-                                onValueChange={puckTabValueSet}
-                            >
-                                <TabsList className="grid grid-cols-3">
-                                    <TabsTrigger value="fields">
-                                        Fields
-                                    </TabsTrigger>
-                                    <TabsTrigger value="blocks">
-                                        Blocks
-                                    </TabsTrigger>
-                                    <TabsTrigger value="outline">
-                                        Outline
-                                    </TabsTrigger>
-                                </TabsList>
-                                <TabsContent value="fields">
-                                    <div className="border rounded-md max-h-[600px] overflow-y-scroll">
-                                        {selectedItem && <h4 className="p-4 text-lg">{selectedItem.type}</h4>}
-                                        <Puck.Fields />
-                                    </div>
-                                </TabsContent>
-                                <TabsContent
-                                    value="blocks"
-                                    className="space-y-4"
-                                >
-                                    {/* <div className="border rounded-md max-h-[380px] overflow-y-scroll">
-                                        <Puck.Fields />
-                                    </div> */}
-                                    <div className="bg-slate-100 p-2">
-                                        <h5 className="m-2">Components</h5>
-                                        <div className="max-h-[600px] overflow-y-scroll">
-                                            <Puck.Components />
-                                        </div>
-                                    </div>
-                                </TabsContent>
-                                <TabsContent value="outline">
-                                    <Puck.Outline />
-                                </TabsContent>
-                            </Tabs>
-                        </div>
+                            </TabsContent>
+                        </Tabs>
                     </div>
                 </div>
-            </Puck>
+                <div>
+                    <PuckPageEditor onChange={(d) => setData("puck_body", d)} value={data.puck_body} />
+                </div>
+            </div>
         </div>
     );
 }
