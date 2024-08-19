@@ -211,7 +211,7 @@ export default function PuckPageForm({ page, personTitles }) {
                         </Tabs>
                     </div>
                 </div>
-                <div>
+                <div className="mt-4">
                     <PuckPageEditor onChange={(d) => setData("puck_body", d)} value={data.puck_body} />
                 </div>
             </div>

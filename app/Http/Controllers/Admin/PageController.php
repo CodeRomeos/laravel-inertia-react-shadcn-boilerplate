@@ -36,7 +36,7 @@ class PageController extends Controller
     {
         $request->validate([
             'title' => 'required|string',
-            'slug' => 'required|string|unique:pages,slug',
+            'slug' => 'required|string',
             'body' => 'nullable',
             'status' => 'required|in:0,1',
             'meta_title' => 'nullable|string',
@@ -54,7 +54,7 @@ class PageController extends Controller
     {
         $request->validate([
             'title' => 'required|string',
-            'slug' => 'required|string|unique:pages,slug,' . $id,
+            'slug' => 'required|string',
             'body' => 'nullable',
             'puck_body' => 'nullable',
             'status' => 'required|in:0,1',
