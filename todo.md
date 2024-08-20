@@ -1,3 +1,2 @@
  - [ ] Email verification
  - [ ] Client invoices
- - [ ] Menu Management
