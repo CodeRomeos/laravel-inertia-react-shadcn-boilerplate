@@ -5,6 +5,12 @@ namespace App\Traits;
 use Illuminate\Support\Str;
 
 trait HasSlug {
+
+    public function scopeSlug($q, $slug)
+    {
+        return $q->where('slug', $slug);
+    }
+
     public function setSlugAttribute($value)
     {
         if($this->id == null) {
