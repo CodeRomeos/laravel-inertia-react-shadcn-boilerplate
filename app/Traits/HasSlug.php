@@ -7,8 +7,20 @@ use Illuminate\Support\Str;
 trait HasSlug {
     public function setSlugAttribute($value)
     {
-        $count = $this->where('slug', 'like', $value.'%')->where('id', '!=', $this->id)->count();
-
-        $this->attributes['slug'] = $count ? "{$value}-{$count}" : $value;
+        if($this->id == null) {
+            $count = $this->where('slug', 'like', $value.'%')->count();
+        } else {
+            if($value == $this->slug) return;
+            
+            $count = $this->where('slug', 'like', $value.'%')->where('id', '!=', $this->id)->count();
+        }
+        
+        if($count == 0) {
+            $this->attributes['slug'] = $value;
+        }
+        else {
+            $count++;
+            $this->attributes['slug'] = $count ? "{$value}-{$count}" : $value;
+        }
     }
 }

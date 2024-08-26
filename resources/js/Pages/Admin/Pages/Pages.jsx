@@ -57,7 +57,7 @@ export const columns = [
         header: "Slug",
     },
     {
-        accessorKey: "crated_at_string",
+        accessorKey: "created_at_string",
         header: "Created At",
     },
     {
