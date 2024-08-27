@@ -15,7 +15,7 @@ class PageController extends Controller
 {
     public function index(Request $request)
     {
-        $pages = Page::latest()->paginate($request->get('limit', config('app.pagination_limit')))->withQueryString();
+        $pages = Page::select('id', 'user_id', 'title', 'slug', 'created_at', 'updated_at', 'deleted_at')->latest()->paginate($request->get('limit', config('app.pagination_limit')))->withQueryString();
         return Inertia::render('Admin/Pages/Pages', ['pages' => PageResource::collection($pages)]);
     }
 
