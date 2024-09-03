@@ -169,6 +169,10 @@ export function SortableTree({
     },
   };
 
+  React.useEffect(() => {
+    console.log(items);
+  }, [items]);
+
   return (
     <DndContext
       accessibility={{announcements}}
