@@ -19,6 +19,13 @@ export const navItems = [
         icon: "page",
         label: "Posts",
     },
+    {
+        title: "Create Menu",
+        label: "Create Menu",
+        href: route("admin.menus.create"),
+        icon: "page",
+        label: "Create Menu",
+    },
 
     {
         title: "Finance",
