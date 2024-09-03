@@ -29,6 +29,7 @@ import {
 } from "@/shadcn/ui/dropdown-menu";
 import Can from "@/Components/Can";
 import MenuForm from "./MenuForm";
+import MenuForm1 from "./MenuForm1";
 
 export default function Menu({ menu }) {
     const { data, setData, errors, put, reset } = useForm({
@@ -87,7 +88,7 @@ export default function Menu({ menu }) {
             </TwoColumnLayout.Heading>
             <TwoColumnLayout.Content>
                 <TwoColumnLayout.Main>
-                    <MenuForm />
+                    <MenuForm1 />
                 </TwoColumnLayout.Main>
                 <TwoColumnLayout.Aside></TwoColumnLayout.Aside>
             </TwoColumnLayout.Content>

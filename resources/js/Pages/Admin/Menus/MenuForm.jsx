@@ -6,6 +6,7 @@ import {
     PointerSensor,
     useSensor,
     useSensors,
+    MeasuringStrategy,
 } from "@dnd-kit/core";
 import {
     arrayMove,
@@ -16,14 +17,44 @@ import {
 
 import SortableItem from "./SortableItem";
 
+
+const measuring = {
+    droppable: {
+        strategy: MeasuringStrategy.Always,
+    },
+};
+
 export default function MenuForm() {
     const [activeId, setActiveId] = useState(null);
     const [items, setItems] = useState([
-       { id: 1, label: "Item 1", value: "item-1" },
-       { id: 2, label: "Item 2", value: "item-2" },
-       { id: 3, label: "Item 3", value: "item-3" },
-       { id: 4, label: "Item 4", value: "item-4" },
-       { id: 5, label: "Item 5", value: "item-5" },
+        {
+            id: "Home",
+            label: "Home",
+            children: [],
+        },
+        {
+            id: "Collections",
+            label: "Collections",
+            children: [
+                { id: "Spring", children: [] },
+                { id: "Summer", children: [] },
+                { id: "Fall", children: [] },
+                { id: "Winter", children: [] },
+            ],
+        },
+        {
+            id: "About Us",
+            label: "About Us",
+            children: [],
+        },
+        {
+            id: "My Account",
+            label: "My Account",
+            children: [
+                { id: "Addresses", children: [] },
+                { id: "Order History", children: [] },
+            ],
+        },
     ]);
     const sensors = useSensors(
         useSensor(PointerSensor),
@@ -39,6 +70,7 @@ export default function MenuForm() {
     return (
         <DndContext
             sensors={sensors}
+            measuring={measuring}
             collisionDetection={closestCenter}
             onDragEnd={handleDragEnd}
             nDragStart={handleDragStart}
