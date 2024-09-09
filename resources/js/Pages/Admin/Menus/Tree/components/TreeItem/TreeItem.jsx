@@ -10,7 +10,7 @@ import { Button } from '@/shadcn/ui/button';
 import { useState } from 'react';
 import { PencilIcon } from 'lucide-react';
 
-const EditItemForm = ({ item, onItemChange }) => {
+const EditItemForm = ({ item, onItemChange, onClose, onRemove }) => {
     const [label, labelSet] = useState(item.label);
     const [url, urlSet] = useState(item.url);
     const [target, targetSet] = useState(item.target);
@@ -26,7 +26,10 @@ const EditItemForm = ({ item, onItemChange }) => {
     };
 
     return (
-        <form className="bg-slate-50 p-4 border grid grid-cols-3 gap-2 items-center" onSubmit={submit}>
+        <form
+            className="bg-slate-50 p-4 border grid grid-cols-3 gap-2 items-center"
+            onSubmit={submit}
+        >
             <Label htmlFor="label">Label</Label>
             <div className="col-span-2">
                 <Input
@@ -59,8 +62,26 @@ const EditItemForm = ({ item, onItemChange }) => {
                     </SelectContent>
                 </Select>
             </div>
-            <div className="col-span-3 text-right">
-                <Button type="submit" variant="outline">
+            <div className="col-span-3 justify-between flex gap-2">
+                <div className="flex gap-2">
+                    <Button
+                        size="sm"
+                        type="button"
+                        variant="destructive"
+                        onClick={onRemove}
+                    >
+                        Remove
+                    </Button>
+                    <Button
+                        size="sm"
+                        type="button"
+                        variant="ghost"
+                        onClick={onClose}
+                    >
+                        Cancel
+                    </Button>
+                </div>
+                <Button size="sm" type="submit">
                     Update
                 </Button>
             </div>
@@ -150,6 +171,8 @@ export const TreeItem = forwardRef(
                     <EditItemForm
                         item={item}
                         onItemChange={props.onItemChange}
+                        onClose={() => editingSet(false)}
+                        onRemove={onRemove}
                     />
                 )}
             </div>
