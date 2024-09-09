@@ -6,7 +6,7 @@ import { Label } from "@/shadcn/ui/label";
 import { Input } from "@/shadcn/ui/input";
 import InputError from "@/Components/InputError";
 import React from "react";
-import TwoColumnLayout from "@/Layouts/TwoColumnLayout";
+import TwoColumnLayout from "@/Layouts/admin/TwoColumnLayout";
 
 import { MoreHorizontal, PencilLine, PlusCircle, User } from "lucide-react";
 import ShadcnCard from "@/Components/ShadcnCard";
