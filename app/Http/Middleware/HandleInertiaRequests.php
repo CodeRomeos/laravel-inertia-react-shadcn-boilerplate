@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use App\Enums\ModelStatus;
+use App\Models\Menu;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 
@@ -33,6 +34,7 @@ class HandleInertiaRequests extends Middleware
         return [
             ...parent::share($request),
             'appName' => config('app.name'),
+            'primaryMenu' => Menu::getMenu('primary'),
             'auth' => [
                 'user' => $request->user(),
                 'userRoles' => $request->user() ? $request->user()->roles->pluck('name') : [],
