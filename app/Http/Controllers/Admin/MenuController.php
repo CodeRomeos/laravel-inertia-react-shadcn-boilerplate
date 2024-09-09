@@ -14,7 +14,7 @@ class MenuController extends Controller
 
     public function index(Request $request)
     {
-        $menus = Menu::latest()->paginate($request->get('limit', config('app.pagination_limit')))->withQueryString();
+        $menus = Menu::select('id', 'name', 'slug', 'created_at', 'updated_at')->latest()->paginate($request->get('limit', config('app.pagination_limit')))->withQueryString();
 
         return Inertia::render('Admin/Menus/Menus', [
             'menus' => MenuResource::collection($menus),

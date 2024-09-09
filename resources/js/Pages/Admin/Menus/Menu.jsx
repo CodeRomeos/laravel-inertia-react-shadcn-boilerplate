@@ -330,13 +330,15 @@ export default function Menu({ menu, pages }) {
                                 </LoadingButton>
                             </div>
                         </form>
-                        <SortableTree
-                            value={data.items}
-                            onChange={(v) => setData("items", v)}
-                            collapsible
-                            indicator
-                            removable
-                        />
+                        <div className="">
+                            <SortableTree
+                                value={data.items}
+                                onChange={(v) => setData("items", v)}
+                                collapsible
+                                indicator
+                                removable
+                            />
+                        </div>
                     </div>
                 </TwoColumnLayout.Main>
             </TwoColumnLayout.Content>
