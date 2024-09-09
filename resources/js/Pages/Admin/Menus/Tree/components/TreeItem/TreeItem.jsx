@@ -81,7 +81,7 @@ const EditItemForm = ({ item, onItemChange, onClose, onRemove }) => {
                         Cancel
                     </Button>
                 </div>
-                <Button size="sm" type="submit">
+                <Button size="sm" type="submit" variant="outline">
                     Update
                 </Button>
             </div>
