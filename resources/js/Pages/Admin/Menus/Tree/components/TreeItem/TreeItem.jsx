@@ -27,7 +27,7 @@ const EditItemForm = ({ item, onItemChange, onClose, onRemove }) => {
 
     return (
         <form
-            className="bg-slate-50 p-4 border grid grid-cols-3 gap-2 items-center"
+            className="bg-slate-50 p-6 border grid grid-cols-3 gap-2 items-center"
             onSubmit={submit}
         >
             <Label htmlFor="label">Label</Label>
@@ -40,16 +40,20 @@ const EditItemForm = ({ item, onItemChange, onClose, onRemove }) => {
                     onChange={(e) => labelSet(e.target.value)}
                 />
             </div>
-            <Label htmlFor="url">URL</Label>
-            <div className="col-span-2">
-                <Input
-                    id="url"
-                    type="text"
-                    name="url"
-                    value={url}
-                    onChange={(e) => urlSet(e.target.value)}
-                />
-            </div>
+            {item.link_type == "custom_link" && (
+                <>
+                    <Label htmlFor="url">URL</Label>
+                    <div className="col-span-2">
+                        <Input
+                            id="url"
+                            type="text"
+                            name="url"
+                            value={url}
+                            onChange={(e) => urlSet(e.target.value)}
+                        />
+                    </div>
+                </>
+            )}
             <Label htmlFor="target">Target</Label>
             <div className="col-span-2">
                 <Select value={target} onValueChange={targetSet}>
@@ -144,11 +148,10 @@ export const TreeItem = forwardRef(
                     </Action>
                 )}
                 <span className={styles.Text}>{value}</span>
-                {item?.link_type == "custom_link" && (
-                    <span className="text-xs text-muted-foreground mx-1">
-                        Custom Link
-                    </span>
-                )}
+
+                <span className="text-xs text-muted-foreground mx-1 capitalize">
+                    {item?.link_type.split('_').join(' ')}
+                </span>
                 <Button
                     onClick={() => editingSet(!editing)}
                     size="sm"

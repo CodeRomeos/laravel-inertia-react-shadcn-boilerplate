@@ -34,18 +34,24 @@ import {
 } from "@/shadcn/ui/select";
 import Can from "@/Components/Can";
 import { SortableTree } from "./Tree/SortableTree";
+import { Checkbox } from "@/shadcn/ui/checkbox";
+import { ScrollArea } from "@/shadcn/ui/scroll-area";
 
-const genCustomLinkObject = ({url, label, target}) => {
+const genLinkObject = ({url, label, target, route_name = false, route_params = {}, link_type = "custom_link", slug = false}) => {
     return {
         id: uuidv4(),
         url: url,
         label: label,
         target: target,
         children: [],
-        route_name: false,
-        link_type: "custom_link",
+        route_name: route_name,
+        route_params: route_params,
+        link_type: link_type,
+        slug: slug,
     };
 };
+
+const genCustomLinkObject = (props) => genLinkObject({...props, link_type: "custom_link", route_name: false});
 
 const CustomLinkForm = ({onSubmit = () => {}}) => {
     const [url, urlSet] = React.useState("");
@@ -102,8 +108,82 @@ const CustomLinkForm = ({onSubmit = () => {}}) => {
     );
 }
 
+const PagesList = ({pages, onAdd = () => {}}) => {
+    const [search, searchSet] = React.useState("");
+    const [pageList, pageListSet] = React.useState(pages);
+    const [selected, selectedSet] = React.useState([]);
 
-export default function Menu({ menu }) {
+    const addToMenu = () => {
+        onAdd(selected.map((id) => {
+            const page = pages.find((page) => page.id === id);
+            return genLinkObject({url: page.url, label: page.title, link_type: "page", route_name: `pages.show`, route_params: {slug: page.slug}});
+        }));
+
+        selectedSet([]);
+    }
+
+    return (
+        <div>
+            <Input
+                type="search"
+                placeholder="Search..."
+                value={search}
+                className="w-full mb-4"
+                onChange={(e) => {
+                    searchSet(e.target.value);
+                    pageListSet(
+                        pages.filter((page) =>
+                            page.title
+                                .toLowerCase()
+                                .includes(e.target.value.toLowerCase())
+                        )
+                    );
+                }}
+            />
+            <ScrollArea className="h-52">
+                <div className="space-y-3">
+                    {pageList.map((page) => (
+                        <Label
+                            key={page.id}
+                            className="flex gap-4 items-center font-normal"
+                        >
+                            <Checkbox
+                                checked={selected.includes(page.id)}
+                                onCheckedChange={(checked) => {
+                                    return checked
+                                        ? selectedSet([...selected, page.id])
+                                        : selectedSet(
+                                              selected.filter(
+                                                  (id) => id !== page.id
+                                              )
+                                          );
+                                }}
+                            />{" "}
+                            {page.title}
+                            <span className="text-xs text-muted-foreground text-right">
+                                /{page.slug}
+                            </span>
+                        </Label>
+                    ))}
+                </div>
+            </ScrollArea>
+            <div className="text-right">
+                <Button
+                    size="sm"
+                    type="button"
+                    variant="outline"
+                    onClick={() => addToMenu()}
+                >
+                    Add to Menu
+                </Button>
+            </div>
+        </div>
+    );
+}
+                    
+
+
+export default function Menu({ menu, pages }) {
     const { data, setData, errors, put, reset } = useForm({
         name: menu ? menu.name : "",
         items: menu ? menu.items : []
@@ -161,12 +241,38 @@ export default function Menu({ menu }) {
             </TwoColumnLayout.Heading>
             <TwoColumnLayout.Content>
                 <TwoColumnLayout.Aside>
-                    <div className="">
-                        <Accordion className="border border-b-none" type="single" collapsible>
-                            <AccordionItem value="custom-link">
-                                <AccordionTrigger className="p-4">Custom Link</AccordionTrigger>
+                    <div className="space-y-2">
+                        <Accordion
+                            className="border border-b-none"
+                            type="single"
+                            collapsible
+                        >
+                            <AccordionItem value="pages">
+                                <AccordionTrigger className="p-4">
+                                    Pages
+                                </AccordionTrigger>
                                 <AccordionContent className="p-4">
-                                    <CustomLinkForm value={data.items} onSubmit={(v) => setData("items", [...data.items, v])} />
+                                    <PagesList pages={pages} onAdd={(v) => setData("items", [...data.items, ...v])} />
+                                </AccordionContent>
+                            </AccordionItem>
+                        </Accordion>
+
+                        <Accordion
+                            className="border border-b-none"
+                            type="single"
+                            collapsible
+                        >
+                            <AccordionItem value="custom-link">
+                                <AccordionTrigger className="p-4">
+                                    Custom Link
+                                </AccordionTrigger>
+                                <AccordionContent className="p-4">
+                                    <CustomLinkForm
+                                        value={data.items}
+                                        onSubmit={(v) =>
+                                            setData("items", [...data.items, v])
+                                        }
+                                    />
                                 </AccordionContent>
                             </AccordionItem>
                         </Accordion>
