@@ -42,8 +42,8 @@ const genCustomLinkObject = ({url, label, target}) => {
         label: label,
         target: target,
         children: [],
-        routName: false,
-        type: "custom_link",
+        route_name: false,
+        link_type: "custom_link",
     };
 };
 
@@ -61,16 +61,6 @@ const CustomLinkForm = ({onSubmit = () => {}}) => {
     }
     return (
         <form className="grid grid-cols-3 gap-2 items-center" onSubmit={submit}>
-            <Label htmlFor="url">URL</Label>
-            <div className="col-span-2">
-                <Input
-                    id="url"
-                    type="text"
-                    name="url"
-                    value={url}
-                    onChange={(e) => urlSet(e.target.value)}
-                />
-            </div>
             <Label htmlFor="label">Label</Label>
             <div className="col-span-2">
                 <Input
@@ -79,6 +69,16 @@ const CustomLinkForm = ({onSubmit = () => {}}) => {
                     name="label"
                     value={label}
                     onChange={(e) => labelSet(e.target.value)}
+                />
+            </div>
+            <Label htmlFor="url">URL</Label>
+            <div className="col-span-2">
+                <Input
+                    id="url"
+                    type="text"
+                    name="url"
+                    value={url}
+                    onChange={(e) => urlSet(e.target.value)}
                 />
             </div>
             <Label htmlFor="target">Target</Label>

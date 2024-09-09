@@ -3,6 +3,70 @@ import classNames from 'classnames';
 
 import {Action, Handle, Remove} from '../';
 import styles from './TreeItem.module.css';
+import { Label } from '@/shadcn/ui/label';
+import { Input } from '@/shadcn/ui/input';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/shadcn/ui/select';
+import { Button } from '@/shadcn/ui/button';
+import { useState } from 'react';
+import { PencilIcon } from 'lucide-react';
+
+const EditItemForm = ({ item, onItemChange }) => {
+    const [label, labelSet] = useState(item.label);
+    const [url, urlSet] = useState(item.url);
+    const [target, targetSet] = useState(item.target);
+
+    const submit = (e) => {
+        e.preventDefault();
+        onItemChange({
+            ...item,
+            label: label,
+            url: url,
+            target: target,
+        });
+    };
+
+    return (
+        <form className="bg-slate-50 p-4 border grid grid-cols-3 gap-2 items-center" onSubmit={submit}>
+            <Label htmlFor="label">Label</Label>
+            <div className="col-span-2">
+                <Input
+                    id="label"
+                    type="text"
+                    name="label"
+                    value={label}
+                    onChange={(e) => labelSet(e.target.value)}
+                />
+            </div>
+            <Label htmlFor="url">URL</Label>
+            <div className="col-span-2">
+                <Input
+                    id="url"
+                    type="text"
+                    name="url"
+                    value={url}
+                    onChange={(e) => urlSet(e.target.value)}
+                />
+            </div>
+            <Label htmlFor="target">Target</Label>
+            <div className="col-span-2">
+                <Select value={target} onValueChange={targetSet}>
+                    <SelectTrigger className="">
+                        <SelectValue placeholder="Default" />
+                    </SelectTrigger>
+                    <SelectContent>
+                        <SelectItem value="_self">Default</SelectItem>
+                        <SelectItem value="_blank">New Tab</SelectItem>
+                    </SelectContent>
+                </Select>
+            </div>
+            <div className="col-span-3 text-right">
+                <Button type="submit" variant="outline">
+                    Update
+                </Button>
+            </div>
+        </form>
+    );
+};
 
 
 export const TreeItem = forwardRef(
@@ -23,48 +87,73 @@ export const TreeItem = forwardRef(
       style,
       value,
       wrapperRef,
+      item,
       ...props
     },
     ref
   ) => {
+    const [editing, editingSet] = useState(false);
     return (
-      <li
-        className={classNames(
-          styles.Wrapper,
-          clone && styles.clone,
-          ghost && styles.ghost,
-          indicator && styles.indicator,
-          disableSelection && styles.disableSelection,
-          disableInteraction && styles.disableInteraction
-        )}
-        ref={wrapperRef}
-        style={
-          {
-            '--spacing': `${indentationWidth * depth}px`,
-          }
-        }
-        {...props}
-      >
-        <div className={styles.TreeItem} ref={ref} style={style}>
-          <Handle {...handleProps} />
-          {onCollapse && (
-            <Action
-              onClick={onCollapse}
-              className={classNames(
-                styles.Collapse,
-                collapsed && styles.collapsed
-              )}
+        <li
+            className={classNames(
+                styles.Wrapper,
+                clone && styles.clone,
+                ghost && styles.ghost,
+                indicator && styles.indicator,
+                disableSelection && styles.disableSelection,
+                disableInteraction && styles.disableInteraction
+            )}
+            ref={wrapperRef}
+            style={{
+                "--spacing": `${indentationWidth * depth}px`,
+            }}
+            {...props}
+        >
+            <div className={styles.TreeItem} ref={ref} style={style}>
+                <Handle {...handleProps} />
+                {onCollapse && (
+                    <Action
+                        onClick={onCollapse}
+                        className={classNames(
+                            styles.Collapse,
+                            collapsed && styles.collapsed
+                        )}
+                    >
+                        {collapseIcon}
+                    </Action>
+                )}
+                <span className={styles.Text}>{value}</span>
+                {item?.link_type == "custom_link" && (
+                    <span className="text-xs text-muted-foreground mx-1">
+                        Custom Link
+                    </span>
+                )}
+                <Button
+                    onClick={() => editingSet(!editing)}
+                    size="sm"
+                    variant="ghost"
+                >
+                    <PencilIcon className="w-3 h-3" />
+                </Button>
+                {!clone && onRemove && <Remove onClick={onRemove} />}
+                {clone && childCount && childCount > 1 ? (
+                    <span className={styles.Count}>{childCount}</span>
+                ) : null}
+            </div>
+
+            <div
+                className={`transition-all ${
+                    editing ? "h-auto visible" : "h-0 hidden"
+                }`}
             >
-              {collapseIcon}
-            </Action>
-          )}
-          <span className={styles.Text}>{value}</span>
-          {!clone && onRemove && <Remove onClick={onRemove} />}
-          {clone && childCount && childCount > 1 ? (
-            <span className={styles.Count}>{childCount}</span>
-          ) : null}
-        </div>
-      </li>
+                {item && (
+                    <EditItemForm
+                        item={item}
+                        onItemChange={props.onItemChange}
+                    />
+                )}
+            </div>
+        </li>
     );
   }
 );

@@ -86,6 +86,18 @@ const dropAnimationConfig = {
   },
 };
 
+const updateItemValues = (items, id, value) => {
+  return items.map((item) => {
+    if (item.id === id) {
+      return {...item, ...value};
+    }
+    if (item.children) {
+      return {...item, children: updateItemValues(item.children, id, value)};
+    }
+    return item;
+  });
+}
+
 
 export function SortableTree({
     value = [],
@@ -201,29 +213,54 @@ export function SortableTree({
                 items={sortedIds}
                 strategy={verticalListSortingStrategy}
             >
-                {flattenedItems.map(({ id, label, children, collapsed, depth }) => (
-                    <SortableTreeItem
-                        key={id}
-                        id={id}
-                        value={label}
-                        depth={
-                            id === activeId && projected
-                                ? projected.depth
-                                : depth
-                        }
-                        indentationWidth={indentationWidth}
-                        indicator={indicator}
-                        collapsed={Boolean(collapsed && children.length)}
-                        onCollapse={
-                            collapsible && children.length
-                                ? () => handleCollapse(id)
-                                : undefined
-                        }
-                        onRemove={
-                            removable ? () => handleRemove(id) : undefined
-                        }
-                    />
-                ))}
+                {flattenedItems.map(
+                    ({
+                        id,
+                        label,
+                        url,
+                        target,
+                        link_type,
+                        route_name,
+                        children,
+                        collapsed,
+                        depth,
+                        ...props
+                    }) => (
+                        <SortableTreeItem
+                            key={id}
+                            id={id}
+                            value={label}
+                            item={{
+                                id,
+                                label,
+                                url,
+                                target,
+                                link_type,
+                                route_name,
+                            }}
+                            depth={
+                                id === activeId && projected
+                                    ? projected.depth
+                                    : depth
+                            }
+                            indentationWidth={indentationWidth}
+                            indicator={indicator}
+                            collapsed={Boolean(collapsed && children.length)}
+                            onCollapse={
+                                collapsible && children.length
+                                    ? () => handleCollapse(id)
+                                    : undefined
+                            }
+                            onRemove={
+                                removable ? () => handleRemove(id) : undefined
+                            }
+                            onItemChange={it => {
+                                setItems(updateItemValues(items, id, it));
+                            }}
+                            {...props}
+                        />
+                    )
+                )}
                 {createPortal(
                     <DragOverlay
                         dropAnimation={dropAnimationConfig}
@@ -235,7 +272,8 @@ export function SortableTree({
                                 depth={activeItem.depth}
                                 clone
                                 childCount={getChildCount(items, activeId) + 1}
-                                value={activeId.toString()}
+                                value={activeItem.label}
+                                item={activeItem}
                                 indentationWidth={indentationWidth}
                             />
                         ) : null}
