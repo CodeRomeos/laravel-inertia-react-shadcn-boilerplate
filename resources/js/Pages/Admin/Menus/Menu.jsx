@@ -36,8 +36,9 @@ import Can from "@/Components/Can";
 import { SortableTree } from "./Tree/SortableTree";
 import { Checkbox } from "@/shadcn/ui/checkbox";
 import { ScrollArea } from "@/shadcn/ui/scroll-area";
+import LoadingButton from "@/Components/LoadingButton";
 
-const genLinkObject = ({url, label, target, route_name = false, route_params = {}, link_type = "custom_link", slug = false}) => {
+const genLinkObject = ({url, label, target = "_self", route_name = false, route_params = {}, link_type = "custom_link", slug = false}) => {
     return {
         id: uuidv4(),
         url: url,
@@ -116,7 +117,7 @@ const PagesList = ({pages, onAdd = () => {}}) => {
     const addToMenu = () => {
         onAdd(selected.map((id) => {
             const page = pages.find((page) => page.id === id);
-            return genLinkObject({url: page.url, label: page.title, link_type: "page", route_name: `pages.show`, route_params: {slug: page.slug}});
+            return genLinkObject({url: page.url, label: page.title, link_type: "page", route_name: `pages.show`, route_params: {slug: page.slug}, slug: page.slug});
         }));
 
         selectedSet([]);
@@ -181,13 +182,22 @@ const PagesList = ({pages, onAdd = () => {}}) => {
     );
 }
                     
-
-
 export default function Menu({ menu, pages }) {
-    const { data, setData, errors, put, reset } = useForm({
+    const { data, setData, errors, post, processing } = useForm({
         name: menu ? menu.name : "",
+        slug: menu ? menu.slug : "",
         items: menu ? menu.items : []
     })
+
+    const submit = (e) => {
+        e.preventDefault();
+        if(menu) {
+            post(route("admin.menus.update", {menu: menu.id}));
+        } else {
+            post(route("admin.menus.store"));
+        }
+    }
+
     return (
         <TwoColumnLayout>
             <Head>
@@ -226,18 +236,6 @@ export default function Menu({ menu, pages }) {
                         </Can>
                     </PageHeading.Actions>
                 </PageHeading>
-                <div className="flex justify-between">
-                    <div>
-                        {menu ? (
-                            <Link className="text-blue-600 italic text-sm">
-                                {route("admin.menus.edit", menu.id)}
-                            </Link>
-                        ) : (
-                            ""
-                        )}
-                    </div>
-                    <div className="flex gap-4"></div>
-                </div>
             </TwoColumnLayout.Heading>
             <TwoColumnLayout.Content>
                 <TwoColumnLayout.Aside>
@@ -246,22 +244,24 @@ export default function Menu({ menu, pages }) {
                             className="border border-b-none"
                             type="single"
                             collapsible
+                            defaultValue="pages"
                         >
                             <AccordionItem value="pages">
                                 <AccordionTrigger className="p-4">
                                     Pages
                                 </AccordionTrigger>
                                 <AccordionContent className="p-4">
-                                    <PagesList pages={pages} onAdd={(v) => setData("items", [...data.items, ...v])} />
+                                    <PagesList
+                                        pages={pages}
+                                        onAdd={(v) =>
+                                            setData("items", [
+                                                ...data.items,
+                                                ...v,
+                                            ])
+                                        }
+                                    />
                                 </AccordionContent>
                             </AccordionItem>
-                        </Accordion>
-
-                        <Accordion
-                            className="border border-b-none"
-                            type="single"
-                            collapsible
-                        >
                             <AccordionItem value="custom-link">
                                 <AccordionTrigger className="p-4">
                                     Custom Link
@@ -280,6 +280,56 @@ export default function Menu({ menu, pages }) {
                 </TwoColumnLayout.Aside>
                 <TwoColumnLayout.Main>
                     <div>
+                        <form
+                            onSubmit={submit}
+                            className="grid grid-cols-3 gap-4 mb-4"
+                        >
+                            <div>
+                                <div className="flex gap-4 items-center">
+                                    <Label htmlFor="name">Name</Label>
+                                    <Input
+                                        id="name"
+                                        type="text"
+                                        name="name"
+                                        value={data.name}
+                                        onChange={(e) =>
+                                            setData("name", e.target.value)
+                                        }
+                                    />
+                                </div>
+                                <InputError
+                                    message={errors.name}
+                                    className="mt-2"
+                                />
+                            </div>
+
+                            <div>
+                                <div className="flex gap-4 items-center">
+                                    <Label htmlFor="slug">Slug</Label>
+                                    <Input
+                                        id="slug"
+                                        type="text"
+                                        name="slug"
+                                        value={data.slug}
+                                        onChange={(e) =>
+                                            setData("slug", e.target.value)
+                                        }
+                                    />
+                                </div>
+                                <InputError
+                                    message={errors.slug}
+                                    className="mt-2"
+                                />
+                            </div>
+                            <div>
+                                <LoadingButton
+                                    processing={processing}
+                                    type="submit"
+                                >
+                                    Save
+                                </LoadingButton>
+                            </div>
+                        </form>
                         <SortableTree
                             value={data.items}
                             onChange={(v) => setData("items", v)}

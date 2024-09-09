@@ -51,11 +51,13 @@ import {
     Boxes,
     TableCellsSplit,
     FileDown,
-    Landmark
+    Landmark,
+    MenuIcon
 } from "lucide-react";
 
 export const Icons = {
     dashboard: LayoutDashboardIcon,
+    menu: MenuIcon,
     logo: Command,
     login: LogIn,
     landmark: Landmark,

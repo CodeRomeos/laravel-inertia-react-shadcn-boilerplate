@@ -106,9 +106,9 @@ Route::prefix('admin')->name('admin.')->middleware(['web', 'auth'])->group(funct
     });
 
     Route::prefix('menus')->name('menus.')->controller(MenuController::class)->group(function () {
-        Route::post('{id}', 'update')->name('update')->middleware(['can:edit menus']);
         Route::get('create', 'create')->name('create')->middleware(['can:create menus']);
-        Route::get('{id}', 'edit')->name('edit')->middleware(['can:edit menus']);
+        Route::post('{menu}', 'update')->name('update')->middleware(['can:edit menus']);
+        Route::get('{menu}', 'edit')->name('edit')->middleware(['can:edit menus']);
         Route::post('', 'store')->name('store')->middleware(['can:create menus']);
         Route::get('', 'index')->name('index')->middleware(['can:view menus']);
     });

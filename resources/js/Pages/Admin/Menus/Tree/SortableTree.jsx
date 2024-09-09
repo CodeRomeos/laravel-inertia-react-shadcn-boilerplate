@@ -313,6 +313,7 @@ export function SortableTree({
 
         if (projected && over) {
             const { depth, parentId } = projected;
+            if(depth > 2) return; // Depth limit
             const clonedItems = JSON.parse(JSON.stringify(flattenTree(items)));
             const overIndex = clonedItems.findIndex(({ id }) => id === over.id);
             const activeIndex = clonedItems.findIndex(

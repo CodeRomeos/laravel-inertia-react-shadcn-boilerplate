@@ -20,11 +20,25 @@ export const navItems = [
         label: "Posts",
     },
     {
-        title: "Create Menu",
+        title: "Menus",
+        label: "Menus",
+        href: "#",
+        icon: "menu",
         label: "Create Menu",
-        href: route("admin.menus.create"),
-        icon: "page",
-        label: "Create Menu",
+        items: [
+            {
+                title: "Menus",
+                href: route("admin.menus.index"),
+                icon: "menu",
+                label: "Menus",
+            },
+            {
+                title: "Create Menu",
+                href: route("admin.menus.create"),
+                icon: "add",
+                label: "Create Menu",
+            },
+        ],
     },
 
     {

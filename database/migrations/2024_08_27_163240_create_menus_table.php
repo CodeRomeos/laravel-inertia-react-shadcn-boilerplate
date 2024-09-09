@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained();
             $table->string('name')->index();
             $table->string('slug')->unique()->index();
+            $table->json('items')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
