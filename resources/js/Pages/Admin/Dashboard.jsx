@@ -1,5 +1,5 @@
 import { usePage } from "@inertiajs/react";
-import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
+import AuthenticatedLayout from "@/Layouts/admin/AuthenticatedLayout";
 import { Button } from "@/shadcn/ui/button";
 import {
     Card,

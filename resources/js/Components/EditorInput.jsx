@@ -11,7 +11,7 @@ import htmlToDraft from "html-to-draftjs";
 import "../../../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 
 export default function EditorInput({
-    value,
+    value = "",
     onChange
 }) {
 

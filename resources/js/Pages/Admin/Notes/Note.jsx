@@ -6,7 +6,7 @@ import { Label } from "@/shadcn/ui/label";
 import { Input } from "@/shadcn/ui/input";
 import InputError from "@/Components/InputError";
 import React from "react";
-import TwoColumnLayout from "@/Layouts/TwoColumnLayout";
+import TwoColumnLayout from "@/Layouts/admin/TwoColumnLayout";
 // import { TextLarge, TextMuted } from "@/shadcn/ui/text-muted";
 import {
     MoreHorizontal,

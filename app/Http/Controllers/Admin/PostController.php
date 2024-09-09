@@ -21,7 +21,7 @@ class PostController extends Controller
 
     public function create(CountryRepository $countryRepository)
     {
-        return Inertia::render('Admin/Posts/PostPage', ['personTitles' => PersonTitle::cases(), 'phoneCodes' => $countryRepository->getPhoneCodeOptions()]);
+        return Inertia::render('Admin/Posts/PostPage');
     }
 
     public function edit($id, CountryRepository $countryRepository)
@@ -29,14 +29,14 @@ class PostController extends Controller
         $post = Post::findOrFail($id);
         $postResource = new PostResource($post);
         $postResource->wrap(null);
-        return Inertia::render('Admin/Posts/PostPage', ['post' => $postResource, 'personTitles' => PersonTitle::cases(), 'phoneCodes' => $countryRepository->getPhoneCodeOptions()]);
+        return Inertia::render('Admin/Posts/PostPage', ['post' => $postResource]);
     }
 
     public function store(Request $request)
     {
         $request->validate([
             'title' => 'required|string',
-            'slug' => 'required|string|unique:posts,slug',
+            'slug' => 'required|string',
             'body' => 'nullable|string',
             'status' => 'required|in:0,1',
             'meta_title' => 'nullable|string',
@@ -54,7 +54,7 @@ class PostController extends Controller
     {
         $request->validate([
             'title' => 'required|string',
-            'slug' => 'required|string|unique:posts,slug,' . $id,
+            'slug' => 'required|string',
             'body' => 'nullable|string',
             'status' => 'required|in:0,1',
             'meta_title' => 'nullable|string',

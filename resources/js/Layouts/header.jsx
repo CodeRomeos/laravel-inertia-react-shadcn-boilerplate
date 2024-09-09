@@ -1,29 +1,19 @@
-import ThemeToggle from "../Components/ThemeToggle/theme-toggle";
-import { cn } from "@/shadcn";
-import { MobileSidebar } from "./mobile-sidebar";
-import { UserNav } from "./user-nav";
-import { BellRing } from "lucide-react";
-import { usePage } from "@inertiajs/react";
+import React from "react";
+import Nav from "./Nav";
+import { Link } from "@inertiajs/react";
+import { Package2 } from "lucide-react";
 
 export default function Header() {
-    const {appName} = usePage().props
     return (
-        <div className="fixed top-0 left-0 right-0 supports-backdrop-blur:bg-background/60 border-b bg-background/95 backdrop-blur z-20">
-            <nav className="h-14 flex items-center justify-between px-4">
-                <div className="hidden lg:block">
-                    <a href="/dashboard" className="flex gap-x-2 items-center">
-                        <p className="text-2xl dark:text-white">{appName}</p>
-                    </a>
-                </div>
-                <div className={cn("block lg:!hidden")}>
-                    <MobileSidebar />
-                </div>
-
-                <div className="flex items-center gap-2">
-                    <ThemeToggle />
-                    <UserNav />
-                </div>
-            </nav>
-        </div>
+        <header className="sticky top-0 bg-white flex h-16 items-center gap-4 border-b bg-background px-4 md:px-6">
+            <Link
+                href="#"
+                className="flex items-center gap-2 text-lg font-semibold md:text-base"
+            >
+                <Package2 className="h-6 w-6" />
+                <span className="sr-only">Acme Inc</span>
+            </Link>
+            <Nav />
+        </header>
     );
 }

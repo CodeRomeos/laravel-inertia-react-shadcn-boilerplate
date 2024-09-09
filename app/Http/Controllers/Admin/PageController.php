@@ -15,13 +15,13 @@ class PageController extends Controller
 {
     public function index(Request $request)
     {
-        $pages = Page::latest()->paginate($request->get('limit', config('app.pagination_limit')))->withQueryString();
+        $pages = Page::select('id', 'user_id', 'title', 'slug', 'created_at', 'updated_at', 'deleted_at')->latest()->paginate($request->get('limit', config('app.pagination_limit')))->withQueryString();
         return Inertia::render('Admin/Pages/Pages', ['pages' => PageResource::collection($pages)]);
     }
 
     public function create(CountryRepository $countryRepository)
     {
-        return Inertia::render('Admin/Pages/Page', ['personTitles' => PersonTitle::cases(), 'phoneCodes' => $countryRepository->getPhoneCodeOptions()]);
+        return Inertia::render('Admin/Pages/PuckPage', ['personTitles' => PersonTitle::cases(), 'phoneCodes' => $countryRepository->getPhoneCodeOptions()]);
     }
 
     public function edit($id, CountryRepository $countryRepository)
@@ -29,15 +29,15 @@ class PageController extends Controller
         $page = Page::findOrFail($id);
         $pageResource = new PageResource($page);
         $pageResource->wrap(null);
-        return Inertia::render('Admin/Pages/Page', ['page' => $pageResource, 'personTitles' => PersonTitle::cases(), 'phoneCodes' => $countryRepository->getPhoneCodeOptions()]);
+        return Inertia::render('Admin/Pages/PuckPage', ['page' => $pageResource, 'personTitles' => PersonTitle::cases(), 'phoneCodes' => $countryRepository->getPhoneCodeOptions()]);
     }
 
     public function store(Request $request)
     {
         $request->validate([
             'title' => 'required|string',
-            'slug' => 'required|string|unique:pages,slug',
-            'body' => 'nullable|string',
+            'slug' => 'required|string',
+            'body' => 'nullable',
             'status' => 'required|in:0,1',
             'meta_title' => 'nullable|string',
             'meta_description' => 'nullable|string'
@@ -54,8 +54,9 @@ class PageController extends Controller
     {
         $request->validate([
             'title' => 'required|string',
-            'slug' => 'required|string|unique:pages,slug,' . $id,
-            'body' => 'nullable|string',
+            'slug' => 'required|string',
+            'body' => 'nullable',
+            'puck_body' => 'nullable',
             'status' => 'required|in:0,1',
             'meta_title' => 'nullable|string',
             'meta_description' => 'nullable|string'
@@ -63,6 +64,7 @@ class PageController extends Controller
         $page = Page::findOrFail($id);
         $page->fill($request->all());
         $page->save();
+        $page->refresh();
         return redirect()->route('admin.pages.edit', $id)->with(['flash_type' => 'success', 'flash_message' => 'Page updated successfully', 'flash_description' => $page->title]);
     }
 }

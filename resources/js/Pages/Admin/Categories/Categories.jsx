@@ -18,7 +18,7 @@ import {
     DropdownMenuTrigger,
 } from "@/shadcn/ui/dropdown-menu";
 import RTable from "@/Components/RTable";
-import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
+import AuthenticatedLayout from "@/Layouts/admin/AuthenticatedLayout";
 import PageHeading from "@/Components/PageHeading";
 import Can from "@/Components/Can";
 

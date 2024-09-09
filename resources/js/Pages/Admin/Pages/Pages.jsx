@@ -19,7 +19,7 @@ import {
     DropdownMenuTrigger,
 } from "@/shadcn/ui/dropdown-menu";
 import RTable from "@/Components/RTable";
-import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
+import AuthenticatedLayout from "@/Layouts/admin/AuthenticatedLayout";
 import PageHeading from "@/Components/PageHeading";
 import Can from "@/Components/Can";
 
@@ -57,7 +57,7 @@ export const columns = [
         header: "Slug",
     },
     {
-        accessorKey: "crated_at_string",
+        accessorKey: "created_at_string",
         header: "Created At",
     },
     {
