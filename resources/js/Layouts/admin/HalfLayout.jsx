@@ -1,5 +1,5 @@
 import { ScrollArea } from "@/shadcn/ui/scroll-area";
-import AuthenticatedLayout from "./admin/AuthenticatedLayout";
+import AuthenticatedLayout from "./AuthenticatedLayout";
 
 export default function HalfLayout({ children, className = "" }) {
     return (
