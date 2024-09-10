@@ -117,7 +117,7 @@ const PagesList = ({pages, onAdd = () => {}}) => {
     const addToMenu = () => {
         onAdd(selected.map((id) => {
             const page = pages.find((page) => page.id === id);
-            return genLinkObject({url: page.url, label: page.title, link_type: "page", route_name: `pages.show`, route_params: {slug: page.slug}, slug: page.slug});
+            return genLinkObject({url: page.url, label: page.title, link_type: "page", route_name: `page`, route_params: {slug: page.slug}, slug: page.slug});
         }));
 
         selectedSet([]);
