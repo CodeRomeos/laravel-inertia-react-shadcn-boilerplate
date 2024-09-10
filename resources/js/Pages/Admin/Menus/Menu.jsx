@@ -33,7 +33,7 @@ import {
     SelectValue,
 } from "@/shadcn/ui/select";
 import Can from "@/Components/Can";
-import { SortableTree } from "./Tree/SortableTree";
+import { SortableTree } from "@/Components/Menus/Tree/SortableTree";
 import { Checkbox } from "@/shadcn/ui/checkbox";
 import { ScrollArea } from "@/shadcn/ui/scroll-area";
 import LoadingButton from "@/Components/LoadingButton";
