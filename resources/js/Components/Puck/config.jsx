@@ -1,9 +1,7 @@
-import Header from "@/Layouts/header";
 import { ButtonGroup } from "./Blocks/ButtonGroup";
 import { Card } from "./Blocks/Card";
 import { Columns } from "./Blocks/Columns";
 import { Flex } from "./Blocks/Flex";
-import SiteFooter from "@/Layouts/SiteFooter";
 import { Heading } from "./Blocks/Heading";
 import { Paragraph } from "./Blocks/Paragraph";
 import { WYSIWYG } from "./Blocks/WYSIWYG";
@@ -25,9 +23,7 @@ export const config = {
         render: ({ children }) => {
             return (
                 <div className="">
-                    {/* <Header /> */}
                     {children}
-                    {/* <SiteFooter /> */}
                 </div>
             );
         },

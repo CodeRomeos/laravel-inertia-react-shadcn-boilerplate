@@ -30,6 +30,7 @@ Route::prefix('blog')->name('blog.')->controller(PostController::class)->group(f
     
 });
 
+Route::redirect('/home', '/');
 Route::get('/', HomepageController::class)->name('homepage');
 
 Route::get('{slug}', PageController::class)->name('page');

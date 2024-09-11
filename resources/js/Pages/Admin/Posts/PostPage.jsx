@@ -8,7 +8,7 @@ import InputError from "@/Components/InputError";
 import React from "react";
 import EditorInput from "@/Components/EditorInput";
 import { textToSlug } from "@/Helpers/GlobalFunctions";
-import TwoColumnLayout from "@/Layouts/TwoColumnLayout";
+import TwoColumnLayout from "@/Layouts/admin/TwoColumnLayout";
 import { TextLarge, TextMuted } from "@/shadcn/ui/text-muted";
 import {
     Eye,

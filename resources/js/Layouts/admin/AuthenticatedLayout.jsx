@@ -1,5 +1,5 @@
 import React from "react";
-import ShadcnProvider from "./shadcn-provider";
+import ShadcnProvider from "../shadcn-provider";
 import { Toaster } from "@/shadcn/ui/sonner";
 import Header from "./header";
 import Sidebar from "./sidebar";
