@@ -33,7 +33,7 @@ import {
     SelectValue,
 } from "@/shadcn/ui/select";
 import Can from "@/Components/Can";
-import { SortableTree } from "./Tree/SortableTree";
+import { SortableTree } from "@/Components/Menus/Tree/SortableTree";
 import { Checkbox } from "@/shadcn/ui/checkbox";
 import { ScrollArea } from "@/shadcn/ui/scroll-area";
 import LoadingButton from "@/Components/LoadingButton";
@@ -117,7 +117,7 @@ const PagesList = ({pages, onAdd = () => {}}) => {
     const addToMenu = () => {
         onAdd(selected.map((id) => {
             const page = pages.find((page) => page.id === id);
-            return genLinkObject({url: page.url, label: page.title, link_type: "page", route_name: `pages.show`, route_params: {slug: page.slug}, slug: page.slug});
+            return genLinkObject({url: page.url, label: page.title, link_type: "page", route_name: `page`, route_params: {slug: page.slug}, slug: page.slug});
         }));
 
         selectedSet([]);

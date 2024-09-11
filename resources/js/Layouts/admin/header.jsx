@@ -1,9 +1,9 @@
 import ThemeToggle from "../../Components/ThemeToggle/theme-toggle";
 import { cn } from "@/shadcn";
 import { UserNav } from "../user-nav";
-import { BellRing } from "lucide-react";
 import { usePage } from "@inertiajs/react";
 import { MobileSidebar } from "./mobile-sidebar";
+import MainSiteIconLink from "@/Components/Admin/MainSiteIconLink";
 
 export default function Header() {
     const {appName} = usePage().props
@@ -20,6 +20,7 @@ export default function Header() {
                 </div>
 
                 <div className="flex items-center gap-2">
+                    <MainSiteIconLink />
                     <ThemeToggle />
                     <UserNav />
                 </div>

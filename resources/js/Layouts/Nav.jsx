@@ -1,118 +1,72 @@
-import React from 'react'
-import {
-    NavigationMenu,
-    NavigationMenuContent,
-    NavigationMenuIndicator,
-    NavigationMenuItem,
-    NavigationMenuLink,
-    NavigationMenuList,
-    NavigationMenuTrigger,
-    NavigationMenuViewport,
-    navigationMenuTriggerStyle,
-} from "@/shadcn/ui/navigation-menu";
-import { Link } from '@inertiajs/react';
-import { Package2 } from 'lucide-react';
-import { cn } from '@/shadcn';
+import React from "react";
+import { Link, usePage } from "@inertiajs/react";
+import { ChevronDownIcon, ChevronRightIcon, MoveRight } from "lucide-react";
 
-const ListItem = React.forwardRef(({ className, title, children, ...props }, ref) => {
-  return (
-    <li>
-      <NavigationMenuLink asChild>
-        <a
-          ref={ref}
-          className={cn(
-            "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
-            className
-          )}
-          {...props}
-        >
-          <div className="text-sm font-medium leading-none">{title}</div>
-          <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-            {children}
-          </p>
-        </a>
-      </NavigationMenuLink>
-    </li>
-  )
-})
-ListItem.displayName = "ListItem"
+const MenuLink = ({item, ...props}) => {
+    if(item.route_name) {
+        return <Link href={route(item.route_name, item.route_params)} {...props} />
+    }
+
+    return <a href={item.url} {...props} />;
+}
+
+const ParentItem = ({item}) => {
+    return (
+        <li className="group/dropdown relative inline-flex items-center transition duration-150 ease-in-out focus:outline-none cursor-pointer hover:bg-slate-100">
+            <MenuLink className="p-3.5 py-2 flex justify-between items-center" item={item}>
+                {item.label}{" "}
+                {item.children && item.children.length > 0 && (
+                    <ChevronDownIcon size="14" className="ml-2" />
+                )}
+            </MenuLink>
+
+            {item.children && item.children.length > 0 && (
+                <ul className="absolute opacity-0 group-hover/dropdown:opacity-100 h-0 invisible group-hover/dropdown:h-auto group-hover/dropdown:visible transition-all duration-500 animate-fadeInDown z-10 lg:absolute top-full left-0 right-0 m-auto bg-white min-w-[240px] shadow-lg">
+                    {item.children.map((child) => (
+                        <li
+                            key={child.id}
+                            className="group/submenu relative hover:bg-slate-100"
+                        >
+                            <MenuLink
+                                item={child}
+                                className="p-3.5 hover:bg-slate-100 w-full flex items-center justify-between"
+                            >
+                                {child.label}
+                                {child.children &&
+                                    child.children.length > 0 && (
+                                        <ChevronRightIcon size="14" />
+                                    )}
+                            </MenuLink>
+
+                            {child.children && child.children.length > 0 && (
+                                <ul className="absolute opacity-0 group-hover/submenu:opacity-100 w-0 invisible group-hover/submenu:w-auto group-hover/submenu:visible transition-all duration-500 animate-fadeInDown z-10 lg:absolute top-0 left-full m-auto bg-white min-w-[240px] shadow-lg">
+                                    {child.children.map((grandchild) => (
+                                        <li key={grandchild.id} className="">
+                                            <MenuLink
+                                                item={grandchild}
+                                                className="p-3.5 hover:bg-slate-100 w-full block"
+                                            >
+                                                {grandchild.label}
+                                            </MenuLink>
+                                        </li>
+                                    ))}
+                                </ul>
+                            )}
+                        </li>
+                    ))}
+                </ul>
+            )}
+        </li>
+    );
+}
 
 export default function Nav() {
-  return (
-      <nav className="hidden flex-col gap-6 text-lg font-medium md:flex md:flex-row md:items-center md:gap-5 md:text-sm lg:gap-6">
-          <NavigationMenu>
-              <NavigationMenuList>
-                  <NavigationMenuItem>
-                      <NavigationMenuTrigger>
-                          Getting started
-                      </NavigationMenuTrigger>
-                      <NavigationMenuContent>
-                          <ul className="bg-white grid gap-3 p-6 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
-                              <li className="row-span-3">
-                                  <NavigationMenuLink asChild>
-                                      <a
-                                          className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
-                                          href="/"
-                                      >
-                                          <Package2 className="h-6 w-6" />
-                                          <div className="mb-2 mt-4 text-lg font-medium">
-                                              shadcn/ui
-                                          </div>
-                                          <p className="text-sm leading-tight text-muted-foreground">
-                                              Beautifully designed components
-                                              that you can copy and paste into
-                                              your apps. Accessible.
-                                              Customizable. Open Source.
-                                          </p>
-                                      </a>
-                                  </NavigationMenuLink>
-                              </li>
-                              <ListItem href="/docs" title="Introduction">
-                                  Re-usable components built using Radix UI and
-                                  Tailwind CSS.
-                              </ListItem>
-                              <ListItem
-                                  href="/docs/installation"
-                                  title="Installation"
-                              >
-                                  How to install dependencies and structure your
-                                  app.
-                              </ListItem>
-                              <ListItem
-                                  href="/docs/primitives/typography"
-                                  title="Typography"
-                              >
-                                  Styles for headings, paragraphs, lists...etc
-                              </ListItem>
-                          </ul>
-                      </NavigationMenuContent>
-                  </NavigationMenuItem>
-                  <NavigationMenuItem>
-                      <NavigationMenuTrigger>Components</NavigationMenuTrigger>
-                      <NavigationMenuContent>
-                          <ul className="bg-white grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
-
-                                  <ListItem
-                                      title={'alskdfj'}
-                                      href={'#'}
-                                  >
-                                      dasldkfjasdlkfj
-                                  </ListItem>
-
-                          </ul>
-                      </NavigationMenuContent>
-                  </NavigationMenuItem>
-                  <NavigationMenuItem>
-                      <Link href="/docs" legacyBehavior passHref>
-                          <NavigationMenuLink
-                              className={navigationMenuTriggerStyle()}
-                          >
-                              Documentation
-                          </NavigationMenuLink>
-                      </Link>
-                  </NavigationMenuItem>
-              </NavigationMenuList>
-          </NavigationMenu>
-      </nav>
-  );
+    const {primaryMenu} = usePage().props;
+    return (
+        <nav className="hidden flex-col gap-6 text-lg font-medium md:flex md:flex-row md:items-center md:gap-5 md:text-sm lg:gap-6">
+            <ul className="flex">
+                {primaryMenu.items.map((item) => <ParentItem key={item.id} item={item} />)}
+            </ul>
+        </nav>
+    );
 }
