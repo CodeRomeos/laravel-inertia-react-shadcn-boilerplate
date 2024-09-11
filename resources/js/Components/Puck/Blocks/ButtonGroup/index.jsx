@@ -1,9 +1,8 @@
 /* eslint-disable @next/next/no-img-element */
 import React from "react";
-import "./ButtonGroup.css";
 import { Button } from "@/shadcn/ui/button";
-import { Section } from "../../Components/Section";
 import { Link } from "@inertiajs/react";
+import { AlignCenterVertical, AlignEndVertical, AlignHorizontalSpaceAround, AlignHorizontalSpaceBetween, AlignStartVertical } from "lucide-react";
 
 export const ButtonGroup = {
     label: "Button Group",
@@ -44,8 +43,21 @@ export const ButtonGroup = {
         align: {
             type: "radio",
             options: [
-                { label: "left", value: "left" },
-                { label: "center", value: "center" },
+                { label: <AlignStartVertical className="mx-auto" size={18} />, value: "start" },
+                { label: <AlignCenterVertical className="mx-auto" size={18} />, value: "center" },
+                { label: <AlignEndVertical className="mx-auto" size={18} />, value: "end" },
+            ],
+        },
+        justify: {
+            label: "Justify Content",
+            type: "radio",
+            options: [
+                { label: <AlignStartVertical className="mx-auto" size={18} />, value: "start" },
+                { label: <AlignCenterVertical className="mx-auto" size={18} />, value: "center" },
+                { label: <AlignEndVertical className="mx-auto" size={18} />, value: "end" },
+                { label: <AlignHorizontalSpaceBetween className="mx-auto" size={18} />, value: "between" },
+                { label: <AlignHorizontalSpaceAround className="mx-auto" size={18} />, value: "around" },
+                
             ],
         },
     },
@@ -59,27 +71,21 @@ export const ButtonGroup = {
             },
         ],
     },
-    render: ({ align, buttons, puck }) => {
+    render: ({ align, justify, buttons, puck }) => {
         return (
-            <Section
-                className={`${
-                    align === "center" ? "ButtonGroup-center" : "ButtonGroup"
-                } p-3`}
-            >
-                <div className="ButtonGroup-actions">
-                    {buttons.map((button, i) => (
-                        <Button
-                            key={i}
-                            asChild
-                            variant={button.variant}
-                            size={button.size}
-                            tabIndex={puck.isEditing ? -1 : undefined}
-                        >
-                            <Link href={button.href}>{button.label}</Link>
-                        </Button>
-                    ))}
-                </div>
-            </Section>
+            <div className={`flex align-${align} justify-${justify}`}>
+                {buttons.map((button, i) => (
+                    <Button
+                        key={i}
+                        asChild
+                        variant={button.variant}
+                        size={button.size}
+                        tabIndex={puck.isEditing ? -1 : undefined}
+                    >
+                        <Link href={button.href}>{button.label}</Link>
+                    </Button>
+                ))}
+            </div>
         );
     },
 };
