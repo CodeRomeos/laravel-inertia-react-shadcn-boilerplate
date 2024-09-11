@@ -1,22 +1,12 @@
+import React from "react";
 import { Button } from "@/shadcn/ui/button";
 import { Head, Link } from "@inertiajs/react";
 import PageHeading from "@/Components/PageHeading";
-import { useForm } from "@inertiajs/react";
-import { Label } from "@/shadcn/ui/label";
-import { Input } from "@/shadcn/ui/input";
-import InputError from "@/Components/InputError";
-import React from "react";
-import EditorInput from "@/Components/EditorInput";
-import { textToSlug } from "@/Helpers/GlobalFunctions";
 import TwoColumnLayout from "@/Layouts/admin/TwoColumnLayout";
 import { TextLarge, TextMuted } from "@/shadcn/ui/text-muted";
 import {
-    Info,
-    Mail,
-    MapPin,
     MoreHorizontal,
     PencilLine,
-    Phone,
     PlusCircle,
 } from "lucide-react";
 import ShadcnCard from "@/Components/ShadcnCard";

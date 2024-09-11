@@ -57,7 +57,7 @@ export const columns = [
         header: "Slug",
     },
     {
-        accessorKey: "crated_at_string",
+        accessorKey: "cratead_at_string",
         header: "Created At",
     },
     {
@@ -76,7 +76,7 @@ export const columns = [
                     {row.original.status == 1 && (
                         <Button asChild size="icon">
                             <Link
-                                href={route("page", row.original.slug)}
+                                href={route("blog.post", row.original.slug)}
                                 target="_blank"
                             >
                                 <Eye className="h-4 w-4" />
@@ -84,7 +84,7 @@ export const columns = [
                         </Button>
                     )}
 
-                    <Can permit="edit pages">
+                    <Can permit="edit posts">
                         <Button asChild variant="outline" size="icon">
                             <Link
                                 href={route(
@@ -112,7 +112,7 @@ export const columns = [
                                 Copy payment ID
                             </DropdownMenuItem>
                             <DropdownMenuSeparator />
-                            <DropdownMenuItem>View page</DropdownMenuItem>
+                            <DropdownMenuItem>View Post</DropdownMenuItem>
                             <DropdownMenuItem>
                                 View payment details
                             </DropdownMenuItem>
@@ -138,10 +138,10 @@ export default function Posts({ posts }) {
                         </PageHeading.Title>
 
                         <PageHeading.Actions>
-                            <Can permit="export pages">
+                            <Can permit="export posts">
                                 <Button variant="outline">Export</Button>
                             </Can>
-                            <Can permit="create pages">
+                            <Can permit="create posts">
                                 <Button asChild>
                                     <Link href={route("admin.posts.create")}>
                                         <PlusCircle className="h-4 w-4 mr-2" />{" "}
