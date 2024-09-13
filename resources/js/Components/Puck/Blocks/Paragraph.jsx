@@ -2,6 +2,7 @@
 import React from "react";
 import { Autofield } from "@measured/puck";
 import { bgColorField, borderField, borderRadiusField, marginFields, paddingFields, textColorField } from "./CommonBlockProps";
+import { AlignCenter, AlignLeft, AlignRight } from "lucide-react";
 
 export const Paragraph = {
     label: "Paragraph",
@@ -10,9 +11,9 @@ export const Paragraph = {
         align: {
             type: "radio",
             options: [
-                { label: "left", value: "left" },
-                { label: "center", value: "center" },
-                { label: "right", value: "right" },
+                { label: <AlignLeft className="mx-auto" size={18} />, value: "left" },
+                { label: <AlignCenter className="mx-auto" size={18} />, value: "center" },
+                { label: <AlignRight className="mx-auto" size={18} />, value: "right" },
             ],
         },
 

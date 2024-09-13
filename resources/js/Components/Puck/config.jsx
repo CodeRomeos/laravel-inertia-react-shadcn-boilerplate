@@ -9,6 +9,8 @@ import { HTMLCodeEditor } from "./Blocks/HTMLCodeEditor";
 import { WYSIWYG2 } from "./Blocks/WYSIWYG2";
 import { Image } from "./Blocks/Image";
 import { VerticalSpace } from "./Blocks/VerticalSpace";
+import { ButtonComponent } from "./Blocks/ButtonComponent";
+
 
 
 // Create Puck component config
@@ -39,12 +41,13 @@ export const config = {
             components: ["Flex", "Columns"],
         },
         blocks: {
-            components: ["Card", "ButtonGroup", "Image", "VerticalSpace"],
+            components: ["ButtonComponent", "Card", "ButtonGroup", "Image", "VerticalSpace"],
         },
     },
     components: {
         Flex,
         Columns,
+        ButtonComponent,
         ButtonGroup,
         Card,
         Heading,
