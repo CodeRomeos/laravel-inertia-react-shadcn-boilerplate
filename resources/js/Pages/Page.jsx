@@ -1,9 +1,9 @@
 import { config } from "@/Components/Puck/config";
 import BlankLayout from "@/Layouts/blank-layout";
+import Footer from "@/Layouts/Footer";
 import Header from "@/Layouts/Header";
 import { Head } from "@inertiajs/react";
 import { Render } from "@measured/puck";
-
 
 export default function Page({ page }) {
     return (
@@ -16,6 +16,7 @@ export default function Page({ page }) {
             <div className="content overflow-y-visible h-auto">
                 <Render config={config} data={page.puck_body} />
             </div>
+            <Footer />
         </div>
     );
 }

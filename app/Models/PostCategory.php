@@ -3,38 +3,25 @@
 namespace App\Models;
 
 use App\Traits\ActivityLoggable;
-use App\Traits\HasSlug;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Post extends Model
+class PostCategory extends Model
 {
-    use HasFactory, ActivityLoggable, SoftDeletes, HasSlug;
+    use HasFactory, SoftDeletes, ActivityLoggable;
 
     protected $guarded = ['id'];
 
-    public function casts()
+    public function posts()
     {
-        return [
-            'created_at' => 'datetime:Y-m-d H:i:s',
-        ];
+        return $this->belongsToMany(Post::class, 'post_post_category', 'post_category_id', 'post_id')->latest();
     }
 
     public function user()
     {
         return $this->belongsTo(User::class);
-    }
-
-    public function categories()
-    {
-        return $this->belongsToMany(PostCategory::class, 'post_post_category', 'post_id', 'post_category_id');
-    }
-
-    function scopePublished($posts)
-    {
-        return $posts->where('status', 1);
     }
 
     function image(): MorphOne

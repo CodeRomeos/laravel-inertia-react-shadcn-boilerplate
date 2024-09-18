@@ -1,10 +1,11 @@
-import BlankLayout from "@/Layouts/blank-layout";
+import PageLayout from "@/Layouts/PageLayout";
 import { Head, Link } from "@inertiajs/react";
 
 export default function Blog({ posts }) {
     return (
-        <BlankLayout>
+        <PageLayout>
             <Head title="Blog" />
+
             <h2 className="text-3xl font-bold">Blog</h2>
             <ul>
                 {posts.data.map((post) => (
@@ -18,6 +19,6 @@ export default function Blog({ posts }) {
                     </li>
                 ))}
             </ul>
-        </BlankLayout>
+        </PageLayout>
     );
 }

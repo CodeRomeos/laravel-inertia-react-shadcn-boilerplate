@@ -11,8 +11,10 @@ use App\Http\Controllers\Admin\MenuController;
 use App\Http\Controllers\Admin\NoteController;
 use App\Http\Controllers\Admin\PageController;
 use App\Http\Controllers\Admin\PaymentMethodController;
+use App\Http\Controllers\Admin\PostCategoryController;
 use App\Http\Controllers\Admin\PostController;
 use App\Http\Controllers\Admin\Role\RoleController;
+use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\Users\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -68,6 +70,14 @@ Route::prefix('admin')->name('admin.')->middleware(['web', 'auth'])->group(funct
         Route::get('', 'index')->name('index')->middleware(['can:view pages']);
     });
 
+    Route::prefix('post-categories')->name('postCategories.')->controller(PostCategoryController::class)->group(function () {
+        Route::post('update/{id}', 'update')->name('update')->middleware(['can:edit post categories']);
+        Route::post('store', 'store')->name('store')->middleware(['can:create post categories']);
+        Route::get('create', 'create')->name('create')->middleware(['can:create post categories']);
+        Route::get('{id}', 'edit')->name('edit')->middleware(['can:edit post categories']);
+        Route::get('', 'index')->name('index')->middleware(['can:view post categories']);
+    });
+
     Route::prefix('posts')->name('posts.')->controller(PostController::class)->group(function () {
         Route::post('update/{id}', 'update')->name('update')->middleware(['can:edit posts']);
         Route::post('store', 'store')->name('store')->middleware(['can:create posts']);
@@ -116,6 +126,11 @@ Route::prefix('admin')->name('admin.')->middleware(['web', 'auth'])->group(funct
 
     Route::prefix('comments')->name('comments.')->controller(CommentController::class)->group(function () {
         Route::post('store', 'store')->name('store')->middleware(['can:create comments']);
+    });
+
+    Route::prefix('settings')->name('settings.')->controller(SettingController::class)->group(function () {
+        Route::post('{groupKey?}', 'update')->name('update');
+        Route::get('{groupKey?}', 'view')->name('view');
     });
 
     Route::get('/dashboard', DashboardController::class)->middleware(['auth', 'verified'])->name('dashboard');

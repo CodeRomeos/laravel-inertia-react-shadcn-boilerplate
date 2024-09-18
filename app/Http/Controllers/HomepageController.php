@@ -11,7 +11,9 @@ class HomepageController extends Controller
     public function __invoke()
     {
         $page = Page::slug('home')->firstOrFail();
-        $page->increment('views');
+        activity()->withoutLogs(function () use($page) {
+            $page->increment('views');
+        });
 
         return Inertia::render('Homepage', ['page' => $page]);
     }

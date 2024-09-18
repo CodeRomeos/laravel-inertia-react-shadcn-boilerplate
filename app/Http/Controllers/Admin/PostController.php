@@ -7,32 +7,35 @@ use App\Http\Controllers\Controller;
 use Inertia\Inertia;
 use App\Models\Post;
 use App\Http\Resources\PostResource;
-use App\Models\Country;
-use App\Repositories\CountryRepository;
+use App\Models\PostCategory;
+use App\Repositories\PostRepository;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
     public function index(Request $request)
     {
-        $posts = Post::latest()->paginate($request->get('limit', config('app.pagination_limit')))->withQueryString();
+        $posts = Post::with('image', 'categories')->latest()->paginate($request->get('limit', config('app.pagination_limit')))->withQueryString();
         return Inertia::render('Admin/Posts/Posts', ['posts' => PostResource::collection($posts)]);
     }
 
-    public function create(CountryRepository $countryRepository)
+    public function create()
     {
-        return Inertia::render('Admin/Posts/PostPage');
+        $postCategories = PostCategory::select('id', 'name')->orderBy('name')->get();
+
+        return Inertia::render('Admin/Posts/PostPage', ['postCategories' => $postCategories]);
     }
 
-    public function edit($id, CountryRepository $countryRepository)
+    public function edit($id)
     {
-        $post = Post::findOrFail($id);
+        $post = Post::with('image', 'categories')->findOrFail($id);
         $postResource = new PostResource($post);
         $postResource->wrap(null);
-        return Inertia::render('Admin/Posts/PostPage', ['post' => $postResource]);
+        $postCategories = PostCategory::select('id', 'name')->orderBy('name')->get();
+        return Inertia::render('Admin/Posts/PostPage', ['post' => $postResource, 'postCategories' => $postCategories]);
     }
 
-    public function store(Request $request)
+    public function store(Request $request, PostRepository $postRepository)
     {
         $request->validate([
             'title' => 'required|string',
@@ -40,17 +43,22 @@ class PostController extends Controller
             'body' => 'nullable|string',
             'status' => 'required|in:0,1',
             'meta_title' => 'nullable|string',
-            'meta_description' => 'nullable|string'
+            'meta_description' => 'nullable|string',
+            'image' => 'nullable|image',
+            'category_ids' => 'required|array',
+            'category_ids.*' => 'exists:post_categories,id'
         ]);
 
         $request->merge(['user_id' => auth()->user()->id]);
 
         $post = Post::create($request->all());
+        $postRepository->uploadImage($post, $request, 'image');
+        $post->categories()->sync($request->get('category_ids'));
 
         return redirect()->route('admin.posts.edit', $post->id)->with(['flash_type' => 'success', 'flash_message' => 'Post created successfully', 'flash_description' => $post->title]);
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, PostRepository $postRepository, $id)
     {
         $request->validate([
             'title' => 'required|string',
@@ -58,11 +66,16 @@ class PostController extends Controller
             'body' => 'nullable|string',
             'status' => 'required|in:0,1',
             'meta_title' => 'nullable|string',
-            'meta_description' => 'nullable|string'
+            'meta_description' => 'nullable|string',
+            'image' => 'nullable|image',
+            'category_ids' => 'required|array',
+            'category_ids.*' => 'exists:post_categories,id'
         ]);
         $post = Post::findOrFail($id);
         $post->fill($request->all());
         $post->save();
+        $postRepository->uploadImage($post, $request, 'image');
+        $post->categories()->sync($request->get('category_ids'));
         return redirect()->route('admin.posts.edit', $id)->with(['flash_type' => 'success', 'flash_message' => 'Post updated successfully', 'flash_description' => $post->title]);
     }
 }
