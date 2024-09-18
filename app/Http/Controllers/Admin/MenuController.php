@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\MenuResource;
 use App\Models\Menu;
-use App\Models\Page;
+use App\Repositories\MenuRepository;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -21,24 +21,20 @@ class MenuController extends Controller
         ]);
     }
 
-    public function create()
+    public function create(MenuRepository $menuRepository)
     {
-        $pages = Page::select('id', 'slug', 'title', 'status', 'created_at')->published()->latest()->orderBy('title')->get();
-
         return Inertia::render('Admin/Menus/Menu', [
-            'pages' => $pages
+            'pages' => $menuRepository->getPageListForMenu(),
         ]);
     }
 
-    public function edit(Menu $menu)
+    public function edit(Menu $menu, MenuRepository $menuRepository)
     {
-        $pages = Page::select('id', 'slug', 'title', 'status', 'created_at')->published()->latest()->orderBy('title')->get();
-
         $menuResource = new MenuResource($menu);
         $menuResource->wrap(null);
 
         return Inertia::render('Admin/Menus/Menu', [
-            'pages' => $pages,
+            'pages' => $menuRepository->getPageListForMenu(),
             'menu' => $menuResource,
         ]);
     }
