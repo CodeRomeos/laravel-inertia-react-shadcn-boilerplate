@@ -1,11 +1,11 @@
-import ShadcnProvider from "./shadcn-provider";
+import SiteParentLayout from "./SiteParentLayout";
 
 export default function BlankLayout({ children }) {
     return (
-        <ShadcnProvider>
+        <SiteParentLayout>
             <main className="w-full tracking-tight bg-background">
                 {children}
             </main>
-        </ShadcnProvider>
+        </SiteParentLayout>
     );
 }
