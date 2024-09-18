@@ -1,11 +1,9 @@
 import PageLayout from "@/Layouts/PageLayout";
-import { Head, Link } from "@inertiajs/react";
+import { Link } from "@inertiajs/react";
 
-export default function Blog({ posts }) {
+const Blog = ({ posts }) => {
     return (
-        <PageLayout>
-            <Head title="Blog" />
-
+        <>
             <h2 className="text-3xl font-bold">Blog</h2>
             <ul>
                 {posts.data.map((post) => (
@@ -19,6 +17,16 @@ export default function Blog({ posts }) {
                     </li>
                 ))}
             </ul>
-        </PageLayout>
+        </>
     );
 }
+
+Blog.layout = (page) => (
+    <PageLayout
+        children={page}
+        title="Blog"
+        metaDescription="Blog"
+    />
+);
+
+export default Blog
