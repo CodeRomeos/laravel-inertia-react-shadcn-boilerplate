@@ -79,8 +79,13 @@ Route::prefix('admin')->name('admin.')->middleware(['web', 'auth'])->group(funct
     });
 
     Route::prefix('posts')->name('posts.')->controller(PostController::class)->group(function () {
+        Route::delete('delete-permanently/{id}', 'deletePermanently')->name('deletePermanently')->middleware(['can:delete posts']);
+        Route::delete('delete/{id}', 'delete')->name('delete')->middleware(['can:delete posts']);
+        Route::post('restore/{id}', 'restore')->name('restore')->middleware(['can:edit posts']);
+        Route::post('update/{id}', 'update')->name('update')->middleware(['can:edit posts']);
         Route::post('update/{id}', 'update')->name('update')->middleware(['can:edit posts']);
         Route::post('store', 'store')->name('store')->middleware(['can:create posts']);
+        Route::get('trashed', 'trashed')->name('trashed')->middleware(['can:view posts']);
         Route::get('create', 'create')->name('create')->middleware(['can:create posts']);
         Route::get('{id}', 'edit')->name('edit')->middleware(['can:edit posts']);
         Route::get('', 'index')->name('index')->middleware(['can:view posts']);
