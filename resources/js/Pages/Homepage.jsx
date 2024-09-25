@@ -9,10 +9,16 @@ const Homepage = ({ page }) => (
     />
 );
 
-Homepage.layout = page => <PageLayout
+Homepage.layout = (page) => (
+    <PageLayout
         children={page}
-        title={page.props.page.meta_title ? page.props.page.meta_title : page.props.page.title}
+        title={
+            page.props.page.meta_title
+                ? page.props.page.meta_title
+                : page.props.page.title
+        }
         metaDescription={page.props.page.meta_description}
     />
+);
 
 export default Homepage;
