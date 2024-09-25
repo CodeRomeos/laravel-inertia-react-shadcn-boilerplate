@@ -19,11 +19,9 @@ class DatabaseSeeder extends Seeder
         // ]);
 
         $this->call([
-            PaymentMethodSeeder::class,
             RoleSeeder::class,
             UserSeeder::class,
-            BankAccountSeeder::class,
-            CardSeeder::class,
+            PageSeeder::class,
             CountrySeeder::class,
             StateSeeder::class,
             CitySeeder::class,

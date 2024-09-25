@@ -18,7 +18,21 @@ class PageSeeder extends Seeder
             'title' => 'Home',
             'slug' => 'home',
             'body' => null,
-            'puck_body' => null,
+            'puck_body' => [
+                'content' => [],
+                'root' => [],
+            ],
+            'status' => 1
+        ]);
+        Page::firstOrCreate([
+            'user_id' => 1,
+            'title' => 'About Us',
+            'slug' => 'about-us',
+            'body' => null,
+            'puck_body' => [
+                'content' => [],
+                'root' => [],
+            ],
             'status' => 1
         ]);
     }
