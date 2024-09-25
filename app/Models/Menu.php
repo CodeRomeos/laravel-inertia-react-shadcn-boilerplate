@@ -25,9 +25,9 @@ class Menu extends Model
 
     protected static function booted(): void
     {
-        static::updated(function (Model $model) {
-            Cache::forget("menus.{$model->slug}");
-        });
+        // static::updated(function (Model $model) {
+        //     Cache::forget("menus.{$model->slug}");
+        // });
     }
 
     public function setSlugAttribute($value)

@@ -7,6 +7,7 @@ use App\Http\Resources\MenuResource;
 use App\Models\Menu;
 use App\Repositories\MenuRepository;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Inertia\Inertia;
 
 class MenuController extends Controller
@@ -58,7 +59,8 @@ class MenuController extends Controller
             'name' => 'required',
             'slug' => 'required|unique:menus,slug,' . $menu->id,
         ]);
-
+        
+        Cache::forget("menus.{$menu->slug}");
         $menu->update($request->all());
         $menu->refresh();
 
