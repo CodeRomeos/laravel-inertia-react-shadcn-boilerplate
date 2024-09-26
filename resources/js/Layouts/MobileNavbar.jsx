@@ -31,12 +31,15 @@ const ParentItem = ({item}) => {
         <li className="">
             {item.children && item.children.length > 0 ? (
                 <Accordion type="single" collapsible className="w-full">
-                    <AccordionItem value={item.id} className="border-none">
+                    <AccordionItem
+                        value={item.id}
+                        className="border-none border-red-500"
+                    >
                         <AccordionTrigger className="no-underline">
                             {item.label}
                         </AccordionTrigger>
                         <AccordionContent>
-                            <ul>
+                            <ul class="bg-slate-200 px-4">
                                 {item.children.map((child) => (
                                     <li key={child.id} className="">
                                         {child.children &&
@@ -53,11 +56,11 @@ const ParentItem = ({item}) => {
                                                     <AccordionTrigger className="no-underline">
                                                         {child.label}
                                                     </AccordionTrigger>
-                                                    <AccordionContent>
+                                                    <AccordionContent className="p-0 bg-slate-300">
                                                         {child.children &&
                                                             child.children
                                                                 .length > 0 && (
-                                                                <ul className="">
+                                                                <ul className="mb-4">
                                                                     {child.children.map(
                                                                         (
                                                                             grandchild
@@ -72,7 +75,7 @@ const ParentItem = ({item}) => {
                                                                                     item={
                                                                                         grandchild
                                                                                     }
-                                                                                    className=""
+                                                                                    className="p-3 block"
                                                                                 >
                                                                                     {
                                                                                         grandchild.label
@@ -101,7 +104,7 @@ const ParentItem = ({item}) => {
                     </AccordionItem>
                 </Accordion>
             ) : (
-                <MenuLink className="py-3 block" item={item}>
+                <MenuLink className="py-2 block" item={item}>
                     {item.label}
                 </MenuLink>
             )}
