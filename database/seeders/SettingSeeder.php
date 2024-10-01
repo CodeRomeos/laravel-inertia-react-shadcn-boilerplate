@@ -32,7 +32,7 @@ class SettingSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'id' => 3,
+                'id' => 2,
                 'parent_id' => 1,
                 'key' => 'site_identity',
                 'name' => 'Site Identity',
@@ -41,11 +41,21 @@ class SettingSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
+            [
+                'id' => 3,
+                'parent_id' => 1,
+                'key' => 'site_footer',
+                'name' => 'Site Footer',
+                'description' => 'Site footer settings',
+                'order' => 1,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
         ];
 
         $settings = [
             [
-                'setting_group_id' => 3,
+                'setting_group_id' => 2,
                 'name' => 'App Name',
                 'description' => 'Application name',
                 'key' => 'app_name',
@@ -56,7 +66,7 @@ class SettingSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'setting_group_id' => 3,
+                'setting_group_id' => 2,
                 'name' => 'Logo',
                 'description' => 'Application logo',
                 'key' => 'app_logo',
@@ -67,13 +77,24 @@ class SettingSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'setting_group_id' => 3,
+                'setting_group_id' => 2,
                 'name' => 'Favicon',
                 'description' => 'Application Favicon',
                 'key' => 'app_favicon',
                 'value' => '',
                 'type' => 'image',
                 'order' => 2,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'setting_group_id' => 3,
+                'name' => 'Footer Text',
+                'description' => 'Footer text below the logo',
+                'key' => 'app_footer_logo_text',
+                'value' => '',
+                'type' => 'textarea',
+                'order' => 3,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],

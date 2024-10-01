@@ -30,11 +30,7 @@ export default function Footer() {
                             {globalSettings.general.app_name || appName}
                         </span>
                         <p className="text-xs">
-                            Lorem ipsum, dolor sit amet consectetur adipisicing
-                            elit. Iusto maiores excepturi delectus nam pariatur
-                            commodi libero, non impedit! Et labore ducimus
-                            perferendis placeat deserunt impedit fugiat.
-                            Reiciendis autem accusamus quam.
+                            {globalSettings.general.app_footer_logo_text}
                         </p>
 
                         <Link
