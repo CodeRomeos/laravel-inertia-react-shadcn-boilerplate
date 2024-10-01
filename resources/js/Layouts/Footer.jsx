@@ -134,7 +134,8 @@ export default function Footer() {
                 </div>
             </div>
             <div className="py-6 text-sm text-center">
-                © Acme. All rights reserved.
+                © {globalSettings.general.app_name || appName}. All rights
+                reserved.
             </div>
         </footer>
     );
