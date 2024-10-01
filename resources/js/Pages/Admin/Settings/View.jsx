@@ -72,7 +72,7 @@ export default function View({
                                 className="md:grid md:grid-cols-3 mb-8"
                             >
                                 <div>
-                                    <h3 className="text-xl font-medium leading-6 text-gray-900 mb-4 sm:mb-0">
+                                    <h3 className="text-xl font-medium leading-6 text-primary mb-4 sm:mb-0">
                                         {subgroup.name}
                                     </h3>
                                     <p className="text-sm text-muted-foreground my-2">

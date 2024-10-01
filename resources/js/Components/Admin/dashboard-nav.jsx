@@ -150,7 +150,7 @@ const NavItem = ({ item }) => {
             className={cn(
                 `${
                     open
-                        ? "bg-primary text-primary-foreground dark:text-secondary-foreground"
+                        ? "bg-primary text-primary-foreground "
                         : ""
                 } rounded`
             )}

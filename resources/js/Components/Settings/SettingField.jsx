@@ -84,7 +84,7 @@ export default function SettingField({ setting, value, options, onChange }) {
         <div>
             <div className="flex gap-2 items-center justify-between mb-2">
                 <label
-                    className="block font-medium leading-6 text-gray-900"
+                    className="block font-medium leading-6"
                     htmlFor={setting.key}
                 >
                     {setting.name}
