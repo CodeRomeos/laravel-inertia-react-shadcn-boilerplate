@@ -155,9 +155,9 @@ export const columns = [
 ];
 
 export default function Posts({
-    posts,
-    totalPostCount,
-    totalTrashedPostCount,
+    collection,
+    totalCount,
+    totalTrashedCount,
 }) {
     const blogBaseUrl = usePage().props.blogBaseUrl;
 
@@ -288,7 +288,7 @@ export default function Posts({
                             }
                         >
                             <Link href={route("admin.posts.index")}>
-                                All ({totalPostCount})
+                                All ({totalCount})
                             </Link>
                         </Button>
 
@@ -301,13 +301,13 @@ export default function Posts({
                             }
                         >
                             <Link href={route("admin.posts.trashed")}>
-                                Trashed ({totalTrashedPostCount})
+                                Trashed ({totalTrashedCount})
                             </Link>
                         </Button>
                     </div>
                     <PageHeading>
                         <PageHeading.Title>
-                            Posts ({posts.meta.total})
+                            Posts ({collection.meta.total})
                         </PageHeading.Title>
 
                         <PageHeading.Actions>
@@ -326,12 +326,12 @@ export default function Posts({
                     </PageHeading>
                     <div className="grid gap-4 grid-cols-1">
                         <RTable
-                            data={posts.data}
+                            data={collection.data}
                             columns={columns}
-                            searchColumns={["name"]}
+                            searchColumns={["title"]}
                             // exportable
-                            paginationLinks={posts.links}
-                            meta={posts.meta}
+                            paginationLinks={collection.links}
+                            meta={collection.meta}
                         />
                     </div>
                 </div>

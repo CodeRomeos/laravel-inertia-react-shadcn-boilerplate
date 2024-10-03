@@ -2,26 +2,39 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Enums\PersonTitle;
 use App\Http\Controllers\Controller;
 use Inertia\Inertia;
 use App\Models\Post;
 use App\Http\Resources\PostResource;
 use App\Models\PostCategory;
 use App\Repositories\PostRepository;
+use App\Http\Traits\DeleteableActions;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
+    use DeleteableActions;
+
+    public $repository;
+    public $resource = 'App\Http\Resources\PostResource';
+    public $indexComponent = 'Admin/Posts/Posts';
+    public $singular = 'post';
+    public $plural = 'posts';
+
+    public function __construct(PostRepository $repository)
+    {
+        $this->repository = $repository;
+    }
+
     public function index(Request $request)
     {
-        $posts = Post::with('image')->latest()->paginate($request->get('limit', config('app.pagination_limit')))->withQueryString();
-        $totalPostCount = Post::count();
-        $totalTrashedPostCount = Post::onlyTrashed()->count();
+        $collection = $this->repository->model->with('image')->latest()->paginate($request->get('limit', config('app.pagination_limit')))->withQueryString();
+        $totalCount = $this->repository->model->count();
+        $totalTrashedCount = Post::onlyTrashed()->count();
         return Inertia::render('Admin/Posts/Posts', [
-            'posts' => PostResource::collection($posts),
-            'totalPostCount' => $totalPostCount,
-            'totalTrashedPostCount' => $totalTrashedPostCount,
+            'collection' => PostResource::collection($collection),
+            'totalCount' => $totalCount,
+            'totalTrashedCount' => $totalTrashedCount,
         ]);
     }
 
@@ -83,44 +96,5 @@ class PostController extends Controller
         $postRepository->uploadImage($post, $request, 'image');
         $post->categories()->sync($request->get('category_ids'));
         return redirect()->route('admin.posts.edit', $id)->with(['flash_type' => 'success', 'flash_message' => 'Post updated successfully', 'flash_description' => $post->title]);
-    }
-
-    public function trashed()
-    {
-        $posts = Post::onlyTrashed()->latest()->paginate(config('app.pagination_limit'));
-        $totalPostCount = Post::count();
-        $totalTrashedPostCount = Post::onlyTrashed()->count();
-        return Inertia::render('Admin/Posts/Posts', [
-            'posts' => PostResource::collection($posts),
-            'totalPostCount' => $totalPostCount,
-            'totalTrashedPostCount' => $totalTrashedPostCount,
-        ]);
-    }
-
-    public function delete($id)
-    {
-        $post = Post::findOrFail($id);
-        $title = $post->title;
-        $id = $post->id;
-        $post->delete();
-        return redirect()->back()->with(['flash_type' => 'success', 'flash_message' => 'Post deleted successfully', 'flash_description' => $title . ' with id ' . $id]);
-    }
-
-    public function deletePermanently($id)
-    {
-        $post = Post::withTrashed()->findOrFail($id);
-        $title = $post->title;
-        $id = $post->id;
-        $post->forceDelete();
-        return redirect()->back()->with(['flash_type' => 'success', 'flash_message' => 'Post deleted permanently.', 'flash_description' => $title . ' with id ' . $id]);
-    }
-
-    public function restore($id)
-    {
-        $post = Post::withTrashed()->findOrFail($id);
-        $title = $post->title;
-        $id = $post->id;
-        $post->restore();
-        return redirect()->back()->with(['flash_type' => 'success', 'flash_message' => 'Post restored successfully.', 'flash_description' => $title . ' with id ' . $id]);
     }
 }
