@@ -1,7 +1,7 @@
 import React from "react";
 import ShadcnProvider from "../shadcn-provider";
 import { Toaster } from "@/shadcn/ui/sonner";
-import Header from "./header";
+import Header from "./Header";
 import Sidebar from "./sidebar";
 import { usePage } from "@inertiajs/react";
 import { toast } from "sonner";
@@ -28,7 +28,7 @@ export default function AuthenticatedLayout({ children }) {
             <Header />
             <div className="flex h-screen overflow-hidden">
                 <Sidebar />
-                <div className="w-full tracking-tight bg-background">
+                <div className="w-full pt-12 tracking-tight bg-background">
                     {/* <div className="flex-1 space-y-4 p-4 md:p-8 pt-6">
                       {flash.message && (
                           <Alert>

@@ -1,12 +1,12 @@
 import { cn } from "@/shadcn";
-import { navItems } from "@/data/nav-data";
+import { navItems } from "@/data/admin/nav-data";
 import { DashboardNav } from "@/Components/Admin/dashboard-nav";
 
 export default function Sidebar() {
     return (
         <nav
             className={cn(
-                `relative hidden h-screen border-r lg:block w-72`
+                `relative hidden h-screen border-r pt-16 lg:block w-72`
             )}
         >
             <div className="space-y-4 py-4">

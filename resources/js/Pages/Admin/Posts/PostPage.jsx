@@ -33,8 +33,9 @@ import Screenshot from "@/Components/Screenshot";
 import Can from "@/Components/Can";
 import PostForm from "@/Components/Posts/PostForm";
 
-export default function PostPage({ post }) {
-    
+export default function PostPage({ post, postCategories }) {
+    let params = new URLSearchParams(window.location.search);
+    const copyPost = JSON.parse(params.get('copyPost')) || null;
     return (
         <TwoColumnLayout>
             <Head>
@@ -60,7 +61,7 @@ export default function PostPage({ post }) {
                     </PageHeading.Title>
                     <PageHeading.Actions>
                         {(post && post.status) && <Button asChild size="icon" variant="link">
-                            <Link href={route("blog.post", post.slug)} target="_blank"><Eye className="h-4 w-4" /></Link>
+                            <a href={route("blog.post", post.slug)} target="_blank"><Eye className="h-4 w-4" /></a>
                         </Button>}
                         <Button asChild variant="outline">
                             <Link href={route("admin.posts.index")}>Cancel</Link>
@@ -73,30 +74,6 @@ export default function PostPage({ post }) {
                                 </Link>
                             </Button>
                         </Can>
-                        <DropdownMenu>
-                            <DropdownMenuTrigger asChild>
-                                <Button variant="ghost" className="h-8 w-8 p-0">
-                                    <span className="sr-only">Open menu</span>
-                                    <MoreHorizontal className="h-4 w-4" />
-                                </Button>
-                            </DropdownMenuTrigger>
-                            <DropdownMenuContent align="end">
-                                <DropdownMenuItem
-                                    onClick={() =>
-                                        navigator.clipboard.writeText(
-                                            payment.id
-                                        )
-                                    }
-                                >
-                                    Copy payment ID
-                                </DropdownMenuItem>
-                                <DropdownMenuSeparator />
-                                <DropdownMenuItem>View post</DropdownMenuItem>
-                                <DropdownMenuItem>
-                                    View payment details
-                                </DropdownMenuItem>
-                            </DropdownMenuContent>
-                        </DropdownMenu>
                     </PageHeading.Actions>
                 </PageHeading>
                 <div className="flex justify-between">
@@ -119,7 +96,7 @@ export default function PostPage({ post }) {
                             title="General"
                             description={<></>}
                         >
-                            <PostForm post={post}/>
+                            <PostForm post={post} copyPost={copyPost} postCategories={postCategories}/>
                         </ShadcnCard>
                         <TwoColumnLayout.Actions>
                         </TwoColumnLayout.Actions>
@@ -134,13 +111,13 @@ export default function PostPage({ post }) {
                                 <TextMuted className="inline-block">
                                     Created at
                                 </TextMuted>
-                                <TextLarge className={`leading-[0]`}>
+                                <TextLarge>
                                     {post.created_at_string}
                                 </TextLarge>
                                 <TextMuted className="inline-block pt-2">
                                     Last Updated
                                 </TextMuted>
-                                <TextLarge className={`leading-[0]`}>
+                                <TextLarge>
                                     {post.updated_at_string}
                                 </TextLarge>
                             </ShadcnCard>

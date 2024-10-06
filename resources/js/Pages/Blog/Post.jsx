@@ -1,14 +1,26 @@
-import BlankLayout from "@/Layouts/blank-layout";
-import { Head } from "@inertiajs/react";
+import PageLayout from "@/Layouts/PageLayout";
 
-export default function Post({ post }) {
+const Post = ({ post }) => {
     return (
-        <BlankLayout>
-            <Head title={post.data.meta_title ? post.data.meta_title : post.data.title}>
-                <meta name="description" content={post.data.meta_description} />
-            </Head>
+        <>
             <h2 className="text-3xl font-bold">{post.data?.title}</h2>
-            <div dangerouslySetInnerHTML={{ __html: post.data?.body }}></div>
-        </BlankLayout>
+            <div
+                dangerouslySetInnerHTML={{ __html: post.data?.body }}
+            ></div>
+        </>
     );
 }
+
+Post.layout = (page) => (
+    <PageLayout
+        children={page}
+        title={
+            page.props.post.data.meta_title
+                ? page.props.post.data.meta_title
+                : page.props.post.data.title
+        }
+        metaDescription={page.props.post.data.meta_description}
+    />
+);
+
+export default Post;

@@ -1,19 +1,32 @@
 import React from "react";
-import Nav from "./Nav";
-import { Link } from "@inertiajs/react";
+import Navbar from "./Navbar";
+import { Link, usePage } from "@inertiajs/react";
 import { Package2 } from "lucide-react";
+import MobileNavbar from "./MobileNavbar";
 
 export default function Header() {
+    const { appName, globalSettings } = usePage().props;
     return (
-        <header className="sticky top-0 bg-white flex h-16 items-center gap-4 border-b bg-background px-4 md:px-6">
-            <Link
-                href="#"
-                className="flex items-center gap-2 text-lg font-semibold md:text-base"
-            >
-                <Package2 className="h-6 w-6" />
-                <span className="sr-only">Acme Inc</span>
-            </Link>
-            <Nav />
+        <header className="sticky top-0 bg-white">
+            <div className="container flex items-center gap-4 h-16">
+                <MobileNavbar />
+                <Link
+                    href="/"
+                    className="flex items-center gap-2 text-lg font-semibold md:text-base"
+                >
+                    {globalSettings.general.app_logo && (
+                        <img
+                            src={globalSettings.general.app_logo}
+                            alt={globalSettings.general.app_logo || appName}
+                            className="h-12"
+                        />
+                    )}
+                    <span className="sr-only">
+                        {globalSettings.general.app_name || appName}
+                    </span>
+                </Link>
+                <Navbar />
+            </div>
         </header>
     );
 }

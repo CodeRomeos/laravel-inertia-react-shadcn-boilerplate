@@ -15,11 +15,13 @@ class Attachment extends Model
 
     protected $guarded = [];
 
-    function user() : BelongsTo {
+    function user(): BelongsTo
+    {
         return $this->belongsTo(User::class);
     }
 
-    function attachmentable() : MorphTo {
+    function attachmentable(): MorphTo
+    {
         return $this->morphTo();
     }
 }

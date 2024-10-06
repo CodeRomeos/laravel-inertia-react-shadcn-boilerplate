@@ -3,7 +3,7 @@ import { Label } from "@/shadcn/ui/label";
 import { Input } from "@/shadcn/ui/input";
 import InputError from "../InputError";
 import { Button } from "@/shadcn/ui/button";
-import { useForm } from "@inertiajs/react";
+import { useForm, usePage } from "@inertiajs/react";
 import { textToSlug } from "@/Helpers/GlobalFunctions";
 import LoadingButton from "../LoadingButton";
 import EditorInput from "../EditorInput";
@@ -17,15 +17,41 @@ import {
     SelectValue,
 } from "@/shadcn/ui/select";
 import SlugInput from "../SlugInput";
+import { Textarea } from "@/shadcn/ui/textarea";
+import { Checkbox } from "@/shadcn/ui/checkbox";
+import { ScrollArea } from "@/shadcn/ui/scroll-area";
 
-export default function PostForm({post}) {
-    const { data, setData, post: postAction, processing, errors, reset } = useForm({
-        title: post ? post?.title : '',
-        slug: post ? post?.slug : '',
-        body: post ? post?.body : '',
+export default function PostForm({ post, postCategories, copyPost }) {
+    const blogBaseUrl = usePage().props.blogBaseUrl;
+    const {
+        data,
+        setData,
+        post: postAction,
+        processing,
+        errors,
+        reset,
+    } = useForm({
+        title: copyPost ? copyPost?.title : post ? post?.title : "",
+        category_ids: post ? post?.categories.map((c) => c.id) : [],
+        slug: copyPost ? copyPost?.slug : post ? post?.slug : "",
+        body: copyPost ? copyPost?.body : post ? post?.body : "",
+        short_description: copyPost
+            ? copyPost?.short_description
+            : post
+            ? post?.short_description
+            : "",
         status: post ? post?.status : 0,
-        meta_title: post ? post?.meta_title : '',
-        meta_description: post ? post?.meta_description : '',
+        meta_title: copyPost
+            ? copyPost?.meta_title
+            : post
+            ? post?.meta_title
+            : "",
+        meta_description: copyPost
+            ? copyPost?.meta_description
+            : post
+            ? post?.meta_description
+            : "",
+        image: null,
     });
 
     const submit = (e) => {
@@ -67,6 +93,9 @@ export default function PostForm({post}) {
 
                     <InputError message={errors.title} className="mt-2" />
                 </div>
+                <div>
+                    <Label htmlFor="status">Status</Label>
+                </div>
                 {/* Slug */}
                 <div>
                     <SlugInput
@@ -78,10 +107,100 @@ export default function PostForm({post}) {
                         onChange={(e) => {
                             setData("slug", e.target.value);
                         }}
-                        baseUrl={route("blog.index")}
+                        baseUrl={blogBaseUrl}
                     />
 
                     <InputError message={errors.slug} className="mt-2" />
+                </div>
+                <div className="grid grid-cols-2 gap-4">
+                    <div>
+                        <Label className="">Categories</Label>
+                        <ScrollArea className="h-40 border p-4">
+                            <ul className="space-y-2">
+                                {postCategories.map((category) => (
+                                    <li key={category.id}>
+                                        <Label className="flex items-center gap-2">
+                                            <Checkbox
+                                                checked={data.category_ids.includes(
+                                                    category.id
+                                                )}
+                                                onCheckedChange={(checked) => {
+                                                    if (checked) {
+                                                        setData(
+                                                            "category_ids",
+                                                            [
+                                                                ...data.category_ids,
+                                                                category.id,
+                                                            ]
+                                                        );
+                                                    } else {
+                                                        setData(
+                                                            "category_ids",
+                                                            data.category_ids.filter(
+                                                                (id) =>
+                                                                    id !==
+                                                                    category.id
+                                                            )
+                                                        );
+                                                    }
+                                                }}
+                                            />
+                                            <span>{category.name}</span>
+                                        </Label>
+                                    </li>
+                                ))}
+                            </ul>
+                        </ScrollArea>
+                    </div>
+
+                    <div>
+                        <Label htmlFor="image">Image</Label>
+                        <Input
+                            id="image"
+                            type="file"
+                            name="image"
+                            onChange={(e) => {
+                                setData("image", e.target.files[0]);
+                            }}
+                        />
+
+                        <InputError message={errors.image} className="mt-2" />
+                        {post && post.image && (
+                            <div className="border p-1 rounded-md">
+                                <img
+                                    src={`/storage/${post.image.url}`}
+                                    className="w-full h-36 object-cover rounded-md"
+                                    alt={post.title}
+                                    title={post.title}
+                                    loading="lazy"
+                                />
+                            </div>
+                        )}
+                    </div>
+                </div>
+                <div className="">
+                    {/* Description */}
+                    <div>
+                        <Label htmlFor="short_description">
+                            Short Description
+                        </Label>
+                        <Textarea
+                            id="short_description"
+                            type="text"
+                            name="short_description"
+                            value={data.short_description}
+                            className="mt-1 block w-full"
+                            placeholder="Short Description"
+                            onChange={(e) => {
+                                setData("short_description", e.target.value);
+                            }}
+                        />
+
+                        <InputError
+                            message={errors.short_description}
+                            className="mt-2"
+                        />
+                    </div>
                 </div>
                 <div>
                     <Label htmlFor="body">Body</Label>

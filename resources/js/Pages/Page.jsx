@@ -1,21 +1,18 @@
 import { config } from "@/Components/Puck/config";
-import BlankLayout from "@/Layouts/blank-layout";
-import Header from "@/Layouts/Header";
-import { Head } from "@inertiajs/react";
+import PageLayout from "@/Layouts/PageLayout";
 import { Render } from "@measured/puck";
 
+const Page = ({ page }) => (
+    <Render
+        config={config}
+        data={page.puck_body || { content: [], root: {} }}
+    />
+);
 
-export default function Page({ page }) {
-    return (
-        <div>
-            <Head title={page.meta_title ? page.meta_title : page.title}>
-                <meta name="description" content={page.meta_description} />
-            </Head>
-            <Header />
-            {/* <div dangerouslySetInnerHTML={{ __html: page?.body }}></div> */}
-            <div className="content overflow-y-visible h-auto">
-                <Render config={config} data={page.puck_body} />
-            </div>
-        </div>
-    );
-}
+Page.layout = page => <PageLayout
+        children={page}
+        title={page.props.page.meta_title ? page.props.page.meta_title : page.props.page.title}
+        metaDescription={page.props.page.meta_description}
+    />
+
+export default Page;

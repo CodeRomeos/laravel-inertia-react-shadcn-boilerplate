@@ -60,12 +60,15 @@ const ParentItem = ({item}) => {
     );
 }
 
-export default function Nav() {
-    const {primaryMenu} = usePage().props;
+export default function Navbar() {
+    const { primaryMenu } = usePage().props;
     return (
         <nav className="hidden flex-col gap-6 text-lg font-medium md:flex md:flex-row md:items-center md:gap-5 md:text-sm lg:gap-6">
             <ul className="flex">
-                {primaryMenu.items.map((item) => <ParentItem key={item.id} item={item} />)}
+                {primaryMenu &&
+                    primaryMenu.items.map((item) => (
+                        <ParentItem key={item.id} item={item} />
+                    ))}
             </ul>
         </nav>
     );

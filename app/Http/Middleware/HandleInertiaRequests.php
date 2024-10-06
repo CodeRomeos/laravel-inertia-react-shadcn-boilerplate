@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use App\Enums\ModelStatus;
 use App\Models\Menu;
+use App\Models\Setting;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 
@@ -31,9 +32,14 @@ class HandleInertiaRequests extends Middleware
      */
     public function share(Request $request): array
     {
+        $globalSettings = [
+            'general' => Setting::getValues('general')
+        ];
+
         return [
             ...parent::share($request),
             'appName' => config('app.name'),
+            'globalSettings' => $globalSettings,
             'primaryMenu' => Menu::getMenu('primary'),
             'auth' => [
                 'user' => $request->user(),
