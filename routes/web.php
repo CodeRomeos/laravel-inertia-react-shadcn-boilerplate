@@ -27,11 +27,9 @@ require __DIR__ . '/auth.php';
 Route::prefix('blog')->name('blog.')->controller(PostController::class)->group(function () {
     Route::get('/', 'index')->name('index');
     Route::get('/{slug}', 'show')->name('post');
-    
 });
 
 Route::redirect('/home', '/');
 Route::get('/', HomepageController::class)->name('homepage');
 
 Route::get('{slug}', PageController::class)->name('page');
-

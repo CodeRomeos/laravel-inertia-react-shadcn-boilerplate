@@ -15,13 +15,14 @@ use App\Http\Controllers\Admin\PostCategoryController;
 use App\Http\Controllers\Admin\PostController;
 use App\Http\Controllers\Admin\Role\RoleController;
 use App\Http\Controllers\Admin\SettingController;
+use App\Http\Controllers\Admin\TagController;
 use App\Http\Controllers\Admin\Users\UserController;
 use Illuminate\Support\Facades\Route;
 
 
 
 
-Route::prefix('admin')->name('admin.')->middleware(['web', 'auth'])->group(function() {
+Route::prefix('admin')->name('admin.')->middleware(['web', 'auth'])->group(function () {
     Route::prefix('users')->name('users.')->controller(UserController::class)->group(function () {
         Route::post('update/{id}', 'update')->name('update')->middleware(['can:edit users']);
         Route::post('store', 'store')->name('store')->middleware(['can:create users']);
@@ -136,6 +137,11 @@ Route::prefix('admin')->name('admin.')->middleware(['web', 'auth'])->group(funct
     Route::prefix('settings')->name('settings.')->controller(SettingController::class)->group(function () {
         Route::post('{groupKey?}', 'update')->name('update');
         Route::get('{groupKey?}', 'view')->name('view');
+    });
+
+    Route::prefix('tags')->name('tags.')->controller(TagController::class)->group(function () {
+        Route::get('store', 'store')->name('store')->can('store tags');
+        Route::get('', 'index')->name('index')->can('view tags');
     });
 
     Route::get('/dashboard', DashboardController::class)->middleware(['auth', 'verified'])->name('dashboard');

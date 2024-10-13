@@ -65,7 +65,9 @@ class PostController extends Controller
             'meta_description' => 'nullable|string',
             'image' => 'nullable|image',
             'category_ids' => 'required|array',
-            'category_ids.*' => 'exists:post_categories,id'
+            'category_ids.*' => 'exists:post_categories,id',
+            'tag_ids' => 'sometimes|required|array',
+            'tag_ids.*' => 'required|integer|exists:tags,id'
         ]);
 
         $request->merge(['user_id' => auth()->user()->id]);
@@ -73,6 +75,7 @@ class PostController extends Controller
         $post = Post::create($request->all());
         $postRepository->uploadImage($post, $request, 'image');
         $post->categories()->sync($request->get('category_ids'));
+        $post->tags()->sync($request->get('tag_ids'));
 
         return redirect()->route('admin.posts.edit', $post->id)->with(['flash_type' => 'success', 'flash_message' => 'Post created successfully', 'flash_description' => $post->title]);
     }
@@ -88,13 +91,16 @@ class PostController extends Controller
             'meta_description' => 'nullable|string',
             'image' => 'nullable|image',
             'category_ids' => 'required|array',
-            'category_ids.*' => 'exists:post_categories,id'
+            'category_ids.*' => 'exists:post_categories,id',
+            'tag_ids' => 'sometimes|required|array',
+            'tag_ids.*' => 'required|integer|exists:tags,id'
         ]);
         $post = Post::findOrFail($id);
         $post->fill($request->all());
         $post->save();
         $postRepository->uploadImage($post, $request, 'image');
         $post->categories()->sync($request->get('category_ids'));
+        $post->tags()->sync($request->get('tag_ids'));
         return redirect()->route('admin.posts.edit', $id)->with(['flash_type' => 'success', 'flash_message' => 'Post updated successfully', 'flash_description' => $post->title]);
     }
 }
