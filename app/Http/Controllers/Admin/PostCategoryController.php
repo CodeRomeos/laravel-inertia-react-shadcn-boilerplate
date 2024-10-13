@@ -58,12 +58,12 @@ class PostCategoryController extends Controller
             'meta_title' => 'nullable|string',
             'meta_description' => 'nullable|string'
         ]);
-        
+
         $postCategory = PostCategory::findOrFail($id);
         $postCategory->fill($request->all());
         $postCategory->save();
         $postCategoryRepository->uploadImage($postCategory, $request, 'image');
-        
+
         return redirect()->route('admin.postCategories.edit', $id)->with(['flash_type' => 'success', 'flash_message' => 'Post category updated successfully', 'flash_description' => $postCategory->name]);
     }
 }
