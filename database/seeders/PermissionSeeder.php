@@ -20,54 +20,42 @@ class PermissionSeeder extends Seeder
         DB::table('permissions')->truncate();
         DB::table('role_has_permissions')->truncate();
         DB::table('model_has_permissions')->truncate();
-        
+
         $now = now();
         $permissionGroups = [
             [
-                'name' => 'dashboard', 
+                'name' => 'dashboard',
                 'permissions' => [
-                    'dashboard overview stats', 
+                    'dashboard overview stats',
                     'dashboard overview grouped stats'
                 ]
-            ], 
+            ],
             [
-                'name' => 'categories', 
+                'name' => 'categories',
                 'permissions' => PermissionsHelper::genCrudPermissions('categories'),
             ],
             [
-                'name' => 'payment methods', 
-                'permissions' => PermissionsHelper::genCrudPermissions('payment methods'),
-            ],
-            [
-                'name' => 'roles', 
+                'name' => 'roles',
                 'permissions' => PermissionsHelper::genCrudPermissions('roles', ['update role permissions']),
             ],
             [
-                'name' => 'users', 
+                'name' => 'users',
                 'permissions' => PermissionsHelper::genCrudPermissions('users'),
             ],
             [
-                'name' => 'clients', 
+                'name' => 'clients',
                 'permissions' => PermissionsHelper::genCrudPermissions('clients'),
             ],
             [
-                'name' => 'bank accounts', 
-                'permissions' => PermissionsHelper::genCrudPermissions('bank accounts'),
-            ],
-            [
-                'name' => 'cards', 
-                'permissions' => PermissionsHelper::genCrudPermissions('cards'),
-            ],
-            [
-                'name' => 'comments', 
+                'name' => 'comments',
                 'permissions' => PermissionsHelper::genCrudPermissions('comments', [], ['edit', 'delete', 'export', 'screenshot & copy'])
             ],
             [
-                'name' => 'notes', 
+                'name' => 'notes',
                 'permissions' => PermissionsHelper::genCrudPermissions('notes')
             ],
             [
-                'name' => 'activity logs', 
+                'name' => 'activity logs',
                 'permissions' => PermissionsHelper::genCrudPermissions('activity logs', [], ['create', 'edit', 'delete'])
             ]
         ];

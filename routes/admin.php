@@ -1,8 +1,6 @@
 <?php
 
 use App\Http\Controllers\Admin\ActivityController;
-use App\Http\Controllers\Admin\BankAccountController;
-use App\Http\Controllers\Admin\CardController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ClientController;
 use App\Http\Controllers\Admin\CommentController;
@@ -10,7 +8,6 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\MenuController;
 use App\Http\Controllers\Admin\NoteController;
 use App\Http\Controllers\Admin\PageController;
-use App\Http\Controllers\Admin\PaymentMethodController;
 use App\Http\Controllers\Admin\PostCategoryController;
 use App\Http\Controllers\Admin\PostController;
 use App\Http\Controllers\Admin\Role\RoleController;
@@ -47,22 +44,6 @@ Route::prefix('admin')->name('admin.')->middleware(['web', 'auth'])->group(funct
         Route::get('', 'index')->name('index')->middleware(['can:view categories']);
     });
 
-    Route::prefix('payment-methods')->name('paymentMethods.')->controller(PaymentMethodController::class)->group(function () {
-        Route::post('update/{id}', 'update')->name('update')->middleware(['can:edit payment methods']);
-        Route::post('store', 'store')->name('store')->middleware(['can:create payment methods']);
-        Route::get('create', 'create')->name('create')->middleware(['can:create payment methods']);
-        Route::get('{id}', 'edit')->name('edit')->middleware(['can:edit payment methods']);
-        Route::get('', 'index')->name('index')->middleware(['can:view payment methods']);
-    });
-
-    Route::prefix('bank-accounts')->name('bankAccounts.')->controller(BankAccountController::class)->group(function () {
-        Route::post('update/{id}', 'update')->name('update')->middleware(['can:edit bank accounts']);
-        Route::post('store', 'store')->name('store')->middleware(['can:create bank accounts']);
-        Route::get('create', 'create')->name('create')->middleware(['can:create bank accounts']);
-        Route::get('{id}', 'edit')->name('edit')->middleware(['can:edit bank accounts']);
-        Route::get('', 'index')->name('index')->middleware(['can:view bank accounts']);
-    });
-
     Route::prefix('pages')->name('pages.')->controller(PageController::class)->group(function () {
         Route::post('update/{id}', 'update')->name('update')->middleware(['can:edit pages']);
         Route::post('store', 'store')->name('store')->middleware(['can:create pages']);
@@ -90,14 +71,6 @@ Route::prefix('admin')->name('admin.')->middleware(['web', 'auth'])->group(funct
         Route::get('create', 'create')->name('create')->middleware(['can:create posts']);
         Route::get('{id}', 'edit')->name('edit')->middleware(['can:edit posts']);
         Route::get('', 'index')->name('index')->middleware(['can:view posts']);
-    });
-
-    Route::prefix('cards')->name('cards.')->controller(CardController::class)->group(function () {
-        Route::post('update/{id}', 'update')->name('update')->middleware(['can:edit cards']);
-        Route::post('store', 'store')->name('store')->middleware(['can:create cards']);
-        Route::get('create', 'create')->name('create')->middleware(['can:create cards']);
-        Route::get('{id}', 'edit')->name('edit')->middleware(['can:edit cards']);
-        Route::get('', 'index')->name('index')->middleware(['can:view cards']);
     });
 
     Route::prefix('activity-logs')->name('activityLogs.')->controller(ActivityController::class)->group(function () {
