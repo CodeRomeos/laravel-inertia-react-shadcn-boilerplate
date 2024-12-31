@@ -3,7 +3,7 @@ import { ThemeProvider } from "../Components/ThemeToggle/theme-provider";
 
 export default function ShadcnProvider({ children }) {
     return (
-        <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+        <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
             {children}
         </ThemeProvider>
     );
