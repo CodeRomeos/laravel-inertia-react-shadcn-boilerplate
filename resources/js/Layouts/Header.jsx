@@ -7,7 +7,7 @@ import MobileNavbar from "./MobileNavbar";
 export default function Header() {
     const { appName, globalSettings } = usePage().props;
     return (
-        <header className="sticky top-0 bg-white">
+        <header className="sticky top-0 bg-white shadow-md z-50">
             <div className="container flex items-center gap-4 h-16">
                 <MobileNavbar />
                 <Link
@@ -21,7 +21,7 @@ export default function Header() {
                             className="h-12"
                         />
                     )}
-                    <span className="sr-only">
+                    <span>
                         {globalSettings.general.app_name || appName}
                     </span>
                 </Link>
