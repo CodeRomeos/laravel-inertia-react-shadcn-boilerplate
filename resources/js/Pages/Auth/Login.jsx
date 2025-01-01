@@ -156,6 +156,7 @@ const Login = ({ status, canResetPassword }) => {
 				</p> */}
 				</CardContent>
 				</Card>
+				<p className='mt-4'><Link href={route("register")} className="text-sm text-center text-muted-foreground">Don't have an account? <span className="underline underline-offset-4">Register</span></Link></p>
 			</div>
 		</div>
     );
