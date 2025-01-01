@@ -24,11 +24,10 @@ class RoleSeeder extends Seeder
         DB::table('role_has_permissions')->truncate();
         DB::table('model_has_permissions')->truncate();
         DB::table('model_has_roles')->truncate();
-        
+
         $adminRole = Role::create(['name' => 'admin']);
-        $manager = Role::create(['name' => 'manager']);
-        $agent = Role::create(['name' => 'agent']);
-        $support = Role::create(['name' => 'support']);
+        $moderator = Role::create(['name' => 'moderator']);
+        $user = Role::create(['name' => 'user']);
 
         Schema::disableForeignKeyConstraints();
         activity()->enableLogging();
