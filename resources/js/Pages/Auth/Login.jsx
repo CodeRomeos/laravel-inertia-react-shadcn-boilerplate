@@ -31,15 +31,17 @@ const Login = ({ status, canResetPassword }) => {
 
     return (
 		<div className="relative h-screen flex-col items-center justify-center">
-			<div className="p-4 lg:p-8 h-full flex flex-col items-center justify-center">
-				<div className="mx-auto mb-4"><ApplicationLogo className="brightness-100 w-44 text-white text-center"/></div>
+			<div className="h-full flex flex-col items-center justify-center">
+				<div className="mx-auto mb-4 -mt-28 text-center">
+					<ApplicationLogo className="brightness-100 w-44 text-white text-center"/>
+					<p className="text-lg">
+						{import.meta.env.VITE_APP_NAME}
+					</p>
+				</div>
 				<Card className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
 				<CardHeader>
 
 					<div className="flex flex-col space-y-2 text-center">
-						<p className="text-lg">
-							{import.meta.env.VITE_APP_NAME}
-						</p>
 						<h1 className="text-2xl font-semibold tracking-tight text-center">
 							Login
 						</h1>
