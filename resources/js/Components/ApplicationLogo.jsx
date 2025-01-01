@@ -1,6 +1,6 @@
 import { Link, usePage } from "@inertiajs/react";
 
-export default function ApplicationLogo() {
+export default function ApplicationLogo({ imgClass = "", textClass = "" }) {
     const { appName, globalSettings } = usePage().props;
     return (
 		<Link
@@ -13,9 +13,9 @@ export default function ApplicationLogo() {
 				decoding="async"
 				src={globalSettings.general.app_logo}
 				alt={globalSettings.general.app_logo || appName}
-				className="h-12"
+				className={["h-12", imgClass]}
 			/>
-			: <h1>{globalSettings.general.app_name || appName}</h1>
+			: <h1 className={textClass}>{globalSettings.general.app_name || appName}</h1>
 		}
 	</Link>
     );
