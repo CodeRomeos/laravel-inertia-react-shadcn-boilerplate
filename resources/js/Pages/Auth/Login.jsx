@@ -8,6 +8,8 @@ import { Head, Link, useForm, usePage } from '@inertiajs/react';
 import PageLayout from "@/Layouts/PageLayout";
 import ApplicationLogo from '@/Components/ApplicationLogo';
 import { Card, CardContent, CardHeader } from '@/shadcn/ui/card';
+import { Button } from '@/shadcn/ui/button';
+import LoadingButton from '@/Components/LoadingButton';
 
 const Login = ({ status, canResetPassword }) => {
     const {appName} = usePage().props;
@@ -129,12 +131,13 @@ const Login = ({ status, canResetPassword }) => {
 								</Link>
 							)}
 
-							<PrimaryButton
+							<LoadingButton
+								type="submit"
+								loading={processing}
 								className="ms-4"
-								disabled={processing}
 							>
 								Log in
-							</PrimaryButton>
+							</LoadingButton>
 						</div>
 					</form>
 					{/* <p className="px-8 text-center text-sm text-muted-foreground">
