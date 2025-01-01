@@ -2,17 +2,14 @@ import { useEffect } from 'react';
 import Checkbox from '@/Components/Checkbox';
 import InputError from '@/Components/InputError';
 import InputLabel from '@/Components/InputLabel';
-import PrimaryButton from '@/Components/PrimaryButton';
 import { Input } from "@/shadcn/ui/input";
-import { Head, Link, useForm, usePage } from '@inertiajs/react';
+import { Link, useForm, usePage } from '@inertiajs/react';
 import PageLayout from "@/Layouts/PageLayout";
 import ApplicationLogo from '@/Components/ApplicationLogo';
 import { Card, CardContent, CardHeader } from '@/shadcn/ui/card';
-import { Button } from '@/shadcn/ui/button';
 import LoadingButton from '@/Components/LoadingButton';
 
 const Login = ({ status, canResetPassword }) => {
-    const {appName} = usePage().props;
     const { data, setData, post, processing, errors, reset } = useForm({
         email: '',
         password: '',
@@ -36,9 +33,6 @@ const Login = ({ status, canResetPassword }) => {
 			<div className="h-full flex flex-col items-center justify-center">
 				<div className="mx-auto mb-4 -mt-28 text-center">
 					<ApplicationLogo className="brightness-100 w-44 text-white text-center"/>
-					<p className="text-lg">
-						{import.meta.env.VITE_APP_NAME}
-					</p>
 				</div>
 				<Card className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
 				<CardHeader>
