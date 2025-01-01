@@ -1,12 +1,22 @@
-import { usePage } from "@inertiajs/react";
+import { Link, usePage } from "@inertiajs/react";
 
-export default function ApplicationLogo(props) {
-    const { appName } = usePage().props;
+export default function ApplicationLogo() {
+    const { appName, globalSettings } = usePage().props;
     return (
-        <img
-            src="/images/lis-white.png"
-            alt={appName}
-            {...props}
-        />
+		<Link
+		href="/"
+		className="flex items-center gap-2 text-lg font-semibold md:text-base"
+	>
+		{globalSettings.general.app_logo
+			? <img
+				loading="lazy"
+				decoding="async"
+				src={globalSettings.general.app_logo}
+				alt={globalSettings.general.app_logo || appName}
+				className="h-12"
+			/>
+			: <h1>{globalSettings.general.app_name || appName}</h1>
+		}
+	</Link>
     );
 }
