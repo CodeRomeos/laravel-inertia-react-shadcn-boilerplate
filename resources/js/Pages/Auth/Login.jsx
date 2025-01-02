@@ -2,15 +2,14 @@ import { useEffect } from 'react';
 import Checkbox from '@/Components/Checkbox';
 import InputError from '@/Components/InputError';
 import InputLabel from '@/Components/InputLabel';
-import PrimaryButton from '@/Components/PrimaryButton';
 import { Input } from "@/shadcn/ui/input";
-import { Head, Link, useForm, usePage } from '@inertiajs/react';
+import { Link, useForm, usePage } from '@inertiajs/react';
 import PageLayout from "@/Layouts/PageLayout";
 import ApplicationLogo from '@/Components/ApplicationLogo';
 import { Card, CardContent, CardHeader } from '@/shadcn/ui/card';
+import LoadingButton from '@/Components/LoadingButton';
 
 const Login = ({ status, canResetPassword }) => {
-    const {appName} = usePage().props;
     const { data, setData, post, processing, errors, reset } = useForm({
         email: '',
         password: '',
@@ -31,15 +30,14 @@ const Login = ({ status, canResetPassword }) => {
 
     return (
 		<div className="relative h-screen flex-col items-center justify-center">
-			<div className="p-4 lg:p-8 h-full flex items-center">
+			<div className="h-full flex flex-col items-center justify-center">
+				<div className="mx-auto mb-4 -mt-28 text-center">
+					<ApplicationLogo className="brightness-100 w-44 text-white text-center"/>
+				</div>
 				<Card className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
 				<CardHeader>
 
 					<div className="flex flex-col space-y-2 text-center">
-						<div className="mx-auto"><ApplicationLogo className="brightness-100 w-44 text-white text-center"/></div>
-						<p className="text-lg">
-							{import.meta.env.VITE_APP_NAME}
-						</p>
 						<h1 className="text-2xl font-semibold tracking-tight text-center">
 							Login
 						</h1>
@@ -127,12 +125,13 @@ const Login = ({ status, canResetPassword }) => {
 								</Link>
 							)}
 
-							<PrimaryButton
+							<LoadingButton
+								type="submit"
+								loading={processing}
 								className="ms-4"
-								disabled={processing}
 							>
 								Log in
-							</PrimaryButton>
+							</LoadingButton>
 						</div>
 					</form>
 					{/* <p className="px-8 text-center text-sm text-muted-foreground">
@@ -154,6 +153,7 @@ const Login = ({ status, canResetPassword }) => {
 				</p> */}
 				</CardContent>
 				</Card>
+				<p className='mt-4'><Link href={route("register")} className="text-sm text-center text-muted-foreground">Don't have an account? <span className="underline underline-offset-4">Register</span></Link></p>
 			</div>
 		</div>
     );
