@@ -54,7 +54,7 @@ export default function RTable({
     exportable = false,
     filename = "export",
     paginationLinks = null,
-    meta = null
+    meta = null,
 }) {
     const [sorting, setSorting] = React.useState([]);
     const [columnFilters, setColumnFilters] = React.useState([]);
@@ -99,12 +99,18 @@ export default function RTable({
                 {searchColumns.map((c) => (
                     <Input
                         key={`searchColumn-${c}`}
-                        placeholder={`Filter by ${c}...`}
-                        value={table.getColumn(c)?.getFilterValue() ?? ""}
+                        placeholder={`Filter by ${c.replace("_", " ")}...`}
+                        value={
+                            table.getAllColumns().find((co) => co.id === c)
+                                ? table.getColumn(c).getFilterValue()
+                                : ""
+                        }
                         onChange={(event) =>
-                            table
-                                .getColumn(c)
-                                ?.setFilterValue(event.target.value)
+                            table.getAllColumns().find((co) => co.id == c)
+                                ? table
+                                      .getColumn(c)
+                                      ?.setFilterValue(event.target.value)
+                                : null
                         }
                         className="max-w-sm"
                     />
@@ -224,7 +230,16 @@ export default function RTable({
                                 </SelectTrigger>
                                 <SelectContent>
                                     <SelectGroup>
-                                        {[5, 10, 25, 50, 100, 150, 200].map((v) => <SelectItem key={v} value={`${v}`}>Per Page {v}</SelectItem>)}
+                                        {[5, 10, 25, 50, 100, 150, 200].map(
+                                            (v) => (
+                                                <SelectItem
+                                                    key={v}
+                                                    value={`${v}`}
+                                                >
+                                                    Per Page {v}
+                                                </SelectItem>
+                                            )
+                                        )}
                                     </SelectGroup>
                                 </SelectContent>
                             </Select>
@@ -259,7 +274,11 @@ export default function RTable({
                                 <ChevronLeft size={20} />
                             </Link>
                         </Button>
-                        {meta && <div className="border rounded-md w-10 flex justify-center items-center text-sm">{meta.current_page}</div>}
+                        {meta && (
+                            <div className="border rounded-md w-10 flex justify-center items-center text-sm">
+                                {meta.current_page}
+                            </div>
+                        )}
                         <Button
                             variant="outline"
                             size="sm"
